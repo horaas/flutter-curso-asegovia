@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/presentation/widgets/chat/her_mesage_bubble.dart';
 import 'package:pelis_app/presentation/widgets/chat/my_mesage_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class ChatScreen extends StatelessWidget {
         title: const Text("prueba chat"),
         centerTitle: false,
       ),
-      body: _ChatView(),
+      body: const _ChatView(),
     );
   }
 }
@@ -37,9 +38,9 @@ class _ChatView extends StatelessWidget {
           children: [
             Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: 50,
                   itemBuilder: (contex, index) {
-                  return const MyMessageBublble();
+                    return (index % 2 == 0) ? const HerMessageBublble() : const MyMessageBublble();
                 },)
                 ),
             const Text("mundo")
