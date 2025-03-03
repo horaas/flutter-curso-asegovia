@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/presentation/widgets/chat/my_mesage_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -38,7 +39,7 @@ class _ChatView extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (contex, index) {
-                  return Text("indice $index");
+                  return const MyMessageBublble();
                 },)
                 ),
             const Text("mundo")
