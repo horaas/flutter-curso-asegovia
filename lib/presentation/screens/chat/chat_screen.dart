@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/presentation/shared/messge_field_box.dart';
 import 'package:pelis_app/presentation/widgets/chat/her_mesage_bubble.dart';
 import 'package:pelis_app/presentation/widgets/chat/my_mesage_bubble.dart';
 
@@ -43,7 +44,7 @@ class _ChatView extends StatelessWidget {
                     return (index % 2 == 0) ? const HerMessageBublble() : const MyMessageBublble();
                 },)
                 ),
-            const Text("mundo")
+            const MessageFieldBox()
           ],
         ),
       ),
