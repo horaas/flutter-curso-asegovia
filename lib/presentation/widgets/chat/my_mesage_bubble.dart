@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/domain/entities/message.dart';
 
 class MyMessageBublble extends StatelessWidget {
-  const MyMessageBublble({super.key});
+  final Message messageData;
+
+  const MyMessageBublble({super.key, required this.messageData});
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -14,9 +18,9 @@ class MyMessageBublble extends StatelessWidget {
             color: colors.primary,
             borderRadius: BorderRadius.circular(15)
           ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical:  10),
-            child: Text("menos texto", style: TextStyle(color: Colors.white,)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20,vertical:  10),
+            child: Text(messageData.text, style: const TextStyle(color: Colors.white,)),
           ),
         ),
         const SizedBox(
