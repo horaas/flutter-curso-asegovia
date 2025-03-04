@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/domain/entities/message.dart';
+import 'package:provider/provider.dart';
+import 'package:pelis_app/presentation/providers/chat_provider.dart';
 
 class MessageFieldBox extends StatelessWidget {
-  const MessageFieldBox({super.key});
+  final ValueChanged<String> onValue;
+
+  const MessageFieldBox({super.key, required this.onValue});
 
   @override
   Widget build(BuildContext context) {
-
     final controllerInput = TextEditingController();
-  final focusNode = FocusNode();
+    final focusNode = FocusNode();
 
 
     final outlinelineInputBorder = UnderlineInputBorder(
@@ -22,7 +26,7 @@ class MessageFieldBox extends StatelessWidget {
         suffixIcon: IconButton(
           icon: const Icon(Icons.send_outlined),
           onPressed: () {
-            print("obtener valor ${controllerInput.value.text}");
+            onValue(controllerInput.value.text);
             controllerInput.clear();
           },
         ));
@@ -35,9 +39,9 @@ class MessageFieldBox extends StatelessWidget {
       },
       decoration: inputDecoration,
       onFieldSubmitted: (value) {
-        print(value);
         controllerInput.clear();
         focusNode.requestFocus();
+        onValue(value);
       },
     );
   }
