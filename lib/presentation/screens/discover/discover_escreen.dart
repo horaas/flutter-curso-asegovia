@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pelis_app/presentation/shared/video_scrollable_view.dart';
+import 'package:pelis_app/presentation/%20widget/shared/video_scrollable_view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pelis_app/presentation/providers/discover_provider.dart';
