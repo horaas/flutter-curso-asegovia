@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pelis_app/config/helpers/human_formats.dart';
 import 'package:pelis_app/domain/entities/video_post.dart';
 
 class VideoButtons extends StatelessWidget {
@@ -29,7 +30,7 @@ class _CustomIconButton extends StatelessWidget {
     return Column(
       children: [
         IconButton(onPressed: () {}, icon: Icon(iconData, color: color, size: 35,)),
-        Text('$value')
+        Text(HumanFormats.humanREadleNumber(value.toDouble()))
       ],
     );
   }

@@ -22,3 +22,4 @@ quicktype
 ## paquetes
 flutter pub add provider
 flutter pub add dio
+flutter pub add intl
