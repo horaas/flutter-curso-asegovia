@@ -10,6 +10,6 @@ class GetYesNoAnswer {
     final response = await _dio.get("https://yesno.wtf/api");
     final dataParse = YesNoModel.getJsonParse(response.data);
 
-    return Message(text: dataParse.answer, fromWho: FromWho.her, imageUrl: dataParse.image);
+    return dataParse.getMessage();
   }
 }

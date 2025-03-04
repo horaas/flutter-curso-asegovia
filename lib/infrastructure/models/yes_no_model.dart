@@ -1,4 +1,6 @@
 
+import 'package:pelis_app/domain/entities/message.dart';
+
 class YesNoModel {
   String answer;
   bool forced;
@@ -12,4 +14,9 @@ class YesNoModel {
     forced: json['forced'],
     image: json['image'],
   );
+
+  Message getMessage() {
+    return Message(text: answer == 'yes' ? 'Si' : 'No',
+    fromWho: FromWho.her, imageUrl: image);
+  }
 }
