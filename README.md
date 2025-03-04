@@ -18,3 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 cintrol . para agregar faltantes
 
 flutter pub add provider
+flutter pub add dio
