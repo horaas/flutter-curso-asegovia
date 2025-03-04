@@ -24,3 +24,4 @@ flutter pub add provider
 flutter pub add dio
 flutter pub add intl
 flutter pub add animate_do
+flutter pub add video_player
