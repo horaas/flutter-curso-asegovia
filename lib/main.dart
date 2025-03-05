@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pelis_app/config/theme/app_theme.dart';
-import 'package:pelis_app/infrastructure/datasources/local_video_data_source_impl.dart';
-import 'package:pelis_app/infrastructure/repositories/video_post_repository_impl.dart';
-import 'package:pelis_app/presentation/providers/discover_provider.dart';
-import 'package:pelis_app/presentation/screens/discover/discover_escreen.dart';
-import 'package:provider/provider.dart';
+import 'package:pelis_app/presentation/screens/home/home_screen.dart';
  
 void main() => runApp(MyApp());
  
@@ -12,25 +8,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final videPostRepository = VideoPostRepositoryImpl(
-      videoPostDataSource: LocalVideoDataSourceImpl()
-      );
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          lazy: false,
-          create: (_) => DiscoverProvider(videoPostRepository: videPostRepository)..loadNextVideo()
-          )
-      ],
-      child: MaterialApp(
-        title: 'tok tik',
+    return MaterialApp(
+        title: 'Widhets',
         debugShowCheckedModeBanner: false,
         theme: AppTheme().getTheme(),
-        home: const Scaffold(
-          body: DiscoverScreen(),
-        ),
-      ),
-    );
+        home: const HomeScreen(),
+      );
+
   }
 }
