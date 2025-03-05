@@ -52,8 +52,8 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
             _controller.value.aspectRatio,
             child: Stack(
               children: [
-                VideoBackground(stops: const [0.8, 1.0],),
                 VideoPlayer(_controller),
+                VideoBackground(stops: const [0.8, 1.0],),
                 Positioned(
                   bottom: 50,
                   left: 20,
