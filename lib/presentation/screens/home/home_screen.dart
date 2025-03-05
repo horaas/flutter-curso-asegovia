@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pelis_app/config/menu/menu_items.dart';
-import 'package:pelis_app/presentation/screens/buttons/buttons_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -56,6 +56,7 @@ class _CustomListTile extends StatelessWidget {
         // );
 
         // Navigator.of(context).pushNamed(menuItem.link);
+        context.push(menuItem.link);
       },
       );
   }
