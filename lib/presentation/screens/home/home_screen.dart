@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pelis_app/config/menu/menu_items.dart';
+import 'package:pelis_app/presentation/screens/buttons/buttons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,7 +49,13 @@ class _CustomListTile extends StatelessWidget {
       title: Text(menuItem.title),
       subtitle: Text(menuItem.subTitle),
       onTap: () {
-        print("·hola");
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => const ButtonsScreen()
+        //   )
+        // );
+
+        // Navigator.of(context).pushNamed(menuItem.link);
       },
       );
   }
