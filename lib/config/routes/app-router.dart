@@ -4,6 +4,14 @@ import 'package:pelis_app/presentation/screens/screens.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
+      path: '/theme-change',
+      builder: (context, state) => const ThemeChangerScreen(),
+    ),
+    GoRoute(
+      path: '/counter',
+      builder: (context, state) => const CounterScreen(),
+    ),
+    GoRoute(
       name: HomeScreen.name,
       path: '/',
       builder: (context, state) => const HomeScreen(),

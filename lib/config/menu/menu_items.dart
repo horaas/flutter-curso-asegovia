@@ -12,6 +12,8 @@ class MenuItems {
 }
 
 const appMenuItem = <MenuItems> [
+  MenuItems(title: 'ChnageTheme', subTitle: 'cambiador de tema', link: '/theme-change', icon: Icons.color_lens),
+  MenuItems(title: 'Counter', subTitle: 'Contador', link: '/counter', icon: Icons.plus_one_outlined),
   MenuItems(title: 'Botones', subTitle: 'varios botones', link: '/buttons', icon: Icons.smart_button_outlined),
   MenuItems(title: 'Tarjetas', subTitle: 'vontenedor estelizado', link: '/cards', icon: Icons.credit_card),
   MenuItems(title: 'Progress', subTitle: 'Progress page', link: '/progress', icon: Icons.refresh),

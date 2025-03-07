@@ -1,3 +1,4 @@
+export 'package:pelis_app/presentation/screens/counter/counter_screen.dart';
 export 'package:pelis_app/presentation/screens/animated/animated_screen.dart';
 export 'package:pelis_app/presentation/screens/app_tutorial/app_tutorial_screen.dart';
 export 'package:pelis_app/presentation/screens/inifinite_scroll/infinite_scroll_screen.dart';
@@ -8,3 +9,4 @@ export 'package:pelis_app/presentation/screens/buttons/buttons_screen.dart';
 export 'package:pelis_app/presentation/screens/cards/cards_screen.dart';
 export 'package:pelis_app/presentation/screens/home/home_screen.dart';
 
+export 'package:pelis_app/presentation/screens/theme_chnager/theme_changer_screen.dart';
