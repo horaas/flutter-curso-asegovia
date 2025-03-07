@@ -7,3 +7,22 @@ final colorsProvider = Provider((ref) => colorThemes);
 
 
 final selectectdColorProvider = StateProvider((ref) => 0);
+
+//objeto del tip APPTHEME(custom)
+
+final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, AppTheme>(
+  (ref) => ThemeNotifier()
+  );
+
+class ThemeNotifier extends StateNotifier<AppTheme> {
+  ThemeNotifier(): super(AppTheme());
+
+  void toggleChangeDarkMode() {
+    state = state.copyWith(isDarkMode: !state.isDarkMode);
+  }
+
+  changeColor(int color) {
+    state = state.copyWith(selectedColor: color);
+  }
+
+}
