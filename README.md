@@ -19,10 +19,22 @@ cintrol . para agregar faltantes
 
 ## extension
 quicktype
-## paquetes
+## ^aquetes
+```terminal
 flutter pub add provider
 flutter pub add dio
 flutter pub add intl
 flutter pub add animate_do
 flutter pub add video_player
 flutter pub add go_router
+```
+
+# Roverpod
+
+Manejador de estador Riverpod
+es un manejador de estados de la aplicacion el cual no es muy complicada su cruva de aprendisaje y su uso
+
+### instalación
+```terminal
+flutter pub add flutter_riverpod
+```
