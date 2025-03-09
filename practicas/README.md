@@ -27,6 +27,7 @@ flutter pub add intl
 flutter pub add animate_do
 flutter pub add video_player
 flutter pub add go_router
+flutter pub add flutter_dotenv
 ```
 
 # Roverpod
