@@ -1,5 +1,5 @@
-import 'package:cinemapedia/configs/constants/environment.dart';
-import 'package:cinemapedia/domain/entities/movie.dart';
+import 'package:cinemapedia/configs/configs.dart';
+import 'package:cinemapedia/domain/domains.dart';
 import 'package:cinemapedia/infraestructure/models/moviedb/movie_movieDB.dart';
 
 class MovieMapper {
