@@ -2,3 +2,6 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     file_names: ignore
+linter:
+  rules:
+    prefer_const_constructors: true
