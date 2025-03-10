@@ -1,4 +1,5 @@
 import 'package:cinemapedia/presentation/providers/movies/movies_providers.dart';
+import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,15 +34,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final moviesNowPlaying = ref.watch(nowPlayinMoviesProvider);
 
-    if (moviesNowPlaying.isEmpty) return Center(
-      child: CircularProgressIndicator(),
+    return Column(
+      children: [
+        CustomAppBar(),
+        Expanded(
+          child: ListView.builder(
+            itemCount: moviesNowPlaying.length,
+            itemBuilder: (context, index) {
+            final movie = moviesNowPlaying[index];
+            return ListTile(title: Text(movie.title),);
+          },),
+        ),
+      ],
     );
-
-    return ListView.builder(
-      itemCount: moviesNowPlaying.length,
-      itemBuilder: (context, index) {
-      final movie = moviesNowPlaying[index];
-      return ListTile(title: Text(movie.title),);
-    },);
   }
 }
