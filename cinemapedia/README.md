@@ -8,4 +8,5 @@ curl --request GET \
      --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTIwZWU4YjUyMzc5YWJiMzYxOWQyM2M4NmZlMjg1NyIsIm5iZiI6MTc0MTM4NzE0MS43NTAwMDAyLCJzdWIiOiI2N2NiNzU4NWY4ZTFmMWJjOTBmNTg4MTIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.mgIBX8P3O0WC2lMNa7XCo0GekwWbXH_HzCHSbDOSGY4'
 
      flutter pub add card_swiper
+     flutter pub add animate_do 
 ```
