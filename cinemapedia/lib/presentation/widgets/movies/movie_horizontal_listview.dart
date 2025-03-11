@@ -26,17 +26,64 @@ class MovieHorizontalListview extends StatelessWidget {
           if (title != null || subtitle != null)
             _Title(title: title, subtitle: subtitle),
           Expanded(
-            child: ListView.builder(
-              itemCount: movies.length,
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return _Slide(movie: movies[index]);
-              },
-            ),
+            child: _ListViewCustom(movies: movies, loadNextPage: loadNextPage,),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ListViewCustom extends StatefulWidget {
+  
+
+  final List<Movie> movies;
+  final VoidCallback? loadNextPage;
+
+  const _ListViewCustom({
+    required this.movies, this.loadNextPage,
+  });
+
+
+  @override
+  State<_ListViewCustom> createState() => _ListViewCustomState();
+}
+
+class _ListViewCustomState extends State<_ListViewCustom> {
+  ScrollController scrollController = ScrollController();
+
+
+
+  @override
+  void initState() {
+    super.initState();
+
+
+    scrollController.addListener(() {
+      if (widget.loadNextPage == null) return;
+
+      if ((scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent) {
+        widget.loadNextPage!();
+      }
+
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: widget.movies.length,
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return _Slide(movie: widget.movies[index]);
+      },
     );
   }
 }
