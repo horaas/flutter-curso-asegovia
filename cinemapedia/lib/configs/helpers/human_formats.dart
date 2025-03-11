@@ -1,14 +1,14 @@
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 
-// class HumanFormats {
+class HumanFormats {
 
-//   static String humanREadleNumber(double number) {
-//     final formaterNumber = NumberFormat.compactCurrency(
-//       decimalDigits: 0,
-//       symbol: ''
-//     ).format(number);
+  static String humanREadleNumber(double number) {
+    final formaterNumber = NumberFormat.compactCurrency(
+      decimalDigits: 0,
+      symbol: ''
+    ).format(number);
 
-//     return formaterNumber;
-//   }
+    return formaterNumber;
+  }
 
-// }
+}
