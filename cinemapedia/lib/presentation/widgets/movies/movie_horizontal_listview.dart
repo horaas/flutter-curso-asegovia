@@ -82,7 +82,7 @@ class _ListViewCustomState extends State<_ListViewCustom> {
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return _Slide(movie: widget.movies[index]);
+        return FadeInRight(child: _Slide(movie: widget.movies[index]));
       },
     );
   }
@@ -111,8 +111,9 @@ class _Slide extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: 150,
                 loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null)
+                  if (loadingProgress != null) {
                     return const CircularProgressIndicator(strokeWidth: 2);
+                  }
 
                   return FadeIn(child: child);
                 },
