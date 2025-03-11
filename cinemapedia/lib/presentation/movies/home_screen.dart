@@ -1,3 +1,4 @@
+import 'package:cinemapedia/presentation/widgets/movies/full_screen_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
@@ -42,6 +43,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final upcommingMovies = ref.watch(upcommingMoviesProvider);
 
+    return FullScreenLoader();
     return CustomScrollView(
       slivers: [
         const SliverAppBar(
