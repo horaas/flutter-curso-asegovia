@@ -16,10 +16,7 @@ class MovieMapper {
     originalTitle: moviedb.originalTitle,
     overview: moviedb.overview,
     popularity: moviedb.popularity,
-    posterPath:
-        moviedb.posterPath != ''
-            ? Environment.urlImageMovie + moviedb.posterPath
-            : 'no-poster',
+    posterPath: Environment.urlImageMovie + moviedb.posterPath,
     releaseDate: moviedb.releaseDate,
     title: moviedb.title,
     video: moviedb.video,
