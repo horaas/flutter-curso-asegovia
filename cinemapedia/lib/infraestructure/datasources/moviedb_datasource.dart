@@ -17,17 +17,27 @@ class MoviedbDatasource extends MoviesDatasources {
 
   MoviedbDatasource();
 
+  List<Movie> _callToJson(Map<String, dynamic> json) {
+    final movieDBREsponse = MovieDbRespopnse.fromJson(json);
+    return movieDBREsponse.results
+            .where((movieDB) => movieDB.posterPath != 'no-poster')
+            .map((movieDB) => MovieMapper.movieDBToEntity(movieDB))
+            .toList();
+  }
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
     final response = await _dio.get('/movie/now_playing', queryParameters: {
       'page': page
     });
-    final movieDBREsponse = MovieDbRespopnse.fromJson(response.data);
-    final List<Movie> movies =
-        movieDBREsponse.results
-            .where((movieDB) => movieDB.posterPath != 'no-poster')
-            .map((movieDB) => MovieMapper.movieDBToEntity(movieDB))
-            .toList();
-    return movies;
+    return _callToJson(response.data);
+  }
+  
+  @override
+  Future<List<Movie>> getPupular({int page = 1}) async {
+    
+    final response = await _dio.get('/movie/popular', queryParameters: {
+      'page': page
+    });
+    return _callToJson(response.data);
   }
 }

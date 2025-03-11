@@ -29,6 +29,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   void initState() {
     super.initState();
     ref.read(nowPlayinMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -36,27 +37,53 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final moviesNowPlaying = ref.watch(nowPlayinMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideShowProvider);
 
-    return Column(
-      children: [
-        const CustomAppBar(),
-        MoviesSlideShow(movies: slideShowMovies),
-        MovieHorizontalListview(
-          movies: moviesNowPlaying,
-          title: 'En Cines',
-          subtitle: 'Lunes 20',
-          loadNextPage: () {
-            ref.read(nowPlayinMoviesProvider.notifier).loadNextPage();
-          },
+    final popularMovies = ref.watch(popularMoviesProvider);
+
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomAppBar()
+          ),
         ),
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: moviesNowPlaying.length,
-        //     itemBuilder: (context, index) {
-        //     final movie = moviesNowPlaying[index];
-        //     return ListTile(title: Text(movie.title),);
-        //   },),
-        // ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 1,
+            (context, index) {
+            return Column(
+              children: [
+                
+                MoviesSlideShow(movies: slideShowMovies),
+                MovieHorizontalListview(
+                  movies: moviesNowPlaying,
+                  title: 'En Cines',
+                  subtitle: 'Lunes 20',
+                  loadNextPage: () {
+                    ref.read(nowPlayinMoviesProvider.notifier).loadNextPage();
+                  },
+                ),
+                MovieHorizontalListview(
+                  movies: popularMovies,
+                  title: 'Pupulares',
+                  loadNextPage: () {
+                    ref.read(popularMoviesProvider.notifier).loadNextPage();
+                  },
+                ),
+              ],
+            );
+          }),
+        ),
       ],
+
+      // Expanded(
+      //   child: ListView.builder(
+      //     itemCount: moviesNowPlaying.length,
+      //     itemBuilder: (context, index) {
+      //     final movie = moviesNowPlaying[index];
+      //     return ListTile(title: Text(movie.title),);
+      //   },),
+      // ),
     );
   }
 }
