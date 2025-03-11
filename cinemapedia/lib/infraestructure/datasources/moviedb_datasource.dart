@@ -40,4 +40,20 @@ class MoviedbDatasource extends MoviesDatasources {
     });
     return _callToJson(response.data);
   }
+  
+  @override
+  Future<List<Movie>> getTopRate({int page = 1})  async{
+    final response = await _dio.get('/movie/top_rated', queryParameters: {
+      'page': page
+    });
+    return _callToJson(response.data);
+  }
+  
+  @override
+  Future<List<Movie>> getUpcomming({int page = 1}) async {
+    final response = await _dio.get('/movie/upcoming', queryParameters: {
+      'page': page
+    });
+    return _callToJson(response.data);
+  }
 }
