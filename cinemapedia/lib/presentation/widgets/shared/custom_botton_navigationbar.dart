@@ -13,6 +13,10 @@ class CustomBottonNavigationbar extends StatelessWidget {
           label: 'Categoria',
         ),
         const BottomNavigationBarItem(
+          icon: Icon(Icons.label_outline),
+          label: 'Categorias',
+        ),
+        const BottomNavigationBarItem(
           icon: Icon(Icons.favorite_border),
           label: 'Favoritos',
         ),
