@@ -37,13 +37,13 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
       () {
         final page = controllerPageView.page ?? 0;
 
-        if(!endSlide && page >= (slides.length -1.5)) {
+        if (!endSlide && page >= (slides.length - 1.5)) {
           setState(() {
             endSlide = true;
           });
         }
-        
-        if(endSlide && page < (slides.length -1.5)) {
+
+        if (endSlide && page < (slides.length - 1.5)) {
           setState(() {
             endSlide = false;
           });
@@ -55,9 +55,9 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
   @override
   void dispose() {
     controllerPageView.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,10 +88,8 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
                     delay: const Duration(milliseconds: 200),
                     child: FilledButton(
                         child: const Text('Comenzar'),
-                        onPressed: () => context.pop()
-                    ),
-                  )
-                )
+                        onPressed: () => context.pop()),
+                  ))
               : const SizedBox()
         ],
       ),
