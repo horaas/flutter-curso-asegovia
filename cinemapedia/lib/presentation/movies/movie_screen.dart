@@ -57,7 +57,6 @@ class _MovieDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final textStyle = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +116,6 @@ class _ActorsByMovie extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
     final actorByMovie = ref.watch(actorsByMovieProvider)[movieId];
 
     if (actorByMovie == null) {

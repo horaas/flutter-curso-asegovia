@@ -69,7 +69,7 @@ class MoviedbDatasource extends MoviesDatasources {
   }
   
   @override
-  Future<List<Movie>> getSearchMovie({required String query}) async {
+  Future<List<Movie>> getSearchMovie(String query) async {
     final response = await _dio.get('/search/movie', queryParameters: {
       'query': query
     });
