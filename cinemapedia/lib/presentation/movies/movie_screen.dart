@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/domains.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:cinemapedia/presentation/widgets/movies/full_screen_loader.dart';
@@ -20,7 +21,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
-    ref.read(actorsByMovieProvider.notifier).getActors(widget.movieId);
+    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override
@@ -77,7 +78,7 @@ class _MovieDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(movie.title, style: textStyle.titleLarge),
+                    // Text(movie.title, style: textStyle.titleLarge),
                     Text(movie.overview),
                   ],
                 ),
@@ -103,8 +104,63 @@ class _MovieDetails extends StatelessWidget {
             ],
           ),
         ),
+        _ActorsByMovie(movieId: movie.id.toString()),
         const SizedBox(width: 100),
       ],
+    );
+  }
+}
+
+class _ActorsByMovie extends ConsumerWidget {
+  final String movieId;
+  const _ActorsByMovie({required this.movieId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+    final actorByMovie = ref.watch(actorsByMovieProvider)[movieId];
+
+    if (actorByMovie == null) {
+      return const CircularProgressIndicator(strokeWidth: 2);
+    }
+
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: actorByMovie.length,
+        itemBuilder: (context, index) {
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            width: 135,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    height: 180,
+                    width: 135,
+                    fit: BoxFit.cover,
+                    actorByMovie[index].profilePath,
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+                Text(actorByMovie[index].name),
+                Text(
+                  actorByMovie[index].character,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -130,7 +186,9 @@ class _CustomSilverAppBar extends StatelessWidget {
         background: Stack(
           children: [
             SizedBox.expand(
-              child: Image.network(movie.posterPath, fit: BoxFit.cover),
+              child: FadeIn(
+                child: Image.network(movie.posterPath, fit: BoxFit.cover),
+              ),
             ),
             const SizedBox.expand(
               child: DecoratedBox(
