@@ -29,4 +29,9 @@ class MoviesRepositoryImpl extends MoviesRepository {
   Future<Movie> getMovieById(String id) {
     return moviesSources.getMovieById(id);
   }
+  
+  @override
+  Future<List<Movie>> getSearchMovie({required String query}) {
+    return moviesSources.getSearchMovie(query: query);
+  }
 }
