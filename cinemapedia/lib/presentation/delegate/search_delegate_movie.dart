@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia/configs/helpers/human_formats.dart';
 import 'package:cinemapedia/domain/domains.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +9,21 @@ typedef CalbackSearch = Future<List<Movie>> Function(String query);
 
 class SearchDelegateMovie extends SearchDelegate<Movie?> {
   final CalbackSearch calbackSearch;
+  final StreamController<List<Movie>> controllerDelegate = StreamController.broadcast();
+
+  Timer? _timer;
 
   SearchDelegateMovie({required this.calbackSearch});
 
+
+  _queryOnChangeValue(String query) {
+    print('Buscandossss');
+    if (_timer?.isActive ?? false) return _timer!.cancel();
+
+    _timer = Timer(const Duration(milliseconds:  500),() {
+      print('Buscando');
+    }, );
+  }
   @override
   String get searchFieldLabel => 'Buscar películas';
   @override
@@ -46,23 +61,90 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('data2');
+    return const Text('data2');
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
-      future: calbackSearch(query),
+    _queryOnChangeValue(query);
+
+    return StreamBuilder(
+      // future: calbackSearch(query),
+      stream: controllerDelegate.stream,
       builder: (context, snapshot) {
         final movies = snapshot.data ?? [];
         return ListView.builder(
           itemCount: movies.length,
           itemBuilder: (context, index) {
             final movie = movies[index];
-            return ListTile(title: Text(movie.title));
+            return _MovieItem(movie: movie, calbackClose: close,);
           },
         );
       },
+    );
+  }
+}
+
+class _MovieItem extends StatelessWidget {
+  final Movie movie;
+  final Function calbackClose;
+
+  const _MovieItem({required this.movie, required this.calbackClose});
+
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return SizedBox(
+      width: size.width,
+      child: GestureDetector(
+        onTap: () {
+          calbackClose(context, movie);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Row(
+            children: [
+              SizedBox(
+                width: size.width * 0.15,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(movie.posterPath, fit: BoxFit.cover),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        movie.title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        movie.overview.length > 100
+                            ? '${movie.overview.substring(0, 100)}...'
+                            : movie.overview,
+                      ),
+        
+                      Row(
+                        children: [
+                          Icon(Icons.star_border_outlined, color: Colors.yellow.shade800,),
+                          const SizedBox(width: 5,),
+                          Text(HumanFormats.humanREadleNumber(movie.voteAverage, 1))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+        
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
