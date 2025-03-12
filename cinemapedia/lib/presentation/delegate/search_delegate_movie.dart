@@ -9,21 +9,28 @@ typedef CalbackSearch = Future<List<Movie>> Function(String query);
 
 class SearchDelegateMovie extends SearchDelegate<Movie?> {
   final CalbackSearch calbackSearch;
-  final StreamController<List<Movie>> controllerDelegate = StreamController.broadcast();
+  final StreamController<List<Movie>> controllerDelegate =
+      StreamController.broadcast();
 
   Timer? _timer;
 
   SearchDelegateMovie({required this.calbackSearch});
 
+  _clearStream() {
+    controllerDelegate.close();
+  }
 
   _queryOnChangeValue(String query) {
-    print('Buscandossss');
     if (_timer?.isActive ?? false) return _timer!.cancel();
 
-    _timer = Timer(const Duration(milliseconds:  500),() {
-      print('Buscando');
-    }, );
+    _timer = Timer(const Duration(milliseconds: 500), () async {
+      if (query.isEmpty) return controllerDelegate.add([]);
+
+      final movies = await calbackSearch(query);
+      controllerDelegate.add(movies);
+    });
   }
+
   @override
   String get searchFieldLabel => 'Buscar películas';
   @override
@@ -53,7 +60,10 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
     return Padding(
       padding: const EdgeInsets.only(left: 3),
       child: IconButton(
-        onPressed: () => close(context, null),
+        onPressed: () {
+          _clearStream();
+          close(context, null);
+        },
         icon: const Icon(Icons.arrow_back),
       ),
     );
@@ -77,7 +87,13 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
           itemCount: movies.length,
           itemBuilder: (context, index) {
             final movie = movies[index];
-            return _MovieItem(movie: movie, calbackClose: close,);
+            return _MovieItem(
+              movie: movie,
+              calbackClose: (context, movie) {
+                _clearStream();
+                close(context, movie);
+              },
+            );
           },
         );
       },
@@ -90,7 +106,6 @@ class _MovieItem extends StatelessWidget {
   final Function calbackClose;
 
   const _MovieItem({required this.movie, required this.calbackClose});
-
 
   @override
   Widget build(BuildContext context) {
@@ -128,19 +143,26 @@ class _MovieItem extends StatelessWidget {
                             ? '${movie.overview.substring(0, 100)}...'
                             : movie.overview,
                       ),
-        
+
                       Row(
                         children: [
-                          Icon(Icons.star_border_outlined, color: Colors.yellow.shade800,),
-                          const SizedBox(width: 5,),
-                          Text(HumanFormats.humanREadleNumber(movie.voteAverage, 1))
+                          Icon(
+                            Icons.star_border_outlined,
+                            color: Colors.yellow.shade800,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            HumanFormats.humanREadleNumber(
+                              movie.voteAverage,
+                              1,
+                            ),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
-        
             ],
           ),
         ),
