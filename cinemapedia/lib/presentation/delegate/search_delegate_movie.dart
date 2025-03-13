@@ -11,7 +11,7 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
   final CalbackSearch calbackSearch;
   final StreamController<List<Movie>> controllerDelegate =
       StreamController.broadcast();
-  final List<Movie> initialMovies;
+  List<Movie> initialMovies;
 
   Timer? _timer;
 
@@ -30,6 +30,7 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
     _timer = Timer(const Duration(milliseconds: 500), () async {
       final movies = await calbackSearch(query);
       controllerDelegate.add(movies);
+      initialMovies = movies;
     });
   }
 
@@ -73,13 +74,16 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return const Text('data2');
+    return _buildWidgetStreamBuilder();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     _queryOnChangeValue(query);
+    return _buildWidgetStreamBuilder();
+  }
 
+  StreamBuilder<List<Movie>> _buildWidgetStreamBuilder() {
     return StreamBuilder(
       // future: calbackSearch(query),
       initialData: initialMovies,
