@@ -24,7 +24,7 @@ final router = GoRouter(
             ),
           ],
         ),
-        GoRoute(path: '/', builder: (context, state) => const FavoritesView()),
+        GoRoute(path: '/favorites', builder: (context, state) => const FavoritesView()),
       ],
     ),
     // GoRoute(
