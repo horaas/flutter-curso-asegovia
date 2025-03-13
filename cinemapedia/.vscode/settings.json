@@ -10,6 +10,7 @@
         "editor.inlayHints.enabled": "offUnlessPressed",
         "files.autoSave": "off",
         "editor.formatOnSave": false,
-        "editor.formatOnSaveMode":"modifications"
+        "editor.formatOnSaveMode":"modifications",
+        "editor.formatOnType": false
     },
 }
