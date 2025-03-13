@@ -11,6 +11,7 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
   final CalbackSearch calbackSearch;
   final StreamController<List<Movie>> controllerDelegate =
       StreamController.broadcast();
+  final StreamController<bool> isLoading = StreamController.broadcast();
   List<Movie> initialMovies;
 
   Timer? _timer;
@@ -25,12 +26,14 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
   }
 
   _queryOnChangeValue(String query) {
+    isLoading.add(false);
     if (_timer?.isActive ?? false) return _timer!.cancel();
 
     _timer = Timer(const Duration(milliseconds: 500), () async {
       final movies = await calbackSearch(query);
       controllerDelegate.add(movies);
       initialMovies = movies;
+      isLoading.add(true);
     });
   }
 
@@ -39,20 +42,26 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      if (query.isNotEmpty && query.length >= 3)
-        // Padding(
-        //   padding: const EdgeInsets.only(right: 5),
-        //   child:
-        //       FadeIn(child:
-        //         SpinPerfect( infinite: true,
-        //           child: const Icon(Icons.cached))
-        //       ),
-        // ),
+      if (query.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(right: 5),
-          child: IconButton(
-            onPressed: () => query = '',
-            icon: FadeIn(child: const Icon(Icons.delete)),
+          child: FadeIn(
+            child: StreamBuilder(
+              initialData: false,
+              stream: isLoading.stream,
+              builder: (context, snapshot) {
+                if (snapshot.data ?? true) {
+                  return IconButton(
+                    onPressed: () => query = '',
+                    icon: const Icon(Icons.delete),
+                  );
+                }
+                return SpinPerfect(
+                  infinite: true,
+                  child: const Icon(Icons.cached),
+                );
+              },
+            ),
           ),
         ),
     ];
