@@ -13,7 +13,7 @@ final router = GoRouter(
       },
       routes: [
         GoRoute(
-          path: 'home/:id',
+          path: 'movie/:id',
           name: MovieScreen.name,
           builder: (context, state) {
             final movieId = state.pathParameters['id'] ?? 'no-id';
@@ -22,7 +22,10 @@ final router = GoRouter(
         ),
       ],
     ),
-
+    GoRoute(
+      path: '/',
+      redirect: (_, __) => '/home/0',
+    )
     // GoRoute(
     //   path: '/counter',
     //   builder: (context, state) => const CounterScreen(),
