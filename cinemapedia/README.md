@@ -12,3 +12,6 @@ curl --request GET \
      flutter pub add isar isar_flutter_libs
      flutter pub add -d isar_generator build_runner
 ```
+
+# cambios en la entidad hay que ejcutar el comando
+flutter pub run build_runner build
