@@ -6,9 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const name = 'home-screen';
-  final int pageIdex;
   
-  const HomeScreen({super.key, required this.pageIdex});
+  HomeScreen({super.key});
 
   final viewRoutes = const <Widget>[
     HomeView(),
