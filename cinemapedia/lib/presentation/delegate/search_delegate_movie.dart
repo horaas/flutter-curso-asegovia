@@ -28,8 +28,6 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
     if (_timer?.isActive ?? false) return _timer!.cancel();
 
     _timer = Timer(const Duration(milliseconds: 500), () async {
-      if (query.isEmpty) return controllerDelegate.add([]);
-
       final movies = await calbackSearch(query);
       controllerDelegate.add(movies);
     });
