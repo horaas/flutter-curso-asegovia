@@ -5,8 +5,7 @@ import 'package:path_provider/path_provider.dart';
 class IsarDatasource extends LocalStorageDatasource {
   late Future<Isar> db;
   IsarDatasource() {
-    db:
-    openDB;
+    db = openDB();
   }
 
   Future<Isar> openDB() async {
