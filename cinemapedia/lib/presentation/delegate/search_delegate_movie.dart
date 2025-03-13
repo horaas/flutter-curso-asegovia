@@ -11,10 +11,14 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
   final CalbackSearch calbackSearch;
   final StreamController<List<Movie>> controllerDelegate =
       StreamController.broadcast();
+  final List<Movie> initialMovies;
 
   Timer? _timer;
 
-  SearchDelegateMovie({required this.calbackSearch});
+  SearchDelegateMovie({
+    required this.calbackSearch,
+    required this.initialMovies,
+  });
 
   _clearStream() {
     controllerDelegate.close();
@@ -80,6 +84,7 @@ class SearchDelegateMovie extends SearchDelegate<Movie?> {
 
     return StreamBuilder(
       // future: calbackSearch(query),
+      initialData: initialMovies,
       stream: controllerDelegate.stream,
       builder: (context, snapshot) {
         final movies = snapshot.data ?? [];

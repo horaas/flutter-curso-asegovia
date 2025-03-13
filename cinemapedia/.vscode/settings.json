@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSaveMode": "modifications",
     "[dart]": {
 
         "editor.tabSize": 2,
@@ -6,6 +7,9 @@
         "editor.detectIndentation": false,
         "editor.suggest.insertMode": "replace",
         "editor.defaultFormatter": "Dart-Code.dart-code",
-        "editor.inlayHints.enabled": "offUnlessPressed"
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "files.autoSave": "off",
+        "editor.formatOnSave": false,
+        "editor.formatOnSaveMode":"modifications"
     },
 }
