@@ -171,7 +171,7 @@ class _CustomSilverAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    final localStorage = ref.watch(localStorageRepositoryProvider);
+    final favoriteMovies = ref.read(favoriteMoviesProvider.notifier);
     final isFavorite = ref.watch(isFavoriteProvider(movie.id));
 
     return SliverAppBar(
@@ -179,7 +179,7 @@ class _CustomSilverAppBar extends ConsumerWidget {
       expandedHeight: size.height * 0.7,
       actions: [
         IconButton(onPressed: () async {
-          await localStorage.toogleFavorites(movie);
+          await favoriteMovies.toogleFavorite(movie);
           ref.invalidate(isFavoriteProvider(movie.id));
         }, icon: isFavorite.when(
           loading: () => const CircularProgressIndicator(strokeWidth: 2,),

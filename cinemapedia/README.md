@@ -12,6 +12,7 @@ curl --request GET \
      flutter pub add isar isar_flutter_libs
      flutter pub add -d isar_generator build_runner
      flutter pub add path_provider
+     flutter pub add flutter_staggered_grid_view
 ```
 
 # cambios en la entidad hay que ejcutar el comando

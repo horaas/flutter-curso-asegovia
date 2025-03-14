@@ -1,4 +1,5 @@
 import 'package:cinemapedia/presentation/providers/providers.dart';
+import 'package:cinemapedia/presentation/widgets/movies/movie_masonry_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,9 +12,12 @@ class FavoritesView extends ConsumerStatefulWidget {
 
 class FavoritesViewState extends ConsumerState<FavoritesView> {
 
+  bool isLoading = false;
+  bool isLastPage = false;
+
   @override
   void initState() {
-    ref.read(favoriteMoviesProvider.notifier).loadNextPage();
+    loadNextPage();
     super.initState();
   }
 
@@ -21,21 +25,26 @@ class FavoritesViewState extends ConsumerState<FavoritesView> {
   void dispose() {
     super.dispose();
   }
+
+
+
+  void loadNextPage() async {
+    if(isLoading || isLastPage ) return;
+
+    final movies = await ref.read(favoriteMoviesProvider.notifier).loadNextPage();
+
+    if(movies.isEmpty) isLastPage = true;
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
     final favoritesMovies = ref.watch(favoriteMoviesProvider).values.toList();
 
     return Scaffold(
-      body: ListView.builder(
-        // controller: scrollController,
-        itemCount: favoritesMovies.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return ListTile(title: Text(favoritesMovies[index].title),);
-        },
-      ),
+      body: MovieMasonryWidget(movies: favoritesMovies, loadNexPage: loadNextPage,)
     );
   }
 }

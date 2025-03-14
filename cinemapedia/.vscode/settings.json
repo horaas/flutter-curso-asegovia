@@ -11,6 +11,9 @@
         "files.autoSave": "off",
         "editor.formatOnSave": false,
         "editor.formatOnSaveMode":"modifications",
-        "editor.formatOnType": false
+        "editor.formatOnType": false,
+        "editor.hover.enabled": false,
     },
+    // "editor.suggest.showKeywords": false,
+    // "editor.suggest.showSnippets": false
 }
