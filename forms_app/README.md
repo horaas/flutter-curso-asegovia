@@ -1,3 +1,5 @@
-# forms_app
+# Dependencies
 
-A new Flutter project.
+```
+    flutter pub add flutter_bloc
+```
