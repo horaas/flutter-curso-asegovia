@@ -178,9 +178,9 @@ class _CustomSilverAppBar extends ConsumerWidget {
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.7,
       actions: [
-        IconButton(onPressed: () {
+        IconButton(onPressed: () async {
+          await localStorage.toogleFavorites(movie);
           ref.invalidate(isFavoriteProvider(movie.id));
-          localStorage.toogleFavorites(movie);
         }, icon: isFavorite.when(
           loading: () => const CircularProgressIndicator(strokeWidth: 2,),
           data: (isFavoriteSelected) {
