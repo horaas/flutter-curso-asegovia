@@ -18,16 +18,19 @@ class CustomBottonNavigationbar extends ConsumerWidget {
         currentIndex: viewActive.state,
       items: [
         const BottomNavigationBarItem(
-          icon: Icon(Icons.home_max),
+          icon: Icon(Icons.home_outlined),
           label: 'Categoria',
+          activeIcon: Icon(Icons.home)
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.label_outline),
           label: 'Categorias',
+          activeIcon: Icon(Icons.label)
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.favorite_border),
           label: 'Favoritos',
+          activeIcon: Icon(Icons.favorite)
         ),
       ],
     );
