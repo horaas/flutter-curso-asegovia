@@ -18,22 +18,14 @@ class CreateNewUserScreen extends StatelessWidget {
   }
 }
 
-class _RegisterForm extends StatefulWidget {
+class _RegisterForm extends StatelessWidget {
   const _RegisterForm();
-
-  @override
-  State<_RegisterForm> createState() => _RegisterFormState();
-}
-
-class _RegisterFormState extends State<_RegisterForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final registerCubit = context.watch<RegisterCubit>();
 
     return Form(
-      key: _formKey,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,10 +64,6 @@ class _RegisterFormState extends State<_RegisterForm> {
             ),
             FilledButton.tonalIcon(
               onPressed: () {
-                // if (_formKey.currentState!.validate()) {
-                //   print('valido');
-                //   registerCubit.onSummit();
-                // }
                 registerCubit.onSummit();
               },
               icon: Icon(FontAwesomeIcons.floppyDisk),
