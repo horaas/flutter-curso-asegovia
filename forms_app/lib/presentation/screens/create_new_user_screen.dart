@@ -72,10 +72,11 @@ class _RegisterFormState extends State<_RegisterForm> {
             ),
             FilledButton.tonalIcon(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  print('valido');
-                  registerCubit.onSummit();
-                }
+                // if (_formKey.currentState!.validate()) {
+                //   print('valido');
+                //   registerCubit.onSummit();
+                // }
+                registerCubit.onSummit();
               },
               icon: Icon(FontAwesomeIcons.floppyDisk),
               label: Text('Crear usuario'),
