@@ -24,6 +24,9 @@ class _RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerCubit = context.watch<RegisterCubit>();
+    final userName = registerCubit.state.user;
+    final password = registerCubit.state.pass;
+    final email = registerCubit.state.email;
 
     return Form(
       child: SingleChildScrollView(
@@ -35,36 +38,24 @@ class _RegisterForm extends StatelessWidget {
             CustomTextFormField(
               labelText: 'Nombre de usuario',
               onChanged: (value) => registerCubit.userChanged(value),
-              validator: (value) {
-                if ( value == null && value!.isEmpty) return 'no puede estar vacio';
-                if (value.length <= 5) return 'el valor debe ser mayo a 5';
-                return null;
-              },
+              errorMessage: userName.isPure ? null : userName.errorMessage,
             ),
             CustomTextFormField(
               labelText: 'Corre',
               type: TextInputType.emailAddress,
               onChanged: (value) => registerCubit.emailChanged(value),
-              validator: (value) {
-                final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (value == null && value!.isEmpty) return 'no puede estar vacio';
-                if (!emailRegExp.hasMatch(value)) return 'Email invalido';
-                return null;
-              },
+              errorMessage: email.isPure ? null : email.errorMessage,
             ),
             CustomTextFormField(
               labelText: 'contraseña',
               isSecure: true,
               onChanged: (value) => registerCubit.passChanged(value),
-              validator: (value) {
-                if (value == null && value!.isEmpty) return 'no puede estar vacio';
-                if (value.length <= 5) return 'el valor debe ser mayo a 5';
-                return null;
-              },
+              errorMessage: password.isPure ? null : password.errorMessage,
             ),
             FilledButton.tonalIcon(
               onPressed: () {
                 registerCubit.onSummit();
+                // print(registerCubit.state.user.error?.errorMessage());
               },
               icon: Icon(FontAwesomeIcons.floppyDisk),
               label: Text('Crear usuario'),

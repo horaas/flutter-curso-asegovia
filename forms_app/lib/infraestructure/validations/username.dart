@@ -3,6 +3,13 @@ import 'package:formz/formz.dart';
 // define el enumerado de los errores a validar
 enum UserNameError { empty, length }
 
+class Prueba {
+  final UserNameError entry;
+  Prueba({required this.entry});
+
+  
+}
+
 // se define el nombre de la clase para la validacion
 class Username extends FormzInput<String, UserNameError> {
   // se llama para la inicializacion de la clase
@@ -18,5 +25,21 @@ class Username extends FormzInput<String, UserNameError> {
     if (value.length <= 5) return UserNameError.length;
 
     return null;
+  }
+
+
+  String? get errorMessage {
+
+    if (isValid || isPure) return null;
+
+
+    switch(displayError){
+      case UserNameError.empty:
+        return 'gola';
+      case UserNameError.length:
+        return 'chau';
+      default:
+        return '';
+      }
   }
 }

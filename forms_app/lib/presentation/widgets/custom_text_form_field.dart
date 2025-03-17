@@ -45,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
           filled: true,
           label: labelText != null ? Text(labelText!) : null,
           isDense: true,
-          errorText: null,
+          errorText: errorMessage,
         ),
       ),
     );

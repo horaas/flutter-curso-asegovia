@@ -19,4 +19,19 @@ class Password extends FormzInput<String, PasswordError> {
 
     return null;
   }
+
+    String? get errorMessage {
+
+    if (isValid || isPure) return null;
+
+
+    switch(displayError){
+      case PasswordError.empty:
+        return 'gola';
+      case PasswordError.length:
+        return 'chau';
+      default:
+        return '';
+      }
+  }
 }
