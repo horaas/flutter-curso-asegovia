@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:forms_app/presentation/blocs/register/register_cubit.dart';
 import 'package:forms_app/presentation/widgets/custom_text_form_field.dart';
 
 class CreateNewUserScreen extends StatelessWidget {
@@ -9,7 +11,9 @@ class CreateNewUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Nuevo Usuario')),
-      body: _RegisterForm(),
+      body: BlocProvider(
+        create: (_) => RegisterCubit(),
+        child: _RegisterForm()),
     );
   }
 }
@@ -23,12 +27,11 @@ class _RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<_RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String user = '';
-  String email = '';
-  String pass = '';
 
   @override
   Widget build(BuildContext context) {
+    final registerCubit = context.watch<RegisterCubit>();
+
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -39,39 +42,39 @@ class _RegisterFormState extends State<_RegisterForm> {
             Center(child: Icon(FontAwesomeIcons.userPlus, size: 120)),
             CustomTextFormField(
               labelText: 'Nombre de usuario',
-              onChanged: (value) => user = value,
+              onChanged: (value) => registerCubit.userChanged(value),
               validator: (value) {
-                if (user.isEmpty) return 'no puede estar vacio';
-                if (user.length <= 5) return 'el valor debe ser mayo a 5';
+                if ( value == null && value!.isEmpty) return 'no puede estar vacio';
+                if (value.length <= 5) return 'el valor debe ser mayo a 5';
                 return null;
               },
             ),
             CustomTextFormField(
               labelText: 'Corre',
               type: TextInputType.emailAddress,
-              onChanged: (value) => email = value,
-              validator: (p0) {
-                
-                 final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (email.isEmpty) return 'no puede estar vacio';
-                if (!emailRegExp.hasMatch(email)) return 'Email invalido';
+              onChanged: (value) => registerCubit.emailChanged(value),
+              validator: (value) {
+                final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (value == null && value!.isEmpty) return 'no puede estar vacio';
+                if (!emailRegExp.hasMatch(value)) return 'Email invalido';
                 return null;
               },
             ),
             CustomTextFormField(
               labelText: 'contraseña',
               isSecure: true,
-              onChanged: (value) => pass = value,
-              validator: (p0) {
-                if (pass.isEmpty) return 'no puede estar vacio';
-                if (pass.length <= 5) return 'el valor debe ser mayo a 5';
+              onChanged: (value) => registerCubit.passChanged(value),
+              validator: (value) {
+                if (value == null && value!.isEmpty) return 'no puede estar vacio';
+                if (value.length <= 5) return 'el valor debe ser mayo a 5';
                 return null;
               },
             ),
             FilledButton.tonalIcon(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  print('valido $user, $pass, $email');
+                  print('valido');
+                  registerCubit.onSummit();
                 }
               },
               icon: Icon(FontAwesomeIcons.floppyDisk),
