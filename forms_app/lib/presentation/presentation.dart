@@ -2,3 +2,4 @@ export 'screens/home_screen.dart';
 
 export 'screens/cubit_counter_screen.dart';
 export 'screens/bloc_counter_screen.dart';
+export 'screens/create_new_user_screen.dart';
