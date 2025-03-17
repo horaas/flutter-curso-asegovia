@@ -27,7 +27,6 @@ class _CounterCubitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trnsactionCount = context.watch<CounterCubit>().state;
 
     return Scaffold(
       appBar: AppBar(title: Text('Counter cubit'), actions: [
@@ -35,7 +34,6 @@ class _CounterCubitView extends StatelessWidget {
            ],),
       body: Center(
         child: BlocBuilder<CounterCubit, CounterState>(builder: (context, state) {
-          print('el counter cambio');
           return Text('contador -> ${state.counter}');
         },),
       ),

@@ -26,6 +26,9 @@ class HomeScreen extends StatelessWidget {
                   context.push('/bloc');
                 },
                ),
+               const Padding(padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(),
+               )
              ],
            ),
        );
