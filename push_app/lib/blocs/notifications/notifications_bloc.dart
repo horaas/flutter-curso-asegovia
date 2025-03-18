@@ -63,7 +63,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     print(token);
   }
 
-  void _handleMessageREmote(RemoteMessage message) {
+  void handleMessageREmote(RemoteMessage message) {
     print('Mensaje Recibido');
     print('Mensaje DAta: ${message.data}');
 
@@ -89,7 +89,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void _onForegroundMessage() {
-    FirebaseMessaging.onMessage.listen(_handleMessageREmote);
+    FirebaseMessaging.onMessage.listen(handleMessageREmote);
   }
 
 

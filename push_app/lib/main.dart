@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_app/blocs/notifications/notifications_bloc.dart';
 import 'package:push_app/configs/configs.dart';
+import 'package:push_app/presentation/handle_notification_interactios.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MainApp extends StatelessWidget {
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),
+      builder: (context, child) => HandleNotificationInteractios(child: child!),
     );
   }
 }
