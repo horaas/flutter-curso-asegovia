@@ -10,4 +10,11 @@ flutter pub add firebase_core
 se debe configurar con los siquientes pasoso
 
 dart pub global activate flutterfire_cli
+colocar esto en las variables de entorno si no reconoce
+C:\Users\horacio\AppData\Local\Pub\Cache\bin
+refreshenv
+
 flutterfire configure
+
+seleccionae el proyeto
+seleccionar para androi-ios
