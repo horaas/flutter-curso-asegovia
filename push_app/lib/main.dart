@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:push_app/blocs/notifications/notifications_bloc.dart';
 import 'package:push_app/configs/configs.dart';
 
 Future<void> main() async {
-  runApp(const MainApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => NotificationsBloc())
+    ],
+    child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {

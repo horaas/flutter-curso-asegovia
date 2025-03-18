@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:push_app/blocs/notifications/notifications_bloc.dart';
     
 class HomeScreen extends StatelessWidget {
 
@@ -8,7 +10,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Permisos'),
+        title: context.select((NotificationsBloc notification) {
+          return Text(notification.state.notification.toString());
+        }),
         actions: [
           IconButton(onPressed: () {
             //asda
