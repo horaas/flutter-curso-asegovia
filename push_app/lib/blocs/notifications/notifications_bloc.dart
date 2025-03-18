@@ -13,6 +13,7 @@ part 'notifications_state.dart';
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  int pushIdNumber = 0;
 
   NotificationsBloc() : super(NotificationsState()) {
     on<NotificationStatusChanged>(_notificationChangeStatus);
@@ -47,7 +48,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       provisional: false,
       sound: true,
     );
-    await requestLocalPermissions();
+    await LocalNotification.requestLocalPermissions();
     add(NotificationStatusChanged(settings.authorizationStatus));
   }
 
@@ -85,6 +86,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
               : message.notification!.apple?.imageUrl,
     );
 
+    LocalNotification.showLocalNotifications(id: ++pushIdNumber, title: notification.title, body: notification.body, data: notification.data.toString());
     add(NotificationReceived(notification));
     print(notification.toString());
   }

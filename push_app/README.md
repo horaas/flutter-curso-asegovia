@@ -19,3 +19,8 @@ flutterfire configure
 
 seleccionae el proyeto
 seleccionar para androi-ios
+
+
+al instalar flutter_local_notifications se debe realizar los siguietes pasos
+1 añadir isCoreLibraryDesugaringEnabled = true en la compileOptions dentro de android en el android/app/build.gradle.kts
+1 añadir coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4") en dependencies  en el android/app/build.gradle.kts

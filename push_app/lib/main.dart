@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_app/blocs/notifications/notifications_bloc.dart';
 import 'package:push_app/configs/configs.dart';
+import 'package:push_app/configs/local_notification/local_notification.dart';
 import 'package:push_app/presentation/handle_notification_interactios.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationsBloc.initializedFCM();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await NotificationsBloc.initializedFCM();
+  await LocalNotification.initializeLocalNotifications();
 
   runApp(MultiBlocProvider(
     providers: [
