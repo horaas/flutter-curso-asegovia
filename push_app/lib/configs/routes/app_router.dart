@@ -1,3 +1,4 @@
+import 'package:push_app/presentation/details_screen.dart';
 import 'package:push_app/presentation/screens.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,10 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (_, __) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/push-details/:messageId',
+      builder: (_, state) => DetailsScreen(pushMessageId: state.pathParameters['messageId'] ?? '',),
     )
     // GoRoute(
     //   path: '/counter',
