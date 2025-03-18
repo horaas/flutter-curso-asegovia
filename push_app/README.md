@@ -6,6 +6,7 @@ git lfs uninstall && git reset --hard && git lfs install && git lfs pull
 
 flutter pub add firebase_messaging
 flutter pub add firebase_core  
+flutter pub add flutter_local_notifications
 
 se debe configurar con los siquientes pasoso
 
