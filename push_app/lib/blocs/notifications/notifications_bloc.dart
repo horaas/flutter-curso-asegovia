@@ -38,5 +38,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       provisional: false,
       sound: true,
     );
+
+    add(NotificationStatusChanged(settings.authorizationStatus));
   }
 }

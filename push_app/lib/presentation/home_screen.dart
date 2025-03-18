@@ -11,11 +11,11 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: context.select((NotificationsBloc notification) {
-          return Text(notification.state.notification.toString());
+          return Text('${notification.state.status}');
         }),
         actions: [
           IconButton(onPressed: () {
-            //asda
+           context.read<NotificationsBloc>().requestPermissions();
           }, icon: Icon(Icons.settings))
         ],
       ),
