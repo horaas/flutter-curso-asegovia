@@ -12,6 +12,9 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
 
   NotificationsBloc() : super(NotificationsState()) {
     on<NotificationStatusChanged>(_notificationChangeStatus);
+    _initialStatusCheck();
+
+    _onForegroundMessage();
   }
 
   static Future<void> initializedFCM() async {
@@ -20,12 +23,12 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     );
   }
 
-  void _notificationChangeStatus(NotificationStatusChanged event, Emitter<NotificationsState> emit) {
-    emit(
-      state.copyWith(
-        status: event.status
-      )
-    );
+  void _notificationChangeStatus(
+    NotificationStatusChanged event,
+    Emitter<NotificationsState> emit,
+  ) {
+    emit(state.copyWith(status: event.status));
+    _getFCMToken();
   }
 
   void requestPermissions() async {
@@ -41,4 +44,38 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
 
     add(NotificationStatusChanged(settings.authorizationStatus));
   }
+
+  void _initialStatusCheck() async {
+    final settings = await messaging.getNotificationSettings();
+
+    add(NotificationStatusChanged(settings.authorizationStatus));
+  }
+
+  void _getFCMToken() async {
+    if (state.status != AuthorizationStatus.authorized) return;
+
+    final token = await messaging.getToken();
+    print(token);
+  }
+
+  void _handleMessageREmote(RemoteMessage message) {
+    print('Mensaje Recibido');
+    print('Mensaje DAta: ${message.data}');
+
+    if (message.notification == null) return;
+
+    print('Mensaje: ${message.notification}');
+  }
+
+  void _onForegroundMessage() {
+    FirebaseMessaging.onMessage.listen(_handleMessageREmote);
+  }
+}
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
 }
