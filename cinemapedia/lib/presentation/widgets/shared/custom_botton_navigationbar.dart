@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,10 +18,10 @@ class CustomBottonNavigationbar extends ConsumerWidget {
         elevation: 0,
         currentIndex: viewActive.state,
       items: [
-        const BottomNavigationBarItem(
+        BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
           label: 'Categoria',
-          activeIcon: Icon(Icons.home)
+          activeIcon: Bounce(child: Icon(Icons.home),) 
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.label_outline),
