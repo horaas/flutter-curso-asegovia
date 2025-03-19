@@ -1,5 +1,6 @@
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:cinemapedia/presentation/views/views.dart';
+import 'package:cinemapedia/presentation/widgets/shared/curved_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
         index: viewActive,
         children: viewRoutes,
       ),
-      bottomNavigationBar: CustomBottonNavigationbar(),
+      bottomNavigationBar: CurvedBottomNavigation(),
     );
   }
 }
