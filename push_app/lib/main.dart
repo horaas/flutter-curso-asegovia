@@ -14,7 +14,7 @@ Future<void> main() async {
 
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(create: (_) => NotificationsBloc())
+      BlocProvider(create: (_) => NotificationsBloc(requestLocalPermissions: LocalNotification.requestLocalPermissions, showLocalNotifications: LocalNotification.showLocalNotifications))
     ],
     child: const MainApp()));
 }

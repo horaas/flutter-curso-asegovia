@@ -11,17 +11,22 @@ import 'package:push_app/firebase_options.dart';
 part 'notifications_event.dart';
 part 'notifications_state.dart';
 
+typedef RequestLocalPermissions = Future<void> Function();
+typedef ShowLocalNotifications = void Function({required int id, String? title, String? body, String? data});
+
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   int pushIdNumber = 0;
+  final RequestLocalPermissions? requestLocalPermissions;
+  final ShowLocalNotifications? showLocalNotifications;
 
-  NotificationsBloc() : super(NotificationsState()) {
+  NotificationsBloc({this.requestLocalPermissions, this.showLocalNotifications})
+    : super(NotificationsState()) {
     on<NotificationStatusChanged>(_notificationChangeStatus);
     on<NotificationReceived>(_notificationReceived);
     _initialStatusCheck();
 
     _onForegroundMessage();
-
   }
 
   static Future<void> initializedFCM() async {
@@ -48,7 +53,10 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       provisional: false,
       sound: true,
     );
-    await LocalNotification.requestLocalPermissions();
+    if (requestLocalPermissions != null) {
+      await requestLocalPermissions!();
+    }
+
     add(NotificationStatusChanged(settings.authorizationStatus));
   }
 
@@ -86,7 +94,14 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
               : message.notification!.apple?.imageUrl,
     );
 
-    LocalNotification.showLocalNotifications(id: ++pushIdNumber, title: notification.title, body: notification.body, data: notification.data.toString());
+    if (showLocalNotifications != null) {
+      showLocalNotifications!(
+        id: ++pushIdNumber,
+        title: notification.title,
+        body: notification.body,
+        data: notification.data.toString(),
+      );
+    }
     add(NotificationReceived(notification));
     print(notification.toString());
   }
@@ -95,21 +110,26 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     FirebaseMessaging.onMessage.listen(handleMessageREmote);
   }
 
-
   void _notificationReceived(
     NotificationReceived event,
     Emitter<NotificationsState> emit,
   ) {
     print(state.notification);
-    emit(state.copyWith(notification: [event.pushMessage, ...state.notification]));
+    emit(
+      state.copyWith(notification: [event.pushMessage, ...state.notification]),
+    );
   }
 
   PushMessage? getMessageById(String pushId) {
-    final exust = state.notification.any((element) => element.messageId == pushId,);
+    final exust = state.notification.any(
+      (element) => element.messageId == pushId,
+    );
 
     if (!exust) return null;
 
-    return state.notification.firstWhere((element) => element.messageId == pushId,);
+    return state.notification.firstWhere(
+      (element) => element.messageId == pushId,
+    );
   }
 }
 
