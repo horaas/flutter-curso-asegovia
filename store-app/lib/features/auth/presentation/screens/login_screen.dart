@@ -70,7 +70,7 @@ class _LoginForm extends ConsumerWidget {
             label: 'Correo',
             keyboardType: TextInputType.emailAddress,
             onChanged: ref.read(loginFormProvider.notifier).onEmailChange,
-             errorMessage: loginForm.isFormPosted ?
+            errorMessage: loginForm.isFormPosted ?
                loginForm.email.errorMessage 
                : null,
           ),
