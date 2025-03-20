@@ -1,15 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
-import 'package:teslo_shop/features/shared/infraestructure/email.dart';
+import 'package:teslo_shop/features/auth/presentation/providers/providers.dart';
 import 'package:teslo_shop/features/shared/infraestructure/inputs.dart';
 
 final registerFormProvider = StateNotifierProvider.autoDispose<
     RegisterFormNotifier, RegisterFormProviderState>((ref) {
-  return RegisterFormNotifier();
+      final registerUserCallback = ref.watch(authProvider.notifier).register;
+  return RegisterFormNotifier(registerUserCallback: registerUserCallback);
 });
 
 class RegisterFormNotifier extends StateNotifier<RegisterFormProviderState> {
-  RegisterFormNotifier() : super(RegisterFormProviderState());
+  final Function(String, String, String) registerUserCallback ;
+
+  RegisterFormNotifier({required this.registerUserCallback}) : super(RegisterFormProviderState());
 
   onNameChange(String value) {
     final name = OnlyLetter.dirty(value);
@@ -46,6 +49,7 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormProviderState> {
     _touchEveryField();
 
     if (!state.isValid) return;
+    registerUserCallback(state.name.value, state.email.value, state.password.value);
   }
 
   _touchEveryField() {
