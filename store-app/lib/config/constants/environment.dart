@@ -5,5 +5,5 @@ class Environment {
   static initEnviroments() async {
     await dotenv.load(fileName: '.env');
   }
-  static String apiUrl = dotenv.env["API_URL"] ?? 'error de url';
+  static String apiUrl = dotenv.env['API_URL'] ?? 'error de url';
 }

@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.19.4 <3.0.0'
 
 dependencies:
+  animate_do: ^4.2.0
   dio: ^5.0.2
   flutter:
     sdk: flutter
@@ -28,3 +29,4 @@ flutter:
     - assets/loaders/
     - assets/images/
     - google_fonts/montserrat_alternates/
+    - .env
