@@ -68,8 +68,9 @@ class LoginFormNotifier extends StateNotifier<LoginFormProviderState> {
 
     if (!state.isValid) return;
 
-    
+    state = state.copyWith(isPsting: true);    
     await loginUserCallback(state.email.value, state.password.value);
+    state = state.copyWith(isPsting: false);    
   }
 
   _touchEveryField() {

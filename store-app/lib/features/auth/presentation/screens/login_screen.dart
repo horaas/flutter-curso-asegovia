@@ -78,13 +78,13 @@ class _LoginForm extends ConsumerWidget {
           const SizedBox(height: 50),
           Stack(
             children: [
-              if (loginProcess.authStatus == AuthStatus.checking)
+              if (loginForm.isPsting)
                 Center(
                     child: ZoomOut(
                         child: Text('Login', style: textStyles.titleLarge))),
-              if (loginProcess.authStatus == AuthStatus.notAuthenticated)
+              if (!loginForm.isPsting)
                 Center(child: Text('Login', style: textStyles.titleLarge)),
-              if (loginProcess.authStatus == AuthStatus.checking)
+              if (loginForm.isPsting)
                 Center(
                   child: ZoomIn(
                       child: CircularProgressIndicator(
@@ -116,7 +116,7 @@ class _LoginForm extends ConsumerWidget {
               child: CustomFilledButton(
                 text: 'Ingresar',
                 buttonColor: Colors.black,
-                onPressed: () {
+                onPressed: loginForm.isPsting ? null : () {
                   ref.read(loginFormProvider.notifier).onFormSubmit();
                 },
               )),
