@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:teslo_shop/features/auth/presentation/providers/providers.dart';
-import 'package:teslo_shop/features/shared/infraestructure/inputs.dart';
+import 'package:teslo_shop/features/shared/infraestructure/inputs/inputs.dart';
 
 class LoginFormProviderState {
   final bool isPsting;
