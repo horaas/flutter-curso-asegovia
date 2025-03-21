@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:teslo_shop/features/products/presentation/providers/products_provider.dart';
+import 'package:teslo_shop/features/products/presentation/widgets/widgets.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -32,43 +35,53 @@ class ProductsScreen extends StatelessWidget {
 }
 
 
-class _ProductsView extends StatelessWidget {
+class _ProductsView extends ConsumerStatefulWidget {
   const _ProductsView();
 
   @override
-  Widget build(BuildContext context) {
-    return Center(child: MasonryGridView.count(
-      crossAxisCount: 2,
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        if (index == 1){
-         return Column(children: [
-            SizedBox(height: 30,),
-            _ListProducts()
-          ],);
-        }
-      return _ListProducts();
-    },));
-  }
+  _ProductsViewState createState() => _ProductsViewState();
 }
 
-class _ListProducts extends StatelessWidget {
-  const _ListProducts();
+class _ProductsViewState extends ConsumerState<_ProductsView> {
+  final ScrollController scrollController = ScrollController();
+
+
+@override
+  void initState() {
+    super.initState();
+    
+    // scrollController.addListener(() {
+      // if ( (scrollController.position.pixels + 400) >= scrollController.position.maxScrollExtent ) {
+        ref.read(productsProvider.notifier).loadNextPage();
+      // }
+    // });
+
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network('https://assets-global.website-files.com/5ec7dad2e6f6295a9e2a23dd/6582f25642a96b818502c50d_Design.ai.jpg', height: 250, fit: BoxFit.cover,),
-          ),
-          SizedBox(height: 10,),
-          Text('Descripcion del la imagen')
-        ],
-      ),
-    );
+
+    final products = ref.watch(productsProvider).products;
+
+    return Center(child: MasonryGridView.count(
+      crossAxisCount: 2,
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        final product = products[index];
+        if (index == 1){
+         return Column(children: [
+            SizedBox(height: 30,),
+            ListProducts(product: product)
+          ],);
+        }
+      return ListProducts(product: product,);
+    },));
   }
 }
