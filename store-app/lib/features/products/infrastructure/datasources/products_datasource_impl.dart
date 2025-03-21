@@ -13,9 +13,26 @@ class ProductsDatasourceImpl extends ProductsDatasource {
             headers: {'Authorization': 'Bearer $accessToken'}));
 
   @override
-  Future<Product> createProduct(Map<String, dynamic> productList) {
-    // TODO: implement createProduct
-    throw UnimplementedError();
+  Future<Product> createProduct(Map<String, dynamic> productList) async {
+    try {
+      final String? productId = productList['id'];
+      final String method = productId == null ? 'POST' : 'PATCH';
+      final String url = productId == null ? '/post' : '/products/$productId';
+      productList.remove('id');
+
+      final response = await dio.request(url,
+          data: productList, options: Options(method: method));
+
+      final product = ProductMapper.productJsonToEntity(response.data);
+
+      return product;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) throw ProductNotFound();
+
+      throw Exception();
+    } catch (e) {
+      throw Exception();
+    }
   }
 
   @override
@@ -32,12 +49,19 @@ class ProductsDatasourceImpl extends ProductsDatasource {
 
   @override
   Future<Product> getProductById(String idProduct) async {
-   final response =
-        await dio.get<List>('/products/$idProduct');
+    try {
+      final response = await dio.get('/products/$idProduct');
 
-    final product = ProductMapper.productJsonToEntity(response.data?.first);
+      final product = ProductMapper.productJsonToEntity(response.data);
 
-    return product;
+      return product;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) throw ProductNotFound();
+
+      throw Exception();
+    } catch (e) {
+      throw Exception();
+    }
   }
 
   @override
