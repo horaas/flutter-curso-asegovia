@@ -11,6 +11,13 @@ class ProductScreen extends ConsumerWidget {
 
   const ProductScreen({ super.key, required this.productId });
 
+
+    void showSanackBar(BuildContext context) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Actualizado...'))
+      );
+    }
    @override
    Widget build(BuildContext context, ref) {
     final stateProduct = ref.watch(productProvider(productId));
@@ -40,7 +47,7 @@ class ProductScreen extends ConsumerWidget {
             ).onFormSubmit()
               .then((value) {
                 if ( !value ) return;
-                FullScreenLoader();
+                showSanackBar(context);
               });
     
             
