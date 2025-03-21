@@ -62,7 +62,6 @@ class _LoginForm extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final loginForm = ref.watch(loginFormProvider);
     final textStyles = Theme.of(context).textTheme;
-    final loginProcess = ref.watch(authProvider);
 
     ref.listen(
       authProvider,

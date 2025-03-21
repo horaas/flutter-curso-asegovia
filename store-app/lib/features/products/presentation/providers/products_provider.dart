@@ -53,6 +53,10 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 
   }
 
+  Future getProductById(String productId) async {
+    final product = await productsRepository
+      .getProductById(productId);
+  }
 }
 
 
