@@ -1,7 +1,9 @@
+import 'package:teslo_shop/features/auth/domain/domain.dart';
+
 class Product {
   final String id;
   final String title;
-  final double price;
+  final int price;
   final String description;
   final String slug;
   final int stock;
@@ -9,6 +11,7 @@ class Product {
   final String gende;
   final List<String> tags;
   final List<String> images;
+  final User user;
 
   Product(
       {required this.id,
@@ -20,5 +23,6 @@ class Product {
       required this.sizes,
       required this.gende,
       required this.tags,
-      required this.images});
+      required this.images,
+      required this.user});
 }
