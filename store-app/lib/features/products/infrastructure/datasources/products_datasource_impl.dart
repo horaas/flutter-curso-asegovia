@@ -17,7 +17,7 @@ class ProductsDatasourceImpl extends ProductsDatasource {
     try {
       final String? productId = productList['id'];
       final String method = productId == null ? 'POST' : 'PATCH';
-      final String url = productId == null ? '/post' : '/products/$productId';
+      final String url = productId == null ? '/products' : '/products/$productId';
       productList.remove('id');
 
       final response = await dio.request(url,
