@@ -49,4 +49,6 @@ dart run flutter_launcher_icons
 
 flutter pub add flutter_native_splash
 
+correr el comando
+dart run flutter_native_splash:create
 
