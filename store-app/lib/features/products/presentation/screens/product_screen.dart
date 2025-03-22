@@ -29,7 +29,11 @@ class ProductScreen extends ConsumerWidget {
           title: const Text('Editar Producto'),
           actions: [
             IconButton(onPressed: () {
-    
+              FocusScope.of(context).unfocus();
+            }, 
+            icon: const Icon( Icons.photo_library_sharp )),
+            IconButton(onPressed: () {
+              FocusScope.of(context).unfocus();
             }, 
             icon: const Icon( Icons.camera_alt_outlined ))
           ],
@@ -40,6 +44,7 @@ class ProductScreen extends ConsumerWidget {
           : _ProductView(product: stateProduct.product! ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            FocusScope.of(context).unfocus();
             if ( stateProduct.product == null ) return;
     
             ref.read(
