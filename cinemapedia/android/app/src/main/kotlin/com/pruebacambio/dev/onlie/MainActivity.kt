@@ -1,4 +1,4 @@
-package com.example.cinemapedia
+package com.pruebacambio.dev.onlie
 
 import io.flutter.embedding.android.FlutterActivity
 
