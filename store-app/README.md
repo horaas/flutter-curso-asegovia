@@ -17,4 +17,5 @@ Este es un proyecto para trabajar con:
 Recuerden leer y seguir la guía para montar el backend localmente.
 
 flutter pub add shared_preferences
+flutter pub add image_picker
 
