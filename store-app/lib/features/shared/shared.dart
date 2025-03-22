@@ -11,3 +11,4 @@ export 'infraestructure/inputs/price.dart';
 export 'infraestructure/inputs/slug.dart';
 export 'infraestructure/inputs/title.dart';
 export 'infraestructure/inputs/stock.dart';
+export 'infraestructure/services/camera_gallery_service_impl.dart';
