@@ -44,3 +44,9 @@ flutter_launcher_icons:
 correr elcomando para el icono
 
 dart run flutter_launcher_icons
+
+3 crear el splash cambiar el icono 
+
+flutter pub add flutter_native_splash
+
+
