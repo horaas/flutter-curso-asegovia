@@ -31,8 +31,6 @@ class _RegisterForm extends StatelessWidget {
     return Form(
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Center(child: Icon(FontAwesomeIcons.userPlus, size: 120)),
             CustomTextFormField(

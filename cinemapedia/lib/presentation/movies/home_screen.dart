@@ -1,5 +1,6 @@
 import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:cinemapedia/presentation/views/views.dart';
+import 'package:cinemapedia/presentation/widgets/shared/custom_botton_animated_notch.dart';
 import 'package:flutter/material.dart';
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,11 +20,13 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewActive = ref.watch(ViewActiveProvider);
     return Scaffold(
-      body: IndexedStack(
+      body: 
+       IndexedStack(
         index: viewActive,
         children: viewRoutes,
       ),
-      bottomNavigationBar: CustomBottonNavigationbar(),
+      extendBody: true,
+      bottomNavigationBar: CustomBottonAnimatedNotch(),
     );
   }
 }
