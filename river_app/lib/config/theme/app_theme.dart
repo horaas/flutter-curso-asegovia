@@ -17,8 +17,11 @@ class AppTheme {
     ),
 
     textTheme: TextTheme(
-      titleLarge: GoogleFonts.montserratAlternates(),
-      titleMedium: GoogleFonts.russoOne( fontSize: 25 ),
+      titleLarge: GoogleFonts.montserratAlternates(
+        color: Colors.blue,
+        fontWeight: FontWeight.bold,
+      ),
+      titleMedium: GoogleFonts.russoOne(fontSize: 25, color: Colors.blue),
     )
 
   );
