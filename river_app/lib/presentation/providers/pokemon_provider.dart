@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:river_app/config/config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
