@@ -5,21 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "pelis_app",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "pelis_app (profile mode)",
-            "request": "launch",
+            "name": "Flutter (lib/main.dart)",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "pelis_app (release mode)",
             "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "cwd": "miscelaneos",
+            "program": "lib/main.dart"
         }
     ]
 }
