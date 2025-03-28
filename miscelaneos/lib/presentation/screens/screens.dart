@@ -1,2 +1,7 @@
-export 'package:miscelaneos/presentation/screens/permissions/permissions_screen.dart';
-export 'package:miscelaneos/presentation/screens/home/home_screen.dart';
+export 'permissions/permissions_screen.dart';
+export 'home/home_screen.dart';
+export 'sensors/acelerometer_screen.dart';
+export 'sensors/compass_screen.dart';
+export 'sensors/giroscope_ball_screen.dart';
+export 'sensors/giroscpope_screen.dart';
+export 'sensors/magnometer_screen.dart';

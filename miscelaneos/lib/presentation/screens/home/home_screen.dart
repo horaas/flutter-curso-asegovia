@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:miscelaneos/presentation/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,18 +8,25 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('RiverApp'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.push('/permissions');
-            },
-            icon: Icon(Icons.content_paste_off_outlined),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text('RiverApp'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.push('/permissions');
+                  },
+                  icon: Icon(Icons.content_paste_off_outlined),
+                ),
+              ],
+            ),
+            MainMenuWidget(),
+          ],
+        ),
       ),
-      body: const Placeholder(),
     );
   }
 }
