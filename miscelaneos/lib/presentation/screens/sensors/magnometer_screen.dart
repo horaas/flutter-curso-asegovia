@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:miscelaneos/presentation/providers/providers.dart';
 
-class MagnometerScreen extends StatelessWidget {
+class MagnometerScreen extends ConsumerWidget {
+  const MagnometerScreen({super.key});
 
-  const MagnometerScreen({ super.key });
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final magnetometer = ref.watch(magnetometerProvider);
 
-   @override
-   Widget build(BuildContext context) {
-       return Scaffold(
-           appBar: AppBar(title: const Text(''),),
-           body: Container(),
-       );
+    return Scaffold(
+      appBar: AppBar(title: const Text('Magnetometro')),
+      body: Center(
+        child: magnetometer.when(
+          data:
+              (value) => Text(value.toString(), style: TextStyle(fontSize: 30)),
+          error: (error, stackTrace) => Text('$error'),
+          loading: () => const CircularProgressIndicator(),
+        ),
+      ),
+    );
   }
 }
