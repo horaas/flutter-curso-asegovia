@@ -8,7 +8,8 @@ class CompassScreen extends StatelessWidget {
    Widget build(BuildContext context) {
        return Scaffold(
            appBar: AppBar(title: const Text(''),),
-           body: Container(),
+      body: ask_location_screen(),
        );
   }
 }
+
