@@ -7,16 +7,13 @@ class AskLocationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Permisos')),
-      body: Center(
+    return Center(
         child: FilledButton(
-          child: Text('Permisos necesarios'),
+          child: const Text('Permisos necesarios'),
           onPressed: () {
             ref.read(permissionsProvider.notifier).checkLocations();
           },
         ),
-      ),
-    );
+      );
   }
 }
