@@ -1,16 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:miscelaneos/presentation/screens/screens.dart';
 
-
-
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
 
     GoRoute(
       path: '/permissions',
@@ -36,6 +30,15 @@ final appRouter = GoRouter(
       path: '/compass',
       builder: (context, state) => const CompassScreen(),
     ),
-
-  ]
+    GoRoute(
+      path: '/pokemons',
+      builder: (context, state) => const PokemonsScreen(),
+      routes: [
+        // GoRoute(
+        //   path: ':id',
+        //   // builder: (context, state) => const CompassScreen(),
+        // ),
+      ],
+    ),
+  ],
 );

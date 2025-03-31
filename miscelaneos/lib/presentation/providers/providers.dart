@@ -6,3 +6,5 @@ export 'sensors/gyroscope_provider.dart';
 export 'sensors/acelerometer_provider.dart';
 
 export 'sensors/magnetometer_provider.dart';
+
+export 'pokemons/pokemon_list_provider.dart';

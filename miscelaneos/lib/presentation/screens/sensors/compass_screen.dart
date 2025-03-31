@@ -1,4 +1,3 @@
-import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miscelaneos/presentation/providers/compass/compass.provider.dart';
@@ -82,10 +81,6 @@ class _CompassState extends State<Compass> {
         alignment: AlignmentDirectional.center,
         children: [
           Image.asset('assets/images/compass/quadrant-4.png'),
-          // Transform.rotate(
-          //   angle: (compass * (pi / 180) * -1),
-          //   child: Image.asset('assets/images/compass/needle-7.png'),
-          //   )
           AnimatedRotation(
             curve: Curves.easeInOut,
             turns: getTurns(),

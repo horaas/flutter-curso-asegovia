@@ -5,3 +5,4 @@ export 'sensors/compass_screen.dart';
 export 'sensors/giroscope_ball_screen.dart';
 export 'sensors/giroscpope_screen.dart';
 export 'sensors/magnometer_screen.dart';
+export 'pokemons/pokemons_screen.dart';
