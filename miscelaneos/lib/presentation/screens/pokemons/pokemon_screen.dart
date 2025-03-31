@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:miscelaneos/config/config.dart';
 import 'package:miscelaneos/domain/domain.dart';
 import 'package:miscelaneos/presentation/providers/pokemons/pokemon_provider.dart';
 
@@ -27,7 +28,14 @@ class _PokemonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(pokemon.name)),
+      appBar: AppBar(title: Text(pokemon.name), actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: IconButton(onPressed: () {
+            SharedPlugins.sharedLink(pokemon.front, 'te comparto');
+          }, icon: const Icon(Icons.share)),
+        )
+      ],),
       body: Center(
         child: Image.network(
           pokemon.front,
