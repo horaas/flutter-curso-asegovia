@@ -18,3 +18,9 @@ samples, guidance on mobile development, and a full API reference.
 # permisos en la app ejemplos
 https://pub.dev/packages/permission_handler
 https://github.com/Baseflow/flutter-permission-handler/blob/main/permission_handler/example/android/app/src/main/AndroidManifest.xml
+
+
+cd android
+./gradlew sifningReport
+
+ngrok http http://localhost:5500 --hostname=noted-oyster-in.ngrok-free.app --host-header=rewrite
