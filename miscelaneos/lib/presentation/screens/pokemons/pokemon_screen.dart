@@ -32,7 +32,7 @@ class _PokemonView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: IconButton(onPressed: () {
-            SharedPlugins.sharedLink(pokemon.front, 'te comparto');
+            SharedPlugins.sharedLink('https://pageurl/pokemons/${pokemon.id}/', 'te comparto');
           }, icon: const Icon(Icons.share)),
         )
       ],),
