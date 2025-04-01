@@ -7,3 +7,4 @@ export 'sensors/giroscpope_screen.dart';
 export 'sensors/magnometer_screen.dart';
 export 'pokemons/pokemons_screen.dart';
 export 'pokemons/pokemon_screen.dart';
+export 'biometric/biometric_screen.dart';
