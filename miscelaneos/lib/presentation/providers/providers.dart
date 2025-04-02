@@ -8,3 +8,4 @@ export 'sensors/acelerometer_provider.dart';
 export 'sensors/magnetometer_provider.dart';
 
 export 'pokemons/pokemon_list_provider.dart';
+export 'local_auth/local_auth_providers.dart';
