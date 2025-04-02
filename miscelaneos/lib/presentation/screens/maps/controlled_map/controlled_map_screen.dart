@@ -20,13 +20,13 @@ class ControlledMapScreen extends ConsumerWidget {
   }
 }
 
-class _MapAndControll extends StatelessWidget {
+class _MapAndControll extends ConsumerWidget {
   final double lat;
   final double lng;
   const _MapAndControll({required this.lat, required this.lng});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
         _MapView(lat: lat, lng: lng),
@@ -45,7 +45,7 @@ class _MapAndControll extends StatelessWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
-              
+              ref.read(mapProvider.notifier).getGeoLocation(lat, lng);
             },
             icon: const Icon(Icons.location_searching),
           ),
@@ -55,7 +55,7 @@ class _MapAndControll extends StatelessWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
-              context.pop();
+               
             },
             icon: const Icon(Icons.directions_run),
           ),
@@ -65,7 +65,7 @@ class _MapAndControll extends StatelessWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
-              context.pop();
+              
             },
             icon: const Icon(Icons.pin_drop),
           ),
@@ -75,16 +75,16 @@ class _MapAndControll extends StatelessWidget {
   }
 }
 
-class _MapView extends StatefulWidget {
+class _MapView extends ConsumerStatefulWidget {
   final double lat;
   final double lng;
   const _MapView({required this.lat, required this.lng});
 
   @override
-  State<_MapView> createState() => _MapsScreenState();
+  MapsScreenState createState() => MapsScreenState();
 }
 
-class _MapsScreenState extends State<_MapView> {
+class MapsScreenState extends ConsumerState<_MapView> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
@@ -97,7 +97,7 @@ class _MapsScreenState extends State<_MapView> {
         zoom: 15,
       ),
       onMapCreated: (GoogleMapController controller) {
-        // _controller.complete(controller);
+        ref.read(mapProvider.notifier).setMapController(controller);
       },
     );
   }
