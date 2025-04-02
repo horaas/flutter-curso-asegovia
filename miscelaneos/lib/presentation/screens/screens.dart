@@ -8,3 +8,6 @@ export 'sensors/magnometer_screen.dart';
 export 'pokemons/pokemons_screen.dart';
 export 'pokemons/pokemon_screen.dart';
 export 'biometric/biometric_screen.dart';
+export 'maps/map/maps_screen.dart';
+export 'maps/location/location_screen.dart';
+export 'maps/controlled_map/controlled_map_screen.dart';
