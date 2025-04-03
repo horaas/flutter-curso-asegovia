@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:miscelaneos/config/config.dart';
 import 'package:miscelaneos/presentation/providers/providers.dart';
 
 class BadgeScreen extends ConsumerWidget {
@@ -26,6 +27,7 @@ class BadgeScreen extends ConsumerWidget {
              ),
             FilledButton(onPressed: () {
               ref.invalidate(badgeCounterProvider);
+               AppBadgePlugin.updateBadge(0);
             }, child: const Text('Resetear')),
           ],
         ),
@@ -33,6 +35,7 @@ class BadgeScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ref.read(badgeCounterProvider.notifier).update((state) => state + 1,);
+          AppBadgePlugin.updateBadge(badgeCounter + 1);
         },
         child: const Icon(Icons.plus_one),
       ),
