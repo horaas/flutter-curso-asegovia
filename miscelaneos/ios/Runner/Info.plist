@@ -69,5 +69,11 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>processing</string>
+		<!-- If you need periodic tasks in iOS 13+ you need to enable Background Fetch as well -->
+		<string>fetch</string>
+	</array>
 </dict>
 </plist>
