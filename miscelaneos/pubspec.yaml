@@ -49,7 +49,6 @@ dependencies:
   google_maps_flutter: ^2.12.1
   quick_actions: ^1.1.0
   flutter_app_badge: ^2.0.2
-  workmanager: ^0.5.2
 
 dev_dependencies:
   flutter_test:

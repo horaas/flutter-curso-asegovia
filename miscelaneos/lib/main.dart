@@ -3,10 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:miscelaneos/config/config.dart';
 import 'package:miscelaneos/presentation/providers/providers.dart';
+// import 'package:workmanager/workmanager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Workmanager().initialize(
+  //   callbackDispatcher, // The top level function, aka callbackDispatcher
+  //   isInDebugMode:
+  //       true, // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+  // );
+
+  // Workmanager().registerOneOffTask("task-identifier", "simpleTask");
 
   QuickActionsPlugin.inisialize();
   runApp(const ProviderScope(child: MyApp()));
