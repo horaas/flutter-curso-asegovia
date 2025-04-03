@@ -28,6 +28,10 @@ class MapState {
     listMarker: listMarker ?? this.listMarker,
     googleMapController: googleMapController ?? this.googleMapController,
   );
+
+    Set<Marker> get setMarkers {
+    return Set.from(listMarker);
+  }
 }
 
 class MapNotifier extends StateNotifier<MapState> {
@@ -74,14 +78,31 @@ class MapNotifier extends StateNotifier<MapState> {
   }
 
   findUser() {
-    if(lastUbication == null) return;
+    if (lastUbication == null) return;
     final (lat, lng) = lastUbication!;
 
     goToLocation(lat, lng);
+  }
 
+
+
+  void handleAddMarker() {
+    if (lastUbication == null) return;
+    final (lat, lng) = lastUbication!;
+
+    addMarker(lat, lng, 'por aqui poase yo');
+  }
+
+  void addMarker(double latitude, double longitude, String name) {
+    final marker = Marker(
+      markerId: MarkerId('${state.listMarker.length}'),
+      position: LatLng(latitude, longitude),
+      infoWindow: InfoWindow(title: name, snippet: 'por aquí'),
+    );
+    state = state.copyWith(listMarker: [...state.listMarker, marker]);
   }
 }
 
-final mapProvider = StateNotifierProvider<MapNotifier, MapState>((ref) {
+final mapProvider = StateNotifierProvider.autoDispose<MapNotifier, MapState>((ref) {
   return MapNotifier();
 });
