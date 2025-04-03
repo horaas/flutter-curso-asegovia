@@ -14,3 +14,5 @@ export 'location/user_location_provider.dart';
 export 'location/watch_location_provider.dart';
 
 export 'location/map_controller_provider.dart';
+
+export 'badge/badge_provider.dart';
