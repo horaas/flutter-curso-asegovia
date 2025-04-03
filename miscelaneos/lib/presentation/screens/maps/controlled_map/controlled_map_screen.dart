@@ -9,9 +9,11 @@ class ControlledMapScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final location = ref.watch(locationProvider);
+    
+    final userInitialPosition = ref.watch(userlocationProvider);
+    // final location = ref.watch(locationProvider);
     return Scaffold(
-      body: location.when(
+      body: userInitialPosition.when(
         data: (data) => _MapAndControll(lat: data.$1, lng: data.$2),
         error: (Object error, StackTrace stackTrace) => Text('$error'),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -27,6 +29,7 @@ class _MapAndControll extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userLocation = ref.watch(mapProvider);
     return Stack(
       children: [
         _MapView(lat: lat, lng: lng),
@@ -45,7 +48,7 @@ class _MapAndControll extends ConsumerWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
-              ref.read(mapProvider.notifier).getGeoLocation(lat, lng);
+              ref.read(mapProvider.notifier).findUser();
             },
             icon: const Icon(Icons.location_searching),
           ),
@@ -55,9 +58,9 @@ class _MapAndControll extends ConsumerWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
-               
+               ref.read(mapProvider.notifier).toggFollowUser();
             },
-            icon: const Icon(Icons.directions_run),
+            icon: userLocation.followUser ? const Icon(Icons.directions_run) :const Icon(Icons.accessibility_new_outlined) ,
           ),
         ),
          Positioned(

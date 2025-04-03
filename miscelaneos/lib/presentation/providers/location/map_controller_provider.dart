@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapState {
@@ -7,33 +10,74 @@ class MapState {
   final List<Marker> listMarker;
   final GoogleMapController? googleMapController;
 
-  MapState({this.isReady = false, this.followUser = false, this.listMarker = const[], this.googleMapController});
+  MapState({
+    this.isReady = false,
+    this.followUser = false,
+    this.listMarker = const [],
+    this.googleMapController,
+  });
 
   MapState copyWith({
-  bool? isReady,
-  bool? followUser,
-  List<Marker>? listMarker,
-  GoogleMapController? googleMapController,
+    bool? isReady,
+    bool? followUser,
+    List<Marker>? listMarker,
+    GoogleMapController? googleMapController,
   }) => MapState(
     isReady: isReady ?? this.isReady,
     followUser: followUser ?? this.followUser,
     listMarker: listMarker ?? this.listMarker,
-    googleMapController:googleMapController ?? this.googleMapController 
+    googleMapController: googleMapController ?? this.googleMapController,
   );
-
 }
 
 class MapNotifier extends StateNotifier<MapState> {
-  MapNotifier(): super(MapState());
+  StreamSubscription? streamSubscriptionUser;
+  (double, double)? lastUbication;
 
-  setMapController(GoogleMapController googleMapController) {
-    state = state.copyWith(googleMapController: googleMapController, isReady: true);
+  MapNotifier() : super(MapState()) {
+    trackUser().listen((event) {
+      lastUbication = (event.$1, event.$2);
+    });
   }
 
-  getGeoLocation(double lat, double lng) {
+  Stream<(double, double)> trackUser() async* {
+    await for (final position in Geolocator.getPositionStream()) {
+      yield (position.latitude, position.longitude);
+    }
+  }
+
+  setMapController(GoogleMapController googleMapController) {
+    state = state.copyWith(
+      googleMapController: googleMapController,
+      isReady: true,
+    );
+  }
+
+  goToLocation(double lat, double lng) {
     final newPosition = CameraPosition(target: LatLng(lat, lng), zoom: 15);
 
-    state.googleMapController?.animateCamera(CameraUpdate.newCameraPosition(newPosition));
+    state.googleMapController?.animateCamera(
+      CameraUpdate.newCameraPosition(newPosition),
+    );
+  }
+
+  toggFollowUser() {
+    state = state.copyWith(followUser: !state.followUser);
+
+    if (state.followUser) {
+      streamSubscriptionUser = trackUser().listen((event) {
+        goToLocation(event.$1, event.$2);
+      });
+    } else {
+      streamSubscriptionUser?.cancel();
+    }
+  }
+
+  findUser() {
+    if(lastUbication == null) return;
+    final (lat, lng) = lastUbication!;
+
+    goToLocation(lat, lng);
 
   }
 }
