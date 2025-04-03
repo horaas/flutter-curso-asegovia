@@ -27,19 +27,19 @@ class QuickActionsPlugin {
       const ShortcutItem(
         type: 'compass',
         localizedTitle: 'compass',
-        icon: 'icon_main',
+        icon: 'compass',
       ),
       const ShortcutItem(
         type: 'biometric',
         localizedTitle: 'biometric',
-        icon: 'icon_main',
+        icon: 'finger',
       ),
       const ShortcutItem(
         type: 'pokemons',
         localizedTitle: 'pokemons',
-        icon: 'icon_main',
+        icon: 'pokemons',
       ),
-      const ShortcutItem(type: 'map', localizedTitle: 'map', icon: 'icon_main'),
+      const ShortcutItem(type: 'map', localizedTitle: 'map', icon: 'charmander'),
     ]);
   }
 }
