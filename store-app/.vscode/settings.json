@@ -1,0 +1,20 @@
+{
+    "editor.formatOnSaveMode": "modifications",
+    "editor.snippetSuggestions": "bottom",
+    "[dart]": {
+
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.suggest.insertMode": "replace",
+        "editor.defaultFormatter": "Dart-Code.dart-code",
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "files.autoSave": "off",
+        "editor.formatOnSave": false,
+        "editor.formatOnSaveMode":"modifications",
+        "editor.formatOnType": false,
+        // "editor.hover.enabled": false,
+    },
+    // "editor.suggest.showKeywords": false,
+    // "editor.suggest.showSnippets": false
+}

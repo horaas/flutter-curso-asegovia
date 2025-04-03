@@ -5,21 +5,53 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "pelis_app",
+            "name": "cinmeapedia",
+            "type": "dart",
             "request": "launch",
-            "type": "dart"
+            "cwd": "cinmeapedia",
+            "program": "lib/main.dart"
         },
         {
-            "name": "pelis_app (profile mode)",
-            "request": "launch",
+            "name": "forms_app",
             "type": "dart",
-            "flutterMode": "profile"
+            "request": "launch",
+            "cwd": "forms_app",
+            "program": "lib/main.dart"
         },
         {
-            "name": "pelis_app (release mode)",
-            "request": "launch",
+            "name": "miscelaneos",
             "type": "dart",
-            "flutterMode": "release"
-        }
+            "request": "launch",
+            "cwd": "miscelaneos",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "practicas",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "practicas",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "push_app",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "push_app",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "rever_app",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "rever_app",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "store_app",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "store_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
