@@ -22,6 +22,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
 
   late AnimationController animationController;
   late Animation<double> rotation;
+  late Animation<double> opacidad;
 
   @override
   void initState() {
@@ -30,13 +31,16 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
       duration: Duration(milliseconds: 4000),
     );
     rotation = Tween(begin: 0.0, end: 2 * pi).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.bounceInOut)
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
+    );
+    opacidad = Tween(begin: 0.1, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Interval(0, 0.50, curve: Curves.easeOut))
     );
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
         // animationController.reverse();
-        animationController.reset();
+        // animationController.reset();
       }
     },);
     super.initState();
@@ -54,10 +58,11 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
 
     return AnimatedBuilder(
       animation: animationController,
+      child: _Rectangulo(),
       builder: (context, child) {
         return Transform.rotate(
           angle: rotation.value,
-          child: _Rectangulo());
+          child: Opacity(opacity: opacidad.value, child: child,));
       },
     );
   }
