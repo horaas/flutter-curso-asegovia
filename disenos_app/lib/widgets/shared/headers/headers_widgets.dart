@@ -323,10 +323,19 @@ class _HeaderWavesCustom extends CustomPainter {
     pencil.color = Color(0xFF5E87DF);
     path.moveTo(0.0, 0.0);
     path.lineTo(0.0, size.height * 0.25);
-    path.quadraticBezierTo( size.width * 0.25, size.height * 0.35, size.width * 0.5, size.height * 0.25,
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.35,
+      size.width * 0.5,
+      size.height * 0.25,
     );
 
-    path.quadraticBezierTo( size.width * 0.75, size.height * 0.15, size.width, size.height * 0.25,);
+    path.quadraticBezierTo(
+      size.width * 0.75,
+      size.height * 0.15,
+      size.width,
+      size.height * 0.25,
+    );
 
     path.lineTo(size.width, 0.0);
     path.lineTo(0.0, 0.0);
@@ -344,7 +353,10 @@ class HeaderWavesGradient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: _HeaderWavesGradientCustom(), child: Container());
+    return CustomPaint(
+      painter: _HeaderWavesGradientCustom(),
+      child: Container(),
+    );
   }
 }
 
@@ -353,13 +365,8 @@ class _HeaderWavesGradientCustom extends CustomPainter {
   final gradientColor = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: <Color>[
-    Color(0xFF2869F7),
-    Color(0xFF97B0E5),
-    Color(0xFFFFFFFF),
-  ]);
-
-
+    colors: <Color>[Color(0xFF2869F7), Color(0xFF97B0E5), Color(0xFFFFFFFF)],
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -371,9 +378,19 @@ class _HeaderWavesGradientCustom extends CustomPainter {
     pencil.shader = gradientColor.createShader(rect);
     path.moveTo(0.0, 0.0);
     path.lineTo(0.0, size.height * 0.25);
-    path.quadraticBezierTo( size.width * 0.25, size.height * 0.35, size.width * 0.5, size.height * 0.25,);
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.35,
+      size.width * 0.5,
+      size.height * 0.25,
+    );
 
-    path.quadraticBezierTo( size.width * 0.75, size.height * 0.15, size.width, size.height * 0.25,);
+    path.quadraticBezierTo(
+      size.width * 0.75,
+      size.height * 0.15,
+      size.width,
+      size.height * 0.25,
+    );
 
     path.lineTo(size.width, 0.0);
     path.lineTo(0.0, 0.0);
