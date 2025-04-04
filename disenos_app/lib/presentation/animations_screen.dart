@@ -7,7 +7,7 @@ class AnimationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: CuadradoAnimado()));
+    return const Scaffold(body: Center(child: CuadradoAnimado()));
   }
 }
 
@@ -23,19 +23,32 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
   late AnimationController animationController;
   late Animation<double> rotation;
   late Animation<double> opacidad;
+  late Animation<double> moverDerecha;
+  late Animation<double> moverInit;
+  late Animation<double> agrandar;
 
   @override
   void initState() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 4000),
+      duration: const Duration(milliseconds: 4000),
     );
     rotation = Tween(begin: 0.0, end: 2 * pi).animate(
       CurvedAnimation(parent: animationController, curve: Curves.easeOut)
     );
     opacidad = Tween(begin: 0.1, end: 1.0).animate(
-      CurvedAnimation(parent: animationController, curve: Interval(0, 0.50, curve: Curves.easeOut))
+      CurvedAnimation(parent: animationController, curve: const Interval(0, 0.50, curve: Curves.easeOut))
     );
+    moverDerecha = Tween(begin: 0.0, end: 200.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
+    );
+    moverInit = Tween(begin: 200.0, end: 0.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
+    );
+    agrandar = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
+    );
+
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
@@ -60,9 +73,14 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
       animation: animationController,
       child: _Rectangulo(),
       builder: (context, child) {
-        return Transform.rotate(
-          angle: rotation.value,
-          child: Opacity(opacity: opacidad.value, child: child,));
+        return Transform.translate(
+          offset: Offset(moverDerecha.value, 0),
+          child: Transform.rotate(
+            angle: rotation.value,
+            child: Opacity(opacity: opacidad.value, child: Transform.scale(
+              scale: agrandar.value,
+              child: child),)),
+        );
       },
     );
   }
@@ -74,7 +92,7 @@ class _Rectangulo extends StatelessWidget {
     return Container(
       width: 70,
       height: 70,
-      decoration: BoxDecoration(color: Colors.blue),
+      decoration: const BoxDecoration(color: Colors.blue),
     );
   }
 }
