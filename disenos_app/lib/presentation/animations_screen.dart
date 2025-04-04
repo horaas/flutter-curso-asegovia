@@ -29,11 +29,14 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
       vsync: this,
       duration: Duration(milliseconds: 4000),
     );
-    rotation = Tween(begin: 0.0, end: 2 * pi).animate(animationController);
+    rotation = Tween(begin: 0.0, end: 2 * pi).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.bounceInOut)
+    );
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        animationController.reverse();
+        // animationController.reverse();
+        animationController.reset();
       }
     },);
     super.initState();
