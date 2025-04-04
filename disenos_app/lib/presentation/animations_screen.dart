@@ -23,6 +23,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
   late AnimationController animationController;
   late Animation<double> rotation;
   late Animation<double> opacidad;
+  late Animation<double> opacidadOut;
   late Animation<double> moverDerecha;
   late Animation<double> moverInit;
   late Animation<double> agrandar;
@@ -36,8 +37,14 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
     rotation = Tween(begin: 0.0, end: 2 * pi).animate(
       CurvedAnimation(parent: animationController, curve: Curves.easeOut)
     );
-    opacidad = Tween(begin: 0.1, end: 1.0).animate(
+    opacidad = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animationController, curve: const Interval(0, 0.50, curve: Curves.easeOut))
+    );
+    // opacidadOut = Tween(begin: 1.0, end: 0.0).animate(
+    //   CurvedAnimation(parent: animationController, curve: const Interval(0.75, 1.0, curve: Curves.easeOut))
+    // );
+    opacidadOut = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: const Interval(0.75, 1.0, curve: Curves.easeOut))
     );
     moverDerecha = Tween(begin: 0.0, end: 200.0).animate(
       CurvedAnimation(parent: animationController, curve: Curves.easeOut)
@@ -77,7 +84,9 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado> with TickerProviderSt
           offset: Offset(moverDerecha.value, 0),
           child: Transform.rotate(
             angle: rotation.value,
-            child: Opacity(opacity: opacidad.value, child: Transform.scale(
+            child: Opacity(
+              opacity: opacidad.value - opacidadOut.value,
+              child: Transform.scale(
               scale: agrandar.value,
               child: child),)),
         );
