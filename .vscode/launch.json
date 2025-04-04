@@ -53,5 +53,12 @@
             "cwd": "store_app",
             "program": "lib/main.dart"
         },
+        {
+            "name": "diseños_app",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "disenos_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
