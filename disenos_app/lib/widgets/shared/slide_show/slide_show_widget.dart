@@ -1,4 +1,5 @@
-import 'package:disenos_app/models/slider_model.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,50 +9,78 @@ class SlideShowWidget extends StatelessWidget {
   final bool dotTop;
   final Color dotPrimaryColor;
   final Color dotSecondaryColor;
+  final double bulltPrimary;
+  final double bulltSecondary;
 
-  const SlideShowWidget({ super.key, required this.slides, this.dotTop = false, this.dotPrimaryColor = Colors.blue, this.dotSecondaryColor = Colors.grey });
+  const SlideShowWidget({ super.key, required this.slides, this.dotTop = false, this.dotPrimaryColor = Colors.blue, this.dotSecondaryColor = Colors.grey, this.bulltPrimary = 12.0, this.bulltSecondary = 12.0 });
 
    @override
    Widget build(BuildContext context) {
+
+
        return ChangeNotifierProvider(
-        create: (context) => SliderModel(),
-         child: Center(
-              child: Column(
-                children: [
-                  if(dotTop) _Dots(slides.length, dotPrimaryColor, dotSecondaryColor),
-                  Expanded(child: _Slides(slides)),
-                  if(!dotTop) _Dots(slides.length, dotPrimaryColor, dotSecondaryColor)
-                ],
+        create: (_) => _SliderModel(),
+         child: SafeArea(
+           child: Center(
+              child: Builder(
+                builder: (context) {
+                  Provider.of<_SliderModel>(context).dotPrimaryColor = dotPrimaryColor;
+                  Provider.of<_SliderModel>(context).dotSecondaryColor = dotSecondaryColor;
+                  Provider.of<_SliderModel>(context).bulltPrimary = bulltPrimary;
+                  Provider.of<_SliderModel>(context).bulltSecondary = bulltSecondary;
+                  return _CreateSlideBuilder(dotTop: dotTop, slides: slides);
+                }
               ),
-             ),
+            ),
+         ),
        );
+  }
+}
+
+class _CreateSlideBuilder extends StatelessWidget {
+  const _CreateSlideBuilder({
+    required this.dotTop,
+    required this.slides,
+  });
+
+  final bool dotTop;
+  final List<Widget> slides;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if(dotTop) _Dots(slides.length),
+        Expanded(child: _Slides(slides)),
+        if(!dotTop) _Dots(slides.length)
+      ],
+    );
   }
 }
 
 class _Dots extends StatelessWidget {
   final int countDots;
-  final Color dotPrimaryColor;
-  final Color dotSecondaryColor;
 
-  const _Dots(this.countDots, this.dotPrimaryColor, this.dotSecondaryColor);
+  const _Dots(this.countDots);
 
   //generado por mi para la solcuon de la tarea
   List<Widget> getCountDots(int count) {
     List<Widget> dots = [];
 
     for (var i = 0; i < count; i++) {
-      dots.add(_Dot(i, dotPrimaryColor, dotSecondaryColor));
+      dots.add(_Dot(i));
     }
     return dots;
   }
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 70,
+      // color: Colors.red,
+      // height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(countDots, (index) => _Dot(index, dotPrimaryColor, dotSecondaryColor),)
+        children: List.generate(countDots, (index) => _Dot(index),)
         //  getCountDots(countDots),
       ),
     );
@@ -60,24 +89,33 @@ class _Dots extends StatelessWidget {
 
 class _Dot extends StatelessWidget {
   final int index;
-  final Color dotPrimaryColor;
-  final Color dotSecondaryColor;
 
-  const _Dot(this.index, this.dotPrimaryColor, this.dotSecondaryColor);
+  const _Dot(this.index);
 
   @override
   Widget build(BuildContext context) {
 
-    final pageViewCurrent = Provider.of<SliderModel>(context).currentPage;
+    // final pageViewCurrent = Provider.of<_SliderModel>(context).currentPage;
+    final slideShowModel = Provider.of<_SliderModel>(context);
+    double tamano;
+    Color color;
 
+    if ((slideShowModel.currentPage >= index - 0.5 && slideShowModel.currentPage < index + 0.5 )) {
+      
+      tamano = slideShowModel.bulltPrimary;
+      color = slideShowModel.dotPrimaryColor;
+    } else {
+      tamano = slideShowModel.bulltSecondary;
+      color = slideShowModel.dotSecondaryColor;
+    }
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.slowMiddle,
-      width: 12,
-      height: 12,
-      margin: const EdgeInsets.symmetric(horizontal: 15),
+      width: tamano,
+      height: tamano,
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: (pageViewCurrent >= index - 0.5 && pageViewCurrent < index + 0.5 )? dotPrimaryColor : dotSecondaryColor,
+        color: color,
         shape: BoxShape.circle
       ),
     );
@@ -102,7 +140,7 @@ class _SlidesState extends State<_Slides> {
     pageController = PageController();
 
     pageController.addListener(() {
-      Provider.of<SliderModel>(context, listen: false).currentPage = pageController.page!;
+      Provider.of<_SliderModel>(context, listen: false).currentPage = pageController.page!;
     },);
 
     super.initState();
@@ -146,3 +184,44 @@ class _Slide extends StatelessWidget {
   }
 }
 
+
+
+class _SliderModel with ChangeNotifier {
+  double _currentPage = 0;
+  Color _dotPrimaryColor = Colors.blue;
+  Color _dotSecondaryColor = Colors.grey;
+  double _bulltPrimary = 12.0;
+  double _bulltSecondary = 12.0;
+
+
+  double get currentPage => _currentPage;
+  set currentPage(double currentPage) {
+    _currentPage = currentPage;
+    notifyListeners();
+  }
+
+  Color get dotPrimaryColor => _dotPrimaryColor;
+  set dotPrimaryColor(Color color) {
+    _dotPrimaryColor = color;
+    // notifyListeners();
+  }
+
+  Color get dotSecondaryColor => _dotSecondaryColor;
+  set dotSecondaryColor(Color color) {
+    _dotSecondaryColor = color;
+    // notifyListeners();
+  }
+
+  double get bulltPrimary => _bulltPrimary;
+  set bulltPrimary(double bullet) {
+    _bulltPrimary = bullet;
+    // notifyListeners();
+  }
+
+  double get bulltSecondary => _bulltSecondary;
+  set bulltSecondary(double bullet) {
+    _bulltSecondary = bullet;
+    // notifyListeners();
+  }
+
+}

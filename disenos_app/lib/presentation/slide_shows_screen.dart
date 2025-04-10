@@ -8,18 +8,17 @@ class SlideShowsScreen extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
-       return SafeArea(
-         child: Scaffold(
-             body: SlideShowWidget(
-              // dotTop: true,
-              // dotPrimaryColor: Colors.green,
-              slides: [
-              SvgPicture.asset('assets/images/svgs/slides/slide-1.svg'),
-              SvgPicture.asset('assets/images/svgs/slides/slide-2.svg'),
-              SvgPicture.asset('assets/images/svgs/slides/slide-3.svg'),
-              SvgPicture.asset('assets/images/svgs/slides/slide-4.svg')
-             ],),
-         ),
+       return Scaffold(
+           body: SlideShowWidget(
+            bulltPrimary: 5,
+            // dotTop: true,
+            dotPrimaryColor: Colors.red,
+            slides: [
+            SvgPicture.asset('assets/images/svgs/slides/slide-1.svg'),
+            SvgPicture.asset('assets/images/svgs/slides/slide-2.svg'),
+            SvgPicture.asset('assets/images/svgs/slides/slide-3.svg'),
+            SvgPicture.asset('assets/images/svgs/slides/slide-4.svg')
+           ],),
        );
   }
 }
