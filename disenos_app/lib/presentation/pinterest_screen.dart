@@ -10,8 +10,23 @@ class PinterestScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: PinterestMenuWidget()
+        child: Stack(children: [_PinterestGrid(), _PinterestMenuLcation()]),
+        // PinterestMenuWidget()
         //  _PinterestGrid(),
+      ),
+    );
+  }
+}
+
+class _PinterestMenuLcation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Positioned(
+      bottom: 30,
+      child: SizedBox(
+        width: screenWidth,
+        child: Align(child: PinterestMenuWidget()),
       ),
     );
   }
@@ -24,37 +39,36 @@ class _PinterestGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SingleChildScrollView(
-      child: StaggeredGrid.count(crossAxisCount: 2, mainAxisSpacing: 8, crossAxisSpacing: 6,
-        children: [
-          ...items.map((index) =>  _PinterstItem(index),)
-        ],
+    return SingleChildScrollView(
+      child: StaggeredGrid.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 6,
+        children: [...items.map((index) => _PinterstItem(index))],
       ),
     );
   }
 }
 
-
 class _PinterstItem extends StatelessWidget {
-
   final int index;
   const _PinterstItem(this.index);
 
-   @override
-   Widget build(BuildContext context) {
-       return Container(
-        height: index.isEven ? 300 : 200,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(20)
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: index.isEven ? 300 : 200,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          child: Text('$index'),
         ),
-        child: Center(
-          child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Text('$index')
-            ),
-          ),
-       );
+      ),
+    );
   }
 }
