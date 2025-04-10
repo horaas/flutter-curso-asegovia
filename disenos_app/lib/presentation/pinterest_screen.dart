@@ -31,7 +31,29 @@ class _PinterestMenuLcation extends StatelessWidget {
       bottom: 30,
       child: SizedBox(
         width: screenWidth,
-        child: Align(child: PinterestMenuWidget(show: showMenu)),
+        child: Align(
+          child: PinterestMenuWidget(
+            show: showMenu,
+            optionsButtons: [
+              PinterestButton(
+                icon: Icons.pie_chart,
+                onPresed: () => print('pie_chart'),
+              ),
+              PinterestButton(
+                icon: Icons.search,
+                onPresed: () => print('search'),
+              ),
+              PinterestButton(
+                icon: Icons.notifications,
+                onPresed: () => print('notifications'),
+              ),
+              PinterestButton(
+                icon: Icons.supervised_user_circle,
+                onPresed: () => print('supervised_user_circle'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
