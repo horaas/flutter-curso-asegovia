@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SlideShowsScreen extends StatelessWidget {
 
@@ -8,7 +9,7 @@ class SlideShowsScreen extends StatelessWidget {
    Widget build(BuildContext context) {
        return Scaffold(
            body: Center(
-            child: Text('data'),
+            child: SvgPicture.asset('assets/images/svgs/slides/slide-1.svg'),
            ),
        );
   }
