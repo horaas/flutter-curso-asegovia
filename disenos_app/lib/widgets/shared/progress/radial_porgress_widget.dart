@@ -7,8 +7,9 @@ class RadialPorgressWidget extends StatefulWidget {
   final Color primaryColor;
   final Color secondaryColor;
   final double strokeWidthPrimary;
+  final Gradient? gradient;
 
-  const RadialPorgressWidget({super.key, required this.procentaje, this.primaryColor = Colors.blue, this.secondaryColor = Colors.grey, this.strokeWidthPrimary = 8.0});
+  const RadialPorgressWidget({super.key, required this.procentaje, this.primaryColor = Colors.blue, this.secondaryColor = Colors.grey, this.strokeWidthPrimary = 8.0, this.gradient});
 
   @override
   State<RadialPorgressWidget> createState() => _RadialPorgressWidgetState();
@@ -51,7 +52,7 @@ class _RadialPorgressWidgetState extends State<RadialPorgressWidget> with Single
           width: double.infinity,
           height: double.infinity,
           child: CustomPaint(
-            painter: _MyRadialCustomPainter((widget.procentaje - animatedDif) + (animatedDif * controller.value), widget.primaryColor, widget.secondaryColor, widget.strokeWidthPrimary)
+            painter: _MyRadialCustomPainter((widget.procentaje - animatedDif) + (animatedDif * controller.value), widget.primaryColor, widget.secondaryColor, widget.strokeWidthPrimary, widget.gradient)
           ),
         );
     },);
@@ -65,11 +66,15 @@ class _MyRadialCustomPainter extends CustomPainter {
   final Color primaryColor;
   final Color secondaryColor;
   final double strokeWidthPrimary;
+  final Gradient? gradient;
 
-  _MyRadialCustomPainter(this.porcentage, this.primaryColor, this.secondaryColor, this.strokeWidthPrimary);
+  _MyRadialCustomPainter(this.porcentage, this.primaryColor, this.secondaryColor, this.strokeWidthPrimary, this.gradient);
 
   @override
   void paint(Canvas canvas, Size size) {
+
+    final Rect rect = Rect.fromCircle(center: const Offset(0, 0), radius: 180);
+
     final pencil =
         Paint()
           ..strokeWidth = 5
@@ -86,6 +91,7 @@ class _MyRadialCustomPainter extends CustomPainter {
         Paint()
           ..strokeWidth = strokeWidthPrimary
           ..color = primaryColor
+          ..shader = gradient?.createShader(rect)
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.round;
 

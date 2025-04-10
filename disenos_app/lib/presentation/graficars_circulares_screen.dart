@@ -15,6 +15,12 @@ class _GraficarsCircularesScreenState extends State<GraficarsCircularesScreen> {
   double porcentage = 0.0;    
   Timer? timer;
 
+  Gradient gradient = const LinearGradient(colors: [
+    Color(0xff00d4ff),
+    Color(0xff1b0979),
+    Color(0xff00d4ff)
+  ]);
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,7 +54,7 @@ class _GraficarsCircularesScreenState extends State<GraficarsCircularesScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _CustomRadialProgress(porcentage: porcentage,color: Colors.red),
+              _CustomRadialProgress(porcentage: porcentage,color: Colors.red, gradient: gradient,),
               _CustomRadialProgress(porcentage: porcentage,color: Colors.green)
             ],
           ),
@@ -69,11 +75,11 @@ class _GraficarsCircularesScreenState extends State<GraficarsCircularesScreen> {
 class _CustomRadialProgress extends StatelessWidget {
   final double porcentage;
   final Color color;
-  
+  final Gradient? gradient;
   final double strokeWidthPrimary;
 
   const _CustomRadialProgress({
-    required this.porcentage, required this.color, this.strokeWidthPrimary = 8.0,
+    required this.porcentage, required this.color, this.strokeWidthPrimary = 8.0, this.gradient,
   });
 
 
@@ -82,7 +88,7 @@ class _CustomRadialProgress extends StatelessWidget {
     return SizedBox(
       height: 150,
       width: 150,
-      child: RadialPorgressWidget(procentaje: porcentage, primaryColor: color, strokeWidthPrimary: strokeWidthPrimary),
+      child: RadialPorgressWidget(procentaje: porcentage, primaryColor: color, strokeWidthPrimary: strokeWidthPrimary, gradient: gradient,),
     );
   }
 }
