@@ -16,29 +16,37 @@ class SlideShowWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(child: _Slides(slides)),
-                  _Dots()
+                  _Dots(slides.length)
                 ],
               ),
              ),
-       );;
+       );
   }
 }
 
 class _Dots extends StatelessWidget {
-  const _Dots();
+  final int countDots;
 
+  const _Dots(this.countDots);
+
+  //generado por mi para la solcuon de la tarea
+  List<Widget> getCountDots(int count) {
+    List<Widget> dots = [];
+
+    for (var i = 0; i < count; i++) {
+      dots.add(_Dot(i));
+    }
+    return dots;
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 70,
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _Dot(0),
-          _Dot(1),
-          _Dot(2),
-        ],
+        children: List.generate(countDots, (index) => _Dot(index),)
+        //  getCountDots(countDots),
       ),
     );
   }
