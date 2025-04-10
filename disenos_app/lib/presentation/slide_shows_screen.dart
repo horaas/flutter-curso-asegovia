@@ -20,9 +20,7 @@ class SlideShowsScreen extends StatelessWidget {
 }
 
 class _MySlideShow extends StatelessWidget {
-  const _MySlideShow({
-    super.key,
-  });
+  const _MySlideShow();
 
   @override
   Widget build(BuildContext context) {

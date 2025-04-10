@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -74,10 +72,8 @@ class _Dots extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      // color: Colors.red,
-      // height: 70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(countDots, (index) => _Dot(index),)
@@ -110,13 +106,13 @@ class _Dot extends StatelessWidget {
     }
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      curve: Curves.slowMiddle,
       width: tamano,
       height: tamano,
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         color: color,
-        shape: BoxShape.circle
+        // shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(10)
       ),
     );
   }
