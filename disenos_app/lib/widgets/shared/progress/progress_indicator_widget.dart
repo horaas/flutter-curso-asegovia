@@ -93,7 +93,6 @@ class _MyRadialCustomPainter extends CustomPainter {
           ..strokeWidth = 5
           ..color = Colors.grey
           ..style = PaintingStyle.stroke;
-    final path = Path();
 
     Offset center = Offset(size.width * 0.5, size.height * 0.5);
 

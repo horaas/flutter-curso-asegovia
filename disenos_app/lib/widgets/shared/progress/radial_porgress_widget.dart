@@ -6,8 +6,9 @@ class RadialPorgressWidget extends StatefulWidget {
   final double procentaje;
   final Color primaryColor;
   final Color secondaryColor;
+  final double strokeWidthPrimary;
 
-  const RadialPorgressWidget({super.key, required this.procentaje, this.primaryColor = Colors.blue, this.secondaryColor = Colors.grey});
+  const RadialPorgressWidget({super.key, required this.procentaje, this.primaryColor = Colors.blue, this.secondaryColor = Colors.grey, this.strokeWidthPrimary = 8.0});
 
   @override
   State<RadialPorgressWidget> createState() => _RadialPorgressWidgetState();
@@ -50,7 +51,7 @@ class _RadialPorgressWidgetState extends State<RadialPorgressWidget> with Single
           width: double.infinity,
           height: double.infinity,
           child: CustomPaint(
-            painter: _MyRadialCustomPainter((widget.procentaje - animatedDif) + (animatedDif * controller.value), widget.primaryColor, widget.secondaryColor)
+            painter: _MyRadialCustomPainter((widget.procentaje - animatedDif) + (animatedDif * controller.value), widget.primaryColor, widget.secondaryColor, widget.strokeWidthPrimary)
           ),
         );
     },);
@@ -63,8 +64,9 @@ class _MyRadialCustomPainter extends CustomPainter {
   final double porcentage;
   final Color primaryColor;
   final Color secondaryColor;
+  final double strokeWidthPrimary;
 
-  _MyRadialCustomPainter(this.porcentage, this.primaryColor, this.secondaryColor);
+  _MyRadialCustomPainter(this.porcentage, this.primaryColor, this.secondaryColor, this.strokeWidthPrimary);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -73,7 +75,6 @@ class _MyRadialCustomPainter extends CustomPainter {
           ..strokeWidth = 5
           ..color = secondaryColor
           ..style = PaintingStyle.stroke;
-    final path = Path();
 
     Offset center = Offset(size.width * 0.5, size.height * 0.5);
 
@@ -83,9 +84,10 @@ class _MyRadialCustomPainter extends CustomPainter {
 
     final pencilArco =
         Paint()
-          ..strokeWidth = 8
+          ..strokeWidth = strokeWidthPrimary
           ..color = primaryColor
-          ..style = PaintingStyle.stroke;
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
 
     final arcAngle = 2 * pi * (porcentage / 100);
 
