@@ -1,5 +1,7 @@
+import 'package:disenos_app/models/slider_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class SlideShowsScreen extends StatelessWidget {
 
@@ -7,15 +9,20 @@ class SlideShowsScreen extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
-       return Scaffold(
-           body: Center(
-            child: Column(
-              children: [
-                Expanded(child: _Slides()),
-                _Dots()
-              ],
-            ),
-           ),
+
+
+       return ChangeNotifierProvider(
+        create: (context) => SliderModel(),
+         child: Scaffold(
+             body: Center(
+              child: Column(
+                children: [
+                  Expanded(child: _Slides()),
+                  _Dots()
+                ],
+              ),
+             ),
+         ),
        );
   }
 }
@@ -31,9 +38,9 @@ class _Dots extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _Dot(),
-          _Dot(),
-          _Dot(),
+          _Dot(0),
+          _Dot(1),
+          _Dot(2),
         ],
       ),
     );
@@ -41,30 +48,61 @@ class _Dots extends StatelessWidget {
 }
 
 class _Dot extends StatelessWidget {
-  const _Dot({
-    super.key,
-  });
+  final int index;
+
+  const _Dot(this.index);
 
   @override
   Widget build(BuildContext context) {
+
+    final pageViewCurrent = Provider.of<SliderModel>(context).currentPage;
+
     return Container(
       width: 12,
       height: 12,
       margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: pageViewCurrent == index ? Colors.blue : Colors.grey,
         shape: BoxShape.circle
       ),
     );
   }
 }
 
-class _Slides extends StatelessWidget {
+class _Slides extends StatefulWidget {
   const _Slides();
+
+  @override
+  State<_Slides> createState() => _SlidesState();
+}
+
+class _SlidesState extends State<_Slides> {
+
+  late PageController pageController;
+
+  @override
+  void initState() {
+    pageController = PageController();
+
+    pageController.addListener(() {
+      print('pagina actual ${pageController.page}');
+      Provider.of<SliderModel>(context, listen: false).currentPage = pageController.page!;
+    },);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return PageView(
+      controller: pageController,
       children: [
         _Slide('assets/images/svgs/slides/slide-1.svg'),
         _Slide('assets/images/svgs/slides/slide-2.svg'),
