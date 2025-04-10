@@ -31,7 +31,7 @@ class _PinterestMenuLcation extends StatelessWidget {
       bottom: 30,
       child: SizedBox(
         width: screenWidth,
-        child: Align(child: PinterestMenuWidget(show: showMenu,)),
+        child: Align(child: PinterestMenuWidget(show: showMenu)),
       ),
     );
   }
