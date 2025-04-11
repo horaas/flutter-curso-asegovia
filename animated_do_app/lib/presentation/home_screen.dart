@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:animated_do_app/presentation/twitter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,7 +13,9 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.lightBlue,
         title: const Text('Animate_Do'),
         actions: [
-          IconButton(onPressed: () {}, icon: FaIcon(FontAwesomeIcons.twitter)),
+          IconButton(onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TwitterScreen(),));
+          }, icon: FaIcon(FontAwesomeIcons.twitter)),
           IconButton(
             onPressed: () {},
             icon: FaIcon(FontAwesomeIcons.chevronRight),
