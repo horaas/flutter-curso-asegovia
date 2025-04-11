@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:disenos_app/widgets/shared/buttons/button_icon_item_widget.dart';
 import 'package:disenos_app/widgets/shared/headers/icon_header_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,22 @@ class EmergencyScreen extends StatelessWidget {
       ItemButton(text: 'Theft / Harrasement', icon: FontAwesomeIcons.truck, gradientPrimary: const Color(0xffF2D572), gradientSecondary: const Color(0xffE06AA3)),
       ItemButton(text: 'Awards', icon: FontAwesomeIcons.mosquito, gradientPrimary: const Color(0xff317183), gradientSecondary: const Color(0xff46997D)),
       ItemButton(text: 'iamges', icon: FontAwesomeIcons.image, gradientPrimary: const Color(0xff6989F5), gradientSecondary: const Color(0xff906EF5)),
+      ItemButton(text: 'Motor Accident', icon: FontAwesomeIcons.carBurst, gradientPrimary: const Color(0xff6989F5), gradientSecondary: const Color(0xff906EF5)),
+      ItemButton(text: 'Medical Emergency', icon: FontAwesomeIcons.plus, gradientPrimary: const Color(0xff66A9F2), gradientSecondary: const Color(0xff536CF6)),
+      ItemButton(text: 'Theft / Harrasement', icon: FontAwesomeIcons.faceSmile, gradientPrimary: const Color(0xffF2D572), gradientSecondary: const Color(0xffE06AA3)),
+      ItemButton(text: 'Awards', icon: FontAwesomeIcons.personBiking, gradientPrimary: const Color(0xff317183), gradientSecondary: const Color(0xff46997D)),
+      ItemButton(text: 'Motor Accident', icon: FontAwesomeIcons.masksTheater, gradientPrimary: const Color(0xff6989F5), gradientSecondary: const Color(0xff906EF5)),
+      ItemButton(text: 'Medical Emergency', icon: FontAwesomeIcons.motorcycle, gradientPrimary: const  Color(0xff66A9F2), gradientSecondary: const  Color(0xff536CF6)),
+      ItemButton(text: 'Theft / Harrasement', icon: FontAwesomeIcons.truck, gradientPrimary: const Color(0xffF2D572), gradientSecondary: const Color(0xffE06AA3)),
+      ItemButton(text: 'Awards', icon: FontAwesomeIcons.mosquito, gradientPrimary: const Color(0xff317183), gradientSecondary: const Color(0xff46997D)),
+      ItemButton(text: 'iamges', icon: FontAwesomeIcons.image, gradientPrimary: const Color(0xff6989F5), gradientSecondary: const Color(0xff906EF5)),
     ]; 
 
-    final List<ButtonIconItemWidget> buttonIconItemWidget = items.map((item) => ButtonIconItemWidget(
-      text: item.text, icon: item.icon, gradientPrimary: item.gradientPrimary, gradientSecondary: item.gradientSecondary, onTap: () {},
-      ),).toList();
+    final List<Widget> buttonIconItemWidget = items.map((item) => FadeInLeft(
+      child: ButtonIconItemWidget(
+        text: item.text, icon: item.icon, gradientPrimary: item.gradientPrimary, gradientSecondary: item.gradientSecondary, onTap: () {},
+        ),
+    ),).toList();
 
     return Scaffold(
       body: Stack(
