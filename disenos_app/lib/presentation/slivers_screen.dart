@@ -5,12 +5,76 @@ class SliversScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: 
+    return Scaffold(
+      body: _MainScroll(),
       // _TitleHeader(),
-       _TaskListView(),
+      //  _TaskListView(),
     );
   }
+}
+
+class _MainScroll extends StatelessWidget {
+  final items = [
+    const _TaskItem('Orange', Color(0xffF08F66)),
+    const _TaskItem('Family', Color(0xffF2A38A)),
+    const _TaskItem('Subscriptions', Color(0xffF7CDD5)),
+    const _TaskItem('Books', Color(0xffFCEBAF)),
+    const _TaskItem('Orange', Color(0xffF08F66)),
+    const _TaskItem('Family', Color(0xffF2A38A)),
+    const _TaskItem('Subscriptions', Color(0xffF7CDD5)),
+    const _TaskItem('Books', Color(0xffFCEBAF)),
+  ];
+
+  _MainScroll();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          floating: true,
+          delegate: _SliverCustomHeaderDelegate(
+            minHeight: 170,
+            maxHeight: 200,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              color: Colors.white,
+              child: const _TitleHeader(),
+            )
+          )),
+        SliverList(delegate: SliverChildListDelegate(items))
+      ],
+    );
+  }
+}
+
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate  {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  _SliverCustomHeaderDelegate({required this.minHeight, required this.maxHeight, required this.child});
+  
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(
+      child: child,
+    );
+  }
+  
+  @override
+  double get maxExtent => maxHeight;
+  
+  @override
+  double get minExtent => minHeight;
+  
+  @override
+  bool shouldRebuild(covariant _SliverCustomHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+          minHeight != oldDelegate.minHeight ||
+          child != oldDelegate.child;
+  }
+
 }
 
 class _TitleHeader extends StatelessWidget {
@@ -22,7 +86,7 @@ class _TitleHeader extends StatelessWidget {
       children: [
         const SizedBox(height: 20),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 0),
           child: const Text(
             'New',
             style: TextStyle(color: Colors.black, fontSize: 50),
