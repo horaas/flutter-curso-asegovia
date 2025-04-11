@@ -48,7 +48,20 @@ class ThemeChangerModel with ChangeNotifier {
     _customTheme = enabled;
 
     if (enabled) {
-      _currentTheme = ThemeData.dark();
+      _currentTheme = ThemeData.dark().copyWith(
+        primaryColorLight: Colors.white,
+        scaffoldBackgroundColor: const Color(0xFF16202B),
+        colorScheme: const ColorScheme.dark().copyWith(
+          secondary: const Color(0xFF48A0EB),
+        ),
+        textTheme: const TextTheme(
+          labelMedium: TextStyle(color: Colors.red),
+          labelSmall: TextStyle(color: Colors.red),
+          labelLarge: TextStyle(color: Colors.red)
+
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Colors.red)
+      );
     } else {
       _currentTheme = ThemeData.light();
     }

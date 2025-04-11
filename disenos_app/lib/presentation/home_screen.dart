@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:disenos_app/routes/routes.dart';
 import 'package:disenos_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -80,9 +81,14 @@ class _DrawarIcon extends StatelessWidget {
           ),
           ListTile(
             onTap: () {},
-            leading: FaIcon(
+            leading: customThme.darkTheme() ? FadeInLeft(
+              animate: customThme.darkTheme(),
+              child: FaIcon(
+                FontAwesomeIcons.sun,
+                color: secondaryColor,
+              ),
+            ) : FaIcon(
               FontAwesomeIcons.moon,
-              // FontAwesomeIcons.sun,
               color: secondaryColor,
             ),
             title: const Text('Dark Mode'),
