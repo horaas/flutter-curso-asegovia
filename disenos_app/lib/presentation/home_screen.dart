@@ -22,11 +22,14 @@ class _ListOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final themeData = Provider.of<ThemeChangerModel>(context).currentTheme();
+
     return ListView.separated(
       itemCount: routes.length,
       separatorBuilder:
           (BuildContext context, int index) =>
-              const Divider(color: Colors.blueAccent),
+              Divider(color: themeData.primaryColorLight),
       itemBuilder:
           (BuildContext context, int index) => ListTile(
             onTap: () {
@@ -34,12 +37,12 @@ class _ListOptions extends StatelessWidget {
             },
             leading: FaIcon(
               routes[index].icon,
-              color: Colors.blueAccent,
+              color: themeData.colorScheme.secondary,
             ),
             title: Text(routes[index].title),
-            trailing: const FaIcon(
+            trailing: FaIcon(
               FontAwesomeIcons.chevronRight,
-              color: Colors.blueAccent,
+              color: themeData.colorScheme.secondary,
             ),
           ),
     );
@@ -53,6 +56,7 @@ class _DrawarIcon extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final customThme = Provider.of<ThemeChangerModel>(context);
+    final secondaryColor = customThme.currentTheme().colorScheme.secondary;
     return Drawer(
       child: Column(
         children: [
@@ -61,9 +65,9 @@ class _DrawarIcon extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               width: double.infinity,
               height: 150,
-              child: const CircleAvatar(
-                backgroundColor: Colors.blueAccent,
-                child: Text(
+              child: CircleAvatar(
+                backgroundColor: secondaryColor,
+                child: const Text(
                   'AR',
                   style: TextStyle(fontSize: 50, color: Colors.white),
                 ),
@@ -76,25 +80,25 @@ class _DrawarIcon extends StatelessWidget {
           ),
           ListTile(
             onTap: () {},
-            leading: const FaIcon(
+            leading: FaIcon(
               FontAwesomeIcons.moon,
               // FontAwesomeIcons.sun,
-              color: Colors.blueAccent,
+              color: secondaryColor,
             ),
             title: const Text('Dark Mode'),
             trailing: Switch.adaptive(
-              activeColor: Colors.blueAccent,
+              activeColor: secondaryColor,
               value: customThme.darkTheme(), onChanged: (value) => customThme.setDarkTheme = value,),
           ),
           ListTile(
             onTap: () {},
-            leading: const FaIcon(
+            leading: FaIcon(
               FontAwesomeIcons.fillDrip,
-              color: Colors.blueAccent,
+              color: secondaryColor,
             ),
             title: const Text('Theme'),
             trailing: Switch.adaptive(
-              activeColor: Colors.blueAccent,
+              activeColor: secondaryColor,
               value: customThme.customTheme(), onChanged: (value) => customThme.setCustomTheme = value,),
           ),
           const SizedBox(height: 30,)

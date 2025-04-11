@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (_) => ThemeChangerModel(1),
+    create: (_) => ThemeChangerModel(2),
     child: const MainApp()));
 }
 

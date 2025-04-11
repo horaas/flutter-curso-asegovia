@@ -1,6 +1,8 @@
+import 'package:disenos_app/theme/theme.dart';
 import 'package:disenos_app/widgets/shared/slide_show/slide_show_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class SlideShowsScreen extends StatelessWidget {
 
@@ -24,10 +26,12 @@ class _MySlideShow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customThme = Provider.of<ThemeChangerModel>(context);
     return SlideShowWidget(
-     bulltPrimary: 5,
+     bulltPrimary: 20,
      // dotTop: true,
-     dotPrimaryColor: Colors.red,
+     
+     dotPrimaryColor: customThme.darkTheme() ? customThme.currentTheme().colorScheme.tertiary : Colors.red,
      slides: [
      SvgPicture.asset('assets/images/svgs/slides/slide-1.svg'),
      SvgPicture.asset('assets/images/svgs/slides/slide-2.svg'),
