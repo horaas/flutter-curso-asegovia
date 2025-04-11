@@ -1,6 +1,8 @@
 import 'package:disenos_app/routes/routes.dart';
+import 'package:disenos_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,9 +18,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _ListOptions extends StatelessWidget {
-  const _ListOptions({
-    super.key,
-  });
+  const _ListOptions();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +51,8 @@ class _DrawarIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final customThme = Provider.of<ThemeChangerModel>(context);
     return Drawer(
       child: Column(
         children: [
@@ -82,9 +84,7 @@ class _DrawarIcon extends StatelessWidget {
             title: const Text('Dark Mode'),
             trailing: Switch.adaptive(
               activeColor: Colors.blueAccent,
-              value: true, onChanged: (value) {
-              
-            },),
+              value: customThme.darkTheme(), onChanged: (value) => customThme.setDarkTheme = value,),
           ),
           ListTile(
             onTap: () {},
@@ -95,9 +95,7 @@ class _DrawarIcon extends StatelessWidget {
             title: const Text('Theme'),
             trailing: Switch.adaptive(
               activeColor: Colors.blueAccent,
-              value: true, onChanged: (value) {
-              
-            },),
+              value: customThme.customTheme(), onChanged: (value) => customThme.setCustomTheme = value,),
           ),
           const SizedBox(height: 30,)
         ],
