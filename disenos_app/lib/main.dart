@@ -1,3 +1,4 @@
+import 'package:disenos_app/models/layout_model.dart';
 import 'package:disenos_app/presentation/home_screen_tablet.dart';
 import 'package:disenos_app/presentation/presentation.dart';
 import 'package:disenos_app/theme/theme.dart';
@@ -5,9 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (_) => ThemeChangerModel(2),
-    child: const MainApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeChangerModel>(create: (context) => ThemeChangerModel(2),),
+        ChangeNotifierProvider<LayoutModel>(create: (context) => LayoutModel(),)
+      ],
+      child: const MainApp()
+    )
+  );
+  // runApp(ChangeNotifierProvider(
+  //   create: (_) => ThemeChangerModel(2),
+  //   child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {

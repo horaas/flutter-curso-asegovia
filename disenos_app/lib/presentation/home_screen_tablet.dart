@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:disenos_app/models/layout_model.dart';
 import 'package:disenos_app/presentation/slide_shows_screen.dart';
 import 'package:disenos_app/routes/routes.dart';
 import 'package:disenos_app/theme/theme.dart';
@@ -11,6 +12,8 @@ class HomeScreenTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final layoutModel = Provider.of<LayoutModel>(context).currentPage();
+
     return Scaffold(
       appBar: AppBar(title: const Text('data tablet')),
       body: Row(
@@ -25,7 +28,7 @@ class HomeScreenTablet extends StatelessWidget {
             height: double.infinity,
             color: Colors.grey,
           ),
-          const Expanded(child: SlideShowsScreen())
+          Expanded(child: layoutModel)
         ],
       ),
       drawer: const _DrawarIcon(),
@@ -49,7 +52,9 @@ class _ListOptions extends StatelessWidget {
       itemBuilder:
           (BuildContext context, int index) => ListTile(
             onTap: () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) => routes[index].page,));
+              //  Navigator.push(context, MaterialPageRoute(builder: (context) => routes[index].page,));
+              final layoutModel = Provider.of<LayoutModel>(context, listen: false);
+              layoutModel.setCurrentPage = routes[index].page;
             },
             leading: FaIcon(
               routes[index].icon,
