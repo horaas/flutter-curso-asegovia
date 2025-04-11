@@ -45,20 +45,24 @@ class EmergencyScreen extends StatelessWidget {
         ),
     ),).toList();
 
+    final bool isLarge =
+        MediaQuery.of(context).size.height > 500 ? true : false;
+
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 200),
+            margin: EdgeInsets.only(top: (isLarge ? 200 : 15)),
             child: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
-                const SizedBox(height: 70,),
+                SizedBox(height: (isLarge ? 70: 0)),
                 ...buttonIconItemWidget
               ],
             ),
           ),
-          const _Header(),
+          if (isLarge)
+            const _Header(),
         ],
       ),
     );
