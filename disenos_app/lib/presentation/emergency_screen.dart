@@ -46,13 +46,37 @@ class EmergencyScreen extends StatelessWidget {
               ],
             ),
           ),
-          const IconHaderWidget(
-            title: 'Haz solitado',
-            subTitle: 'Asistencia Médica',
-            icon: FontAwesomeIcons.plus,
-          ),
+          const _Header(),
         ],
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        const IconHaderWidget(
+          title: 'Haz solitado',
+          subTitle: 'Asistencia Médica',
+          icon: FontAwesomeIcons.plus,
+        ),
+        Positioned(
+          right: 0,
+          top: 40,
+          child: MaterialButton(
+            onPressed: () {
+            
+          },
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(10),
+          child: const FaIcon(FontAwesomeIcons.ellipsisVertical, color: Colors.white,),),
+        )
+      ],
     );
   }
 }
