@@ -1,3 +1,4 @@
+import 'package:disenos_app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,9 +8,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('data')),
-      body: _ListOptions(),
-      drawer: _DrawarIcon(),
+      appBar: AppBar(title: const Text('data')),
+      body: const _ListOptions(),
+      drawer: const _DrawarIcon(),
     );
   }
 }
@@ -22,19 +23,21 @@ class _ListOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: 20,
+      itemCount: routes.length,
       separatorBuilder:
           (BuildContext context, int index) =>
-              Divider(color: Colors.blueAccent),
+              const Divider(color: Colors.blueAccent),
       itemBuilder:
           (BuildContext context, int index) => ListTile(
-            onTap: () {},
+            onTap: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => routes[index].page,));
+            },
             leading: FaIcon(
-              FontAwesomeIcons.slideshare,
+              routes[index].icon,
               color: Colors.blueAccent,
             ),
-            title: Text('data'),
-            trailing: FaIcon(
+            title: Text(routes[index].title),
+            trailing: const FaIcon(
               FontAwesomeIcons.chevronRight,
               color: Colors.blueAccent,
             ),
@@ -53,10 +56,10 @@ class _DrawarIcon extends StatelessWidget {
         children: [
           SafeArea(
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: double.infinity,
               height: 150,
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 backgroundColor: Colors.blueAccent,
                 child: Text(
                   'AR',
@@ -66,17 +69,17 @@ class _DrawarIcon extends StatelessWidget {
               
             ),
           ),
-          Expanded(
+          const Expanded(
             child: _ListOptions(),
           ),
           ListTile(
             onTap: () {},
-            leading: FaIcon(
+            leading: const FaIcon(
               FontAwesomeIcons.moon,
               // FontAwesomeIcons.sun,
               color: Colors.blueAccent,
             ),
-            title: Text('Dark Mode'),
+            title: const Text('Dark Mode'),
             trailing: Switch.adaptive(
               activeColor: Colors.blueAccent,
               value: true, onChanged: (value) {
@@ -85,18 +88,18 @@ class _DrawarIcon extends StatelessWidget {
           ),
           ListTile(
             onTap: () {},
-            leading: FaIcon(
+            leading: const FaIcon(
               FontAwesomeIcons.fillDrip,
               color: Colors.blueAccent,
             ),
-            title: Text('Theme'),
+            title: const Text('Theme'),
             trailing: Switch.adaptive(
               activeColor: Colors.blueAccent,
               value: true, onChanged: (value) {
               
             },),
           ),
-          SizedBox(height: 30,)
+          const SizedBox(height: 30,)
         ],
       ),
     );
