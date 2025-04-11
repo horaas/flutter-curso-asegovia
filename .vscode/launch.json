@@ -61,10 +61,10 @@
             "program": "lib/main.dart"
         },
         {
-            "name": "abinated_do_app",
+            "name": "animated_do_app",
             "type": "dart",
             "request": "launch",
-            "cwd": "abinated_do_app",
+            "cwd": "animated_do_app",
             "program": "lib/main.dart"
         },
     ]
