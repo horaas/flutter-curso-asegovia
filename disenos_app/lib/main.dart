@@ -1,3 +1,4 @@
+import 'package:disenos_app/presentation/home_screen_tablet.dart';
 import 'package:disenos_app/presentation/presentation.dart';
 import 'package:disenos_app/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,16 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: themeData,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen()
+      home: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) { 
+          final size = MediaQuery.of(context).size;
+          if (size.width >= 500) {
+            return const HomeScreenTablet();
+          } else {          
+            return const HomeScreen();
+          }
+        },
+      )
     );
   }
 }
