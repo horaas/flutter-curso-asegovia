@@ -5,19 +5,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class SlideShowsScreen extends StatelessWidget {
+  const SlideShowsScreen({super.key});
 
-  const SlideShowsScreen({ super.key });
+  @override
+  Widget build(BuildContext context) {
+    final bool isLarge =
+        MediaQuery.of(context).size.height > 500 ? true : false;
 
-   @override
-   Widget build(BuildContext context) {
-       return const Scaffold(
-           body: Column(
-             children: [
-               Expanded(child: _MySlideShow()),
-               Expanded(child: _MySlideShow()),
-             ],
-           ),
-       );
+    final children = const [
+      Expanded(child: _MySlideShow()),
+      Expanded(child: _MySlideShow()),
+    ];
+    return Scaffold(body: isLarge ? Column(children: children) : Row(children: children) );
   }
 }
 
