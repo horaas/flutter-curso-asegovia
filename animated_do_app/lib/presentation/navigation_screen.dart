@@ -1,3 +1,5 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:animated_do_app/presentation/notification_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -48,15 +50,23 @@ class _BottomNavigation extends StatelessWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: Container(
-                    alignment: Alignment.topCenter,
-                    height: 14,
-                    width: 14,
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent,
-                      shape: BoxShape.circle
+                  child: BounceInDown(
+                    from: 12,
+                    animate: (notificationNumber > 0 ? true : false),
+                    child: Bounce(
+                      from: 10,
+                      controller: (controller) => Provider.of<_NotificationModel>(context).setAnimationController = controller,
+                      child: Container(
+                        alignment: Alignment.topCenter,
+                        height: 14,
+                        width: 14,
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          shape: BoxShape.circle
+                        ),
+                        child: Text('$notificationNumber', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 9),),
+                      ),
                     ),
-                    child: Text('$notificationNumber', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 9),),
                   ),
                 )
               ],
@@ -82,6 +92,11 @@ class _FloatingButton extends StatelessWidget {
         int notificationNumber = Provider.of<_NotificationModel>(context, listen: false).notification;
         notificationNumber++;
         Provider.of<_NotificationModel>(context, listen: false).notification =  notificationNumber;
+
+        final animationController = Provider.of<_NotificationModel>(context, listen: false).animationController();
+        if (notificationNumber > 1) {
+          animationController.forward(from: 0.0);
+        }
       },
       child: FaIcon(FontAwesomeIcons.plus, color: Colors.white),
     );
@@ -90,12 +105,20 @@ class _FloatingButton extends StatelessWidget {
 
 class _NotificationModel with ChangeNotifier {
   int _notification = 0;
+  late AnimationController _animationController;
+
 
 
   int get notification => _notification;
   set notification(int currentNotification) {
     _notification = currentNotification;
     notifyListeners();
+  }
+
+  AnimationController animationController() => _animationController;
+
+  set setAnimationController(AnimationController controller) {
+    _animationController = controller;
   }
 
 }
