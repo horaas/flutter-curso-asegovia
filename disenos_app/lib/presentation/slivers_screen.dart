@@ -6,9 +6,39 @@ class SliversScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _MainScroll(),
+      body: Stack(
+        children: [
+          _MainScroll(),
+          const Positioned(bottom: -5, right: 0, child: _ButtonNewList()),
+        ],
+      ),
       // _TitleHeader(),
       //  _TaskListView(),
+    );
+  }
+}
+
+class _ButtonNewList extends StatelessWidget {
+  const _ButtonNewList();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(topLeft: Radius.circular(30)),
+      child: Material(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30)),
+        color: const Color(0xFFED6762),
+        child: InkWell(
+          child: Container(
+            alignment: Alignment.center,
+            width: size.width * 0.8,
+            height: 100,
+            child: const Text('CREATE NEW LIST', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),),
+          ),
+          onTap: () {},
+        ),
+      ),
     );
   }
 }
@@ -40,41 +70,52 @@ class _MainScroll extends StatelessWidget {
               alignment: Alignment.centerLeft,
               color: Colors.white,
               child: const _TitleHeader(),
-            )
-          )),
-        SliverList(delegate: SliverChildListDelegate(items))
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            ...items,
+            const SizedBox(height: 100),
+          ]),
+        ),
       ],
     );
   }
 }
 
-class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate  {
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
   final Widget child;
 
-  _SliverCustomHeaderDelegate({required this.minHeight, required this.maxHeight, required this.child});
-  
+  _SliverCustomHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(
-      child: child,
-    );
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return SizedBox.expand(child: child);
   }
-  
+
   @override
   double get maxExtent => maxHeight;
-  
+
   @override
   double get minExtent => minHeight;
-  
+
   @override
   bool shouldRebuild(covariant _SliverCustomHeaderDelegate oldDelegate) {
     return maxHeight != oldDelegate.maxHeight ||
-          minHeight != oldDelegate.minHeight ||
-          child != oldDelegate.child;
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
-
 }
 
 class _TitleHeader extends StatelessWidget {
