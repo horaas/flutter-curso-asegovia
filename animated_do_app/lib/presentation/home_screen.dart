@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,16 +23,32 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(FontAwesomeIcons.newspaper, color: Colors.lightBlue, size: 30),
-            Text(
-              'Titulo',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w200),
+            ElasticIn(
+              delay: Duration(milliseconds: 1500),
+              child: Icon(
+                FontAwesomeIcons.newspaper,
+                color: Colors.lightBlue,
+                size: 30,
+              ),
             ),
-            Text(
-              'trext mas corto',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            FadeInDown(
+              duration: Duration(milliseconds: 300),
+              child: Text(
+                'Titulo',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w200),
+              ),
             ),
-            Container(width: 200, height: 2, color: Colors.lightBlue),
+            FadeInDown(
+              delay: Duration(milliseconds: 700),
+              child: Text(
+                'trext mas corto',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+              ),
+            ),
+            FadeInLeft(
+              delay: Duration(milliseconds: 900),
+              child: Container(width: 200, height: 2, color: Colors.lightBlue),
+            ),
           ],
         ),
       ),
