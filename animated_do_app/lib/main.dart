@@ -1,4 +1,4 @@
-import 'package:animated_do_app/presentation/home_screen.dart';
+// import 'package:animated_do_app/presentation/home_screen.dart';
 import 'package:animated_do_app/presentation/navigation_screen.dart';
 import 'package:flutter/material.dart';
 

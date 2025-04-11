@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:animated_do_app/presentation/notification_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
