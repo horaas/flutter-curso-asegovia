@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 // import 'package:disenos_app/retos/square_animated.dart';
 // import 'package:disenos_app/widgets/widgets.dart';
 // import 'package:disenos_app/presentation/pinterest_screen.dart';
-import 'package:disenos_app/presentation/emergency_screen.dart';
+// import 'package:disenos_app/presentation/emergency_screen.dart';
+import 'package:disenos_app/presentation/slivers_screen.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
    @override
    Widget build(BuildContext context) {
        return const Scaffold(
-           body: EmergencyScreen(),
+           body: SliversScreen(),
        );
   }
 }
