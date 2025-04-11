@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        centerTitle: true,
-        title: const Text(
-          'Navigation page',
-          style: TextStyle(color: Colors.white),
+    return ChangeNotifierProvider(
+      create: (_) => _NotificationModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.redAccent,
+          centerTitle: true,
+          title: const Text(
+            'Navigation page',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
+        floatingActionButton: _FloatingButton(),
+        bottomNavigationBar: _BottomNavigation(),
       ),
-      floatingActionButton: _FloatingButton(),
-      bottomNavigationBar: _BottomNavigation(),
     );
   }
 }
@@ -26,6 +30,8 @@ class _BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notificationNumber = Provider.of<_NotificationModel>(context).notification;
+
     return BottomNavigationBar(
       currentIndex: 0,
       selectedItemColor: Colors.redAccent,
@@ -50,7 +56,7 @@ class _BottomNavigation extends StatelessWidget {
                       color: Colors.redAccent,
                       shape: BoxShape.circle
                     ),
-                    child: Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 9),),
+                    child: Text('$notificationNumber', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 9),),
                   ),
                 )
               ],
@@ -72,8 +78,24 @@ class _FloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Colors.redAccent,
-      onPressed: () {},
-      child: FaIcon(FontAwesomeIcons.play, color: Colors.white),
+      onPressed: () {
+        int notificationNumber = Provider.of<_NotificationModel>(context, listen: false).notification;
+        notificationNumber++;
+        Provider.of<_NotificationModel>(context, listen: false).notification =  notificationNumber;
+      },
+      child: FaIcon(FontAwesomeIcons.plus, color: Colors.white),
     );
   }
+}
+
+class _NotificationModel with ChangeNotifier {
+  int _notification = 0;
+
+
+  int get notification => _notification;
+  set notification(int currentNotification) {
+    _notification = currentNotification;
+    notifyListeners();
+  }
+
 }
