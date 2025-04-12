@@ -13,7 +13,7 @@ class PinterestScreen extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Stack(children: [_PinterestGrid(), _PinterestMenuLcation()]),
+          child: Stack(children: [const _PinterestGrid(), _PinterestMenuLcation()]),
           // PinterestMenuWidget()
           //  _PinterestGrid(),
         ),
@@ -25,34 +25,42 @@ class PinterestScreen extends StatelessWidget {
 class _PinterestMenuLcation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     final showMenu = Provider.of<_MenuModelScreen>(context).showMenu;
+    if (screenWidth>500) {
+      screenWidth = screenWidth - 300;
+    }
     return Positioned(
       bottom: 30,
       child: SizedBox(
         width: screenWidth,
-        child: Align(
-          child: PinterestMenuWidget(
-            show: showMenu,
-            optionsButtons: [
-              PinterestButton(
-                icon: Icons.pie_chart,
-                onPresed: () => print('pie_chart'),
-              ),
-              PinterestButton(
-                icon: Icons.search,
-                onPresed: () => print('search'),
-              ),
-              PinterestButton(
-                icon: Icons.notifications,
-                onPresed: () => print('notifications'),
-              ),
-              PinterestButton(
-                icon: Icons.supervised_user_circle,
-                onPresed: () => print('supervised_user_circle'),
-              ),
-            ],
-          ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(),
+            PinterestMenuWidget(
+              show: showMenu,
+              optionsButtons: [
+                PinterestButton(
+                  icon: Icons.pie_chart,
+                  onPresed: () => print('pie_chart'),
+                ),
+                PinterestButton(
+                  icon: Icons.search,
+                  onPresed: () => print('search'),
+                ),
+                PinterestButton(
+                  icon: Icons.notifications,
+                  onPresed: () => print('notifications'),
+                ),
+                PinterestButton(
+                  icon: Icons.supervised_user_circle,
+                  onPresed: () => print('supervised_user_circle'),
+                ),
+              ],
+            ),
+            const Spacer(),
+          ],
         ),
       ),
     );
@@ -92,10 +100,12 @@ class _PinterestGridState extends State<_PinterestGrid> {
   }
   @override
   Widget build(BuildContext context) {
+    final bool isLarge =
+        MediaQuery.of(context).size.width > 500 ? true : false;
     return SingleChildScrollView(
       controller: scrollController,
       child: StaggeredGrid.count(
-        crossAxisCount: 2,
+        crossAxisCount: isLarge ? 3 : 2,
         mainAxisSpacing: 8,
         crossAxisSpacing: 6,
         children: [...items.map((index) => _PinterstItem(index))],
