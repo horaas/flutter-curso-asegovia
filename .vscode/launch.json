@@ -67,5 +67,12 @@
             "cwd": "animated_do_app",
             "program": "lib/main.dart"
         },
+        {
+            "name": "shoes",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "shoesapp",
+            "program": "lib/main.dart"
+        },
     ]
 }
