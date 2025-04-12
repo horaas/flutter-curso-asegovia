@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoesapp/widgets/custom_appbar_wiget.dart';
 import 'package:shoesapp/widgets/shoe_size_preview.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,19 +8,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'For You',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          const Icon(Icons.search, size: 30, color: Colors.black),
-          SizedBox(width: 25),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const CustomAppbarWiget(title: 'For You',),
             ShoeSizePreview(),
             _TextDescription(),
             _PriceDescription(),
