@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shoesapp/widgets/custom_button.dart';
 
 class AddCartButton extends StatelessWidget {
+  final double price;
+
+  const AddCartButton({super.key, required this.price});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,16 +17,16 @@ class AddCartButton extends StatelessWidget {
           color: const Color(0x3C9E9E9E),
           borderRadius: BorderRadius.circular(100),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             Text(
-              '\$180.0',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              '\$ $price',
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            Spacer(),
-            CustomButton(),
-            SizedBox(width: 10,)
+            const Spacer(),
+            const CustomButton(text: 'Add to cart',),
+            const SizedBox(width: 10,)
           ],
         ),
       ),
