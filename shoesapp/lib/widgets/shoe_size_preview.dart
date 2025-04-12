@@ -6,7 +6,7 @@ class ShoeSizePreview extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
-       return _ContainerImage();
+       return const _ContainerImage();
   }
 }
 
@@ -18,7 +18,7 @@ class _ContainerImage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: Container(
-        width: 400,
+        width: double.infinity,
         height: 430,
         // margin: EdgeInsets.all(25),
         decoration: BoxDecoration(
@@ -30,7 +30,7 @@ class _ContainerImage extends StatelessWidget {
           children: [
             _ShoeWhitShadow(),
             // SizedBox(height: 20),
-            // _SizesList(),
+            _SizesList(),
           ],
         ),
       ),
@@ -47,8 +47,35 @@ class _ShoeWhitShadow extends StatelessWidget {
       padding: const EdgeInsets.all(50),
       child: Stack(
         children: [
-          Image.asset('assets/imgs/azul.png', height: 300),
+          const Positioned(
+            top: 140,
+            left: 15,
+            child: _ShadowShoe()
+          ),
+          Image.asset('assets/imgs/azul.png'),
         ],
+      ),
+    );
+  }
+}
+
+class _ShadowShoe extends StatelessWidget {
+  const _ShadowShoe();
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: -10,
+      child: Container(
+        width: 235,
+        height: 100,
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFFEAA14E), blurRadius: 40
+            )
+          ]
+        ),
       ),
     );
   }
@@ -59,23 +86,22 @@ class _SizesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Spacer(),
-        _SizeItem('7'),
-        _SizeItem('7.5'),
-        _SizeItem('8'),
-        _SizeItem('8.5'),
-        _SizeItem('9', true),
-        _SizeItem('9.5'),
-        Spacer(),
+        _SizeItem(7),
+        _SizeItem(7.5),
+        _SizeItem(8),
+        _SizeItem(8.5),
+        _SizeItem(9, true),
+        _SizeItem(9.5),
       ],
     );
   }
 }
 
 class _SizeItem extends StatelessWidget {
-  final String size;
+  final double size;
   final bool isSelected;
   const _SizeItem(this.size, [this.isSelected = false]);
 
@@ -83,18 +109,18 @@ class _SizeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(3),
+      margin: const EdgeInsets.all(3),
       height: 40,
       width: 40,
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xFFFF9e00) : Colors.white,
+        color: isSelected ? const Color(0xFFFF9e00) : Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
-          BoxShadow(color: Color(0xFFFF9e00), blurRadius: 10, spreadRadius: -2),
+          const BoxShadow(color: Color(0xFFF1A23A), blurRadius: 10, offset: Offset(0, 5)),
         ],
       ),
       child: Text(
-        size,
+        size.toString().replaceAll('.0', ''),
         style: TextStyle(
           color: isSelected ? Colors.white : Colors.orange,
           fontSize: 15,
