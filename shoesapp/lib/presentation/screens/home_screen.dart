@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const CustomAppbarWiget(title: 'For You',),
-            ShoeSizePreview(),
+            const ShoeSizePreview(),
             _TextDescription(),
             _PriceDescription(),
           ],

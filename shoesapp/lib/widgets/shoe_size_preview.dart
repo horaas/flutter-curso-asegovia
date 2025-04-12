@@ -15,23 +15,40 @@ class _ContainerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: Container(
         width: 400,
-        height: 450,
-        margin: EdgeInsets.all(25),
+        height: 430,
+        // margin: EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Color(0xFFFFD54F),
+          color: const Color(0xFFFFD54F),
           borderRadius: BorderRadius.circular(50),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/imgs/azul.png', height: 300),
-            SizedBox(height: 20),
-            _SizesList(),
+            _ShoeWhitShadow(),
+            // SizedBox(height: 20),
+            // _SizesList(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ShoeWhitShadow extends StatelessWidget {
+  const _ShoeWhitShadow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(50),
+      child: Stack(
+        children: [
+          Image.asset('assets/imgs/azul.png', height: 300),
+        ],
       ),
     );
   }
