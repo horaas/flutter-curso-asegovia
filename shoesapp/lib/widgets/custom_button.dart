@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(color),
         padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(horizontal: 35, vertical: height),
+          EdgeInsets.symmetric(horizontal: 17, vertical: height),
         ),
       ),
       child: Text(

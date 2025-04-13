@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:shoesapp/widgets/button_with_description.dart';
 import 'package:shoesapp/widgets/custom_button.dart';
@@ -57,7 +58,7 @@ class _ColorsReferences extends StatelessWidget {
         // color: Color(0x3C9E9E9E),
         borderRadius: BorderRadius.circular(50),
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
@@ -65,23 +66,29 @@ class _ColorsReferences extends StatelessWidget {
               children: [
                 Positioned(
                   left: 90,
-                  child: _ButtonCircularColors(Color(0xFFCCDD3D)),
+                  child: FadeInLeft(
+                    delay: const Duration(milliseconds: 500),
+                    child: const _ButtonCircularColors(Color(0xFFCCDD3D))),
                 ),
                 Positioned(
                   left: 60,
-                  child:  _ButtonCircularColors(Color(0xFFFF9e00))
+                  child:  FadeInLeft(
+                    delay: const Duration(milliseconds: 400),
+                    child: const _ButtonCircularColors(Color(0xFFFF9e00)))
                 ),
                 Positioned(
                   left: 30,
-                  child:  _ButtonCircularColors(Color(0xFF3AA8F7))
+                  child:  FadeInLeft(
+                    delay: const Duration(milliseconds: 200),
+                    child: const _ButtonCircularColors(Color(0xFF3AA8F7)))
                 ),
                 Positioned(
-                  child:  _ButtonCircularColors(Color(0xFF435560))
+                  child:  FadeInLeft(child: const _ButtonCircularColors(Color(0xFF435560)))
                 ),
               ],
             ),
           ),
-          CustomButton(text: 'More related item', color: Color(0xFFFFCC7A), height: 5,),
+          const CustomButton(text: 'More related item', color: Color(0xFFFFCC7A), height: 5,),
          ],
       ),
     
@@ -96,8 +103,8 @@ class _ButtonCircularColors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 45,
-      height: 45,
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle
