@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shoesapp/helpers/helpers.dart';
 import 'package:shoesapp/models/shoes_model.dart';
 import 'package:shoesapp/widgets/button_with_description.dart';
 import 'package:shoesapp/widgets/custom_button.dart';
@@ -12,6 +13,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    changeStatusLight();
     return Scaffold(
       body: Column(
         children: [
@@ -25,6 +27,7 @@ class ProductDetailScreen extends StatelessWidget {
                 top: 100,
                 child: IconButton(
                   onPressed: () {
+                    changeStatusDark();
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.chevron_left, size: 60, color: Colors.white),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoesapp/helpers/helpers.dart';
 import 'package:shoesapp/widgets/button_with_description.dart';
 import 'package:shoesapp/widgets/custom_appbar_wiget.dart';
 import 'package:shoesapp/widgets/shoe_description.dart';
@@ -9,6 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    changeStatusDark();
     return const Scaffold(
       body: Column(
         children: [
