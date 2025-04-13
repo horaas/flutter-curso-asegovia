@@ -14,9 +14,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body:
-         ProductDetailScreen()
-        //  HomeScreen()
+        body: HomeScreen()
       ),
     );
   }

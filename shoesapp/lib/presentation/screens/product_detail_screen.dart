@@ -12,7 +12,23 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const ShoeSizePreview(isFullScreen: true),
+          Stack(
+            children: [
+              const Hero(
+                tag: 'widget-shoe-1',
+                child: ShoeSizePreview(isFullScreen: true)
+                ),
+              Positioned(
+                top: 100,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.chevron_left, size: 60, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -90,49 +106,51 @@ class _ButtonCircularColors extends StatelessWidget {
   }
 }
 
-
 class _ButtonsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        // padding: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(onPressed: () {
-              
-            }, icon: const Icon(Icons.favorite), color: Colors.red,
-            style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.green),
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(15),
-                ),
-              )),
-            IconButton(onPressed: () {
-              
-            }, icon: const Icon(Icons.shopping_cart), style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.green),
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(15),
-                ),
-              )),
-            IconButton(onPressed: () {
-              
-            }, icon: const Icon(Icons.settings), style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.green),
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(15),
-                ),
-              )),
-          ],
-        ),
-      
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
       ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const _ButtonShadowCircle(icon: Icon(Icons.favorite, color: Colors.red,),),
+          _ButtonShadowCircle(icon: Icon(Icons.shopping_cart, color: Colors.grey.withValues(alpha: 0.5),),),
+          _ButtonShadowCircle(icon: Icon(Icons.settings, color: Colors.grey.withValues(alpha: 0.5),),),
+        ],
+      ),
+    
+    );
+  }
+}
+
+class _ButtonShadowCircle extends StatelessWidget {
+  final Icon icon;
+  final double size;
+  final Color backgroundColor;
+  final Function? onTap;
+
+  const _ButtonShadowCircle({required this.icon, this.size = 50, this.onTap, this.backgroundColor = Colors.white,});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        shape: BoxShape.circle,
+        boxShadow: [
+           const BoxShadow(
+            color: Colors.black12, blurRadius: 20, spreadRadius: -5, offset: Offset(0, 10)
+          )
+        ], 
+      ),
+      child: icon,
     );
   }
 }

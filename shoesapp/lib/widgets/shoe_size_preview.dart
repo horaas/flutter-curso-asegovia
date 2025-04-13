@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoesapp/presentation/screens/product_detail_screen.dart';
 
 class ShoeSizePreview extends StatelessWidget {
   final bool isFullScreen;
@@ -7,23 +8,30 @@ class ShoeSizePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isFullScreen ? 5 : 30, vertical: 5),
-      child: Container(
-        width: double.infinity,
-        height: 430,
-        // margin: EdgeInsets.all(25),
-        decoration: BoxDecoration(
-          color: const Color(0xFFFFD54F),
-          borderRadius: isFullScreen ? const BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30), bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)) : BorderRadius.circular(50),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const _ShoeWhitShadow(),
-            if (!isFullScreen)
-              const _SizesList(),
-          ],
+    return GestureDetector(
+      onTap: () {
+        if (!isFullScreen) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductDetailScreen(),));
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: isFullScreen ? 5 : 30, vertical: 5),
+        child: Container(
+          width: double.infinity,
+          height: 430,
+          // margin: EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFD54F),
+            borderRadius: isFullScreen ? const BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30), bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)) : BorderRadius.circular(50),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const _ShoeWhitShadow(),
+              if (!isFullScreen)
+                const _SizesList(),
+            ],
+          ),
         ),
       ),
     );
