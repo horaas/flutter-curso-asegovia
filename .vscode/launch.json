@@ -74,5 +74,12 @@
             "cwd": "shoesapp",
             "program": "lib/main.dart"
         },
+        {
+            "name": "music",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "music_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
