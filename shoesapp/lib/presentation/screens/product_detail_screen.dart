@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoesapp/models/shoes_model.dart';
 import 'package:shoesapp/widgets/button_with_description.dart';
 import 'package:shoesapp/widgets/custom_button.dart';
 import 'package:shoesapp/widgets/shoe_description.dart';
@@ -68,22 +70,22 @@ class _ColorsReferences extends StatelessWidget {
                   left: 90,
                   child: FadeInLeft(
                     delay: const Duration(milliseconds: 500),
-                    child: const _ButtonCircularColors(Color(0xFFCCDD3D))),
+                    child: const _ButtonCircularColors(Color(0xFFCCDD3D), 'assets/imgs/verde.png')),
                 ),
                 Positioned(
                   left: 60,
                   child:  FadeInLeft(
                     delay: const Duration(milliseconds: 400),
-                    child: const _ButtonCircularColors(Color(0xFFFF9e00)))
+                    child: const _ButtonCircularColors(Color(0xFFFF9e00), 'assets/imgs/amarillo.png'))
                 ),
                 Positioned(
                   left: 30,
                   child:  FadeInLeft(
                     delay: const Duration(milliseconds: 200),
-                    child: const _ButtonCircularColors(Color(0xFF3AA8F7)))
+                    child: const _ButtonCircularColors(Color(0xFF3AA8F7), 'assets/imgs/azul.png'))
                 ),
                 Positioned(
-                  child:  FadeInLeft(child: const _ButtonCircularColors(Color(0xFF435560)))
+                  child:  FadeInLeft(child: const _ButtonCircularColors(Color(0xFF435560), 'assets/imgs/negro.png'))
                 ),
               ],
             ),
@@ -98,16 +100,20 @@ class _ColorsReferences extends StatelessWidget {
 
 class _ButtonCircularColors extends StatelessWidget {
   final Color color;
-  const _ButtonCircularColors(this.color);
+  final String imageUrl;
+  const _ButtonCircularColors(this.color, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle
+    return GestureDetector(
+      onTap: () => Provider.of<ShoesModel>(context, listen: false).setCurrentImageShoe = imageUrl,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle
+        ),
       ),
     );
   }

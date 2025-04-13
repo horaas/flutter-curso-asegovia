@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoesapp/models/shoes_model.dart';
 import 'package:shoesapp/presentation/screens/product_detail_screen.dart';
 
 class ShoeSizePreview extends StatelessWidget {
@@ -43,6 +45,7 @@ class _ShoeWhitShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentImage = Provider.of<ShoesModel>(context).currentImageShoe();
     return Padding(
       padding: const EdgeInsets.all(50),
       child: Stack(
@@ -52,7 +55,7 @@ class _ShoeWhitShadow extends StatelessWidget {
             left: 15,
             child: _ShadowShoe()
           ),
-          Image.asset('assets/imgs/azul.png'),
+          Image.asset(currentImage),
         ],
       ),
     );
@@ -93,7 +96,7 @@ class _SizesList extends StatelessWidget {
         _SizeItem(7.5),
         _SizeItem(8),
         _SizeItem(8.5),
-        _SizeItem(9, true),
+        _SizeItem(9),
         _SizeItem(9.5),
       ],
     );
@@ -102,29 +105,33 @@ class _SizesList extends StatelessWidget {
 
 class _SizeItem extends StatelessWidget {
   final double size;
-  final bool isSelected;
-  const _SizeItem(this.size, [this.isSelected = false]);
+  const _SizeItem(this.size);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.all(3),
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFFFF9e00) : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          const BoxShadow(color: Color(0xFFF1A23A), blurRadius: 10, offset: Offset(0, 5)),
-        ],
-      ),
-      child: Text(
-        size.toString().replaceAll('.0', ''),
-        style: TextStyle(
-          color: isSelected ? Colors.white : Colors.orange,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
+    final currentSize = Provider.of<ShoesModel>(context).currentSizeShoe();
+    final isSelected = currentSize == size;
+    return GestureDetector(
+      onTap: () => Provider.of<ShoesModel>(context, listen: false).setCurrentSizeShoe = size,
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(3),
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFF9e00) : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            const BoxShadow(color: Color(0xFFF1A23A), blurRadius: 10, offset: Offset(0, 5)),
+          ],
+        ),
+        child: Text(
+          size.toString().replaceAll('.0', ''),
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.orange,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

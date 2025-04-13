@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoesapp/models/shoes_model.dart';
 import 'package:shoesapp/presentation/screens/home_screen.dart';
-import 'package:shoesapp/presentation/screens/product_detail_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ShoesModel>(create: (context) => ShoesModel(),),
+      ],
+      child: const MainApp()
+    )
+  );
 }
 
 class MainApp extends StatelessWidget {
