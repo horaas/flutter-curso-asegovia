@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shoesapp/widgets/custom_button.dart';
 
-class AddCartButton extends StatelessWidget {
+class ButtonWithDescription extends StatelessWidget {
   final double price;
+  final String text;
+  final VoidCallback? onTap;
+  final bool addBackground;
 
-  const AddCartButton({super.key, required this.price});
+  const ButtonWithDescription({super.key, required this.price, required this.text, this.onTap, this.addBackground = true});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +16,10 @@ class AddCartButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 80,
-        decoration: BoxDecoration(
+        decoration: addBackground ? BoxDecoration(
           color: const Color(0x3C9E9E9E),
           borderRadius: BorderRadius.circular(100),
-        ),
+        ) : null,
         child: Row(
           children: [
             const SizedBox(width: 10,),
@@ -25,7 +28,7 @@ class AddCartButton extends StatelessWidget {
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
-            const CustomButton(text: 'Add to cart',),
+            CustomButton(text: text, onTap: onTap,),
             const SizedBox(width: 10,)
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoesapp/widgets/add_cart_button.dart';
+import 'package:shoesapp/widgets/button_with_description.dart';
 import 'package:shoesapp/widgets/custom_appbar_wiget.dart';
 import 'package:shoesapp/widgets/shoe_description.dart';
 import 'package:shoesapp/widgets/shoe_size_preview.dart';
@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          AddCartButton(price: 180,),
+          ButtonWithDescription(price: 180, text: 'Add To cart'),
         ],
       ),
     );

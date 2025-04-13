@@ -15,8 +15,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body:
-        //  ProductDetailScreen()
-         HomeScreen()
+         ProductDetailScreen()
+        //  HomeScreen()
       ),
     );
   }
