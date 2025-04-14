@@ -143,12 +143,13 @@ class _TimeLinePlaying extends StatelessWidget {
     return Container(
       height: 200,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [const Text('04:53', style: TextStyle(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Text('04:53', style: TextStyle(
           color: Color(0xFF959599)
         ),), Transform.rotate(
-          angle: 190,
-          child: const LinearProgressIndicator(value: 25, color: Color(0xFFD4D4D6), )), const Text('02:58', style: TextStyle(
+          angle: -1.57,
+          child: const LinearProgressIndicator(value: 0.5, color: Color(0xFFD4D4D6) )), const Text('02:58', style: TextStyle(
             color: Color(0xFF959599)
           ),)]),
     );
