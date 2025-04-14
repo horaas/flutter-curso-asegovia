@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/helpers/helpers.dart';
+import 'package:music_app/presentation/widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               child: const Column(children: [
-                _Header(),
+                CustomAppBar(),
                 _MusicPlayer(),
                 ]),
             ),
@@ -50,32 +51,6 @@ class _ContentLyrics extends StatelessWidget {
                  ),
                  textAlign: TextAlign.center,),
           ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.chevron_left, size: 40),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.messenger_outline_sharp),
-          ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.headphones)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-        ],
-      ),
     );
   }
 }
