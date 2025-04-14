@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:miscelaneos/presentation/screens/screens.dart';
 
@@ -8,20 +9,113 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/permissions',
-      builder: (context, state) => const PermissionsScreen(),
+      pageBuilder:
+          (context, state) => CustomTransitionPage(
+            child: const PermissionsScreen(),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) {
+              final curveAnimation = CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              );
+              return SlideTransition(
+                position: Tween(
+                  begin: Offset(-0.5, 1.0),
+                  end: Offset.zero,
+                ).animate(curveAnimation),
+                child: child,
+              );
+            },
+          ),
     ),
     GoRoute(
       path: '/giroscopio',
-      builder: (context, state) => const GiroscpopeScreen(),
+      pageBuilder:
+          (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: const GiroscpopeScreen(),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) {
+              final curveAnimation = CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              );
+              return ScaleTransition(
+                scale: Tween(begin: 0.0, end: 1.0).animate(curveAnimation),
+                child: child,
+              );
+            },
+          ),
     ),
     GoRoute(
       path: '/acelerometer',
-      builder: (context, state) => const AcelerometerScreen(),
+      pageBuilder:
+          (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: const AcelerometerScreen(),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) {
+              final curveAnimation = CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              );
+
+              return RotationTransition(
+                turns: Tween(begin: 0.0, end: 1.0).animate(curveAnimation)
+              ,child: child,);
+              
+            },
+          ),
     ),
     GoRoute(
       path: '/magnometer',
-      builder: (context, state) => const MagnometerScreen(),
+      pageBuilder:
+          (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: const MagnometerScreen(),
+            transitionDuration: const Duration(seconds: 1),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) {
+              final curveAnimation = CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              );
+
+              return FadeTransition(
+                opacity: Tween(begin: 0.0, end: 1.0).animate(curveAnimation)
+              ,child: child,);
+              
+            },
+          ),
     ),
+    // GoRoute(
+    //   path: '/giroscopio',
+    //   builder: (context, state) => const GiroscpopeScreen(),
+    // ),
+    // GoRoute(
+    //   path: '/acelerometer',
+    //   builder: (context, state) => const AcelerometerScreen(),
+    // ),
+    // GoRoute(
+    //   path: '/magnometer',
+    //   builder: (context, state) => const MagnometerScreen(),
+    // ),
     GoRoute(
       path: '/giroscope-ball',
       builder: (context, state) => const GiroscopeBallScreen(),
