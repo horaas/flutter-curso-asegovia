@@ -203,16 +203,45 @@ class _MusicControls extends StatelessWidget {
   }
 }
 
-class _ButtonPlayControl extends StatelessWidget {
+class _ButtonPlayControl extends StatefulWidget {
   const _ButtonPlayControl();
 
+  @override
+  State<_ButtonPlayControl> createState() => _ButtonPlayControlState();
+}
+
+class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  bool isPlay = false;
+
+
+  @override
+  void initState() {
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
         print('play');
+        if (isPlay) {
+          controller.reverse();
+          isPlay = !isPlay;
+        } else {
+          controller.forward();
+          isPlay = !isPlay;
+        }
       },
-      icon: const Icon(Icons.play_arrow, size: 40, color: Colors.black,),
+      icon: AnimatedIcon(icon: AnimatedIcons.pause_play, progress: controller, size: 40, color: Colors.black ,),
+      //  const Icon(Icons.play_arrow, size: 40, color: Colors.black,),
       style: const ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Color(0xFFF8CA50))
       ),
