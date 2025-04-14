@@ -1,6 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/helpers/helpers.dart';
+import 'package:music_app/models/playing_model.dart';
 import 'package:music_app/presentation/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -111,6 +114,7 @@ class _DiskImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPlay = Provider.of<PlayingModel>(context).isPlaying();
     return Container(
       padding: const EdgeInsets.all(20),
       width: 240,
@@ -128,7 +132,10 @@ class _DiskImage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Image.asset('assets/aurora.jpg'),
+            SpinPerfect(
+              infinite: true,
+              animate: isPlay,
+              child: Image.asset('assets/aurora.jpg')),
             Container(
               width: 25,
               height: 25,
@@ -217,7 +224,7 @@ class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTicke
 
   @override
   void initState() {
-    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
 
     super.initState();
   }
@@ -235,12 +242,14 @@ class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTicke
         if (isPlay) {
           controller.reverse();
           isPlay = !isPlay;
+          Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         } else {
           controller.forward();
           isPlay = !isPlay;
+          Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         }
       },
-      icon: AnimatedIcon(icon: AnimatedIcons.pause_play, progress: controller, size: 40, color: Colors.black ,),
+      icon: AnimatedIcon(icon: AnimatedIcons.play_pause, progress: controller, size: 40, color: Colors.black ,),
       //  const Icon(Icons.play_arrow, size: 40, color: Colors.black,),
       style: const ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(Color(0xFFF8CA50))
