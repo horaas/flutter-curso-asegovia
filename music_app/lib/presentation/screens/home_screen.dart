@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_app/helpers/helpers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,24 +43,8 @@ class _ContentLyrics extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: size.height * 0.25,
-      child: const SingleChildScrollView(
-            child: Text('''
-                        \nHope start the heart
-                        \nLast beat and lie
-                        \nCold walk the earth
-                        \nLove faded white
-                        \nGave up the war
-                        \nI realize
-                        \nAll will become
-                        \nAll will arise
-                        
-                        \nStay with me
-                        \nI hear them call the tide
-                        \nTake me in…
-                        \nI see the last divide
-                        \nHopelessy
-                        \nI le
-                       ''', style: TextStyle(
+      child: SingleChildScrollView(
+            child: Text(getLyrics().toString(), style: TextStyle(
                   color: Color(0xFF959599),
                   fontSize: 18,
                  ),

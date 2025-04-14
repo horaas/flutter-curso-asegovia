@@ -1,4 +1,5 @@
 
+void prueba() => print('hola');
 
 List<String> getLyrics() {
 
