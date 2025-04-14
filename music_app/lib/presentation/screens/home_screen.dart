@@ -114,7 +114,7 @@ class _DiskImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPlay = Provider.of<PlayingModel>(context).isPlaying();
+    // bool isPlay = Provider.of<PlayingModel>(context).isPlaying();
     return Container(
       padding: const EdgeInsets.all(20),
       width: 240,
@@ -133,8 +133,11 @@ class _DiskImage extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             SpinPerfect(
+              duration: const Duration(seconds: 10),
               infinite: true,
-              animate: isPlay,
+              manualTrigger: true,
+              // animate: isPlay,
+              controller: (controller) => Provider.of<PlayingModel>(context).setController = controller,
               child: Image.asset('assets/aurora.jpg')),
             Container(
               width: 25,
@@ -242,11 +245,13 @@ class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTicke
         if (isPlay) {
           controller.reverse();
           isPlay = !isPlay;
-          Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
+          Provider.of<PlayingModel>(context, listen: false).controller().stop();
+          // Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         } else {
           controller.forward();
           isPlay = !isPlay;
-          Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
+          Provider.of<PlayingModel>(context, listen: false).controller().repeat();
+          // Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         }
       },
       icon: AnimatedIcon(icon: AnimatedIcons.play_pause, progress: controller, size: 40, color: Colors.black ,),
