@@ -1,14 +1,207 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-  const HomeScreen({ super.key });
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 100),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50)),
+                gradient: LinearGradient(
+                  colors: [Colors.grey.shade800, const Color(0xff201E28)],
+                ),
+              ),
+              child: const Column(children: [
+                _Header(),
+                _MusicPlayer(),
+                ]),
+            ),
+          ),
+          _ContentLyrics(size: size)
+        ],
+      ),
+    );
+  }
+}
 
-   @override
-   Widget build(BuildContext context) {
-       return Scaffold(
-           appBar: AppBar(title: const Text(''),),
-           body: Container(),
-       );
+class _ContentLyrics extends StatelessWidget {
+  const _ContentLyrics({
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: size.height * 0.25,
+      child: const SingleChildScrollView(
+            child: Text('''
+                        \nHope start the heart
+                        \nLast beat and lie
+                        \nCold walk the earth
+                        \nLove faded white
+                        \nGave up the war
+                        \nI realize
+                        \nAll will become
+                        \nAll will arise
+                        
+                        \nStay with me
+                        \nI hear them call the tide
+                        \nTake me in…
+                        \nI see the last divide
+                        \nHopelessy
+                        \nI le
+                       ''', style: TextStyle(
+                  color: Color(0xFF959599),
+                  fontSize: 18,
+                 ),
+                 textAlign: TextAlign.center,),
+          ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.chevron_left, size: 40),
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.messenger_outline_sharp),
+          ),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.headphones)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+        ],
+      ),
+    );
+  }
+}
+
+class _MusicPlayer extends StatelessWidget {
+  const _MusicPlayer();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(children: [_MusicPayig(), _MusicControls()]);
+  }
+}
+
+class _MusicPayig extends StatelessWidget {
+  const _MusicPayig();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            width: size.width * 0.6,
+            // height: 200,
+            decoration: BoxDecoration(
+              color: const Color(0xff201E28),
+              borderRadius: BorderRadius.circular(200),
+              gradient: LinearGradient(
+                colors: [Colors.grey.shade800, const Color(0xff201E28)],
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(200),
+              child: Image.asset('assets/aurora.jpg'),
+            ),
+          ),
+          const Expanded(
+            child: _TimeLinePlaying()
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TimeLinePlaying extends StatelessWidget {
+  const _TimeLinePlaying();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [const Text('04:53', style: TextStyle(
+          color: Color(0xFF959599)
+        ),), Transform.rotate(
+          angle: 190,
+          child: const LinearProgressIndicator(value: 25, color: Color(0xFFD4D4D6), )), const Text('02:58', style: TextStyle(
+            color: Color(0xFF959599)
+          ),)]),
+    );
+  }
+}
+
+class _MusicControls extends StatelessWidget {
+  const _MusicControls();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(top: 45),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            children: [
+              Text('Far Away', style: TextStyle(
+                fontSize: 30,
+                color: Color(0xFFD4D4D6)
+              ),),
+              Text('-Breaking Benjamin-', style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF959599)
+              ),),
+            ],
+          ),
+          _ButtonPlayControl()
+        ],
+      ),
+    );
+  }
+}
+
+class _ButtonPlayControl extends StatelessWidget {
+  const _ButtonPlayControl();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        print('play');
+      },
+      icon: const Icon(Icons.play_arrow, size: 40, color: Colors.black,),
+      style: const ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(Color(0xFFF8CA50))
+      ),
+    );
   }
 }
