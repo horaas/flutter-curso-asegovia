@@ -1,5 +1,7 @@
 import 'package:animate_do/animate_do.dart';
+// import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_app/helpers/helpers.dart';
 import 'package:music_app/models/playing_model.dart';
 import 'package:music_app/presentation/widgets/custom_app_bar.dart';
@@ -167,17 +169,24 @@ class _TimeLinePlaying extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final playingModel = Provider.of<PlayingModel>(context);
+    final porcentaje = playingModel.porcentaje;
+
+    return SizedBox(
       height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text('04:53', style: TextStyle(
+          Text(playingModel.songTotalDuration, style: const TextStyle(
           color: Color(0xFF959599)
         ),), Transform.rotate(
           angle: -1.57,
-          child: const LinearProgressIndicator(value: 0.5, color: Color(0xFFD4D4D6) )), const Text('02:58', style: TextStyle(
-            color: Color(0xFF959599)
+          child: LinearProgressIndicator(
+            value: porcentaje,
+            color: const Color(0xFFD4D4D6) )),
+            Text(playingModel.currentSecond,
+            style: const TextStyle(
+              color: Color(0xFF959599)
           ),)]),
     );
   }
@@ -223,13 +232,33 @@ class _ButtonPlayControl extends StatefulWidget {
 class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTickerProviderStateMixin {
   late AnimationController controller;
   bool isPlay = false;
-
+  bool firstTime = true;
+  final audioplayer = AudioPlayer();
 
   @override
   void initState() {
     controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
 
     super.initState();
+  }
+
+  void open() async {
+    final playingModel = Provider.of<PlayingModel>(context, listen: false);
+
+    final duration = await audioplayer.setAsset('assets/Breaking-Benjamin-Far-Away.mp3');
+    playingModel.setsongDuration = duration!;
+
+    audioplayer.positionStream.listen((durationListen) {
+      playingModel.setcurrent = durationListen;
+      if (duration == durationListen) {
+        audioplayer.stop();
+        firstTime = true;
+        isPlay = false;
+        controller.reverse();
+        playingModel.controller().stop();
+        playingModel.setcurrent = const Duration(milliseconds: 0);
+      }
+    },);
   }
 
   @override
@@ -242,15 +271,24 @@ class _ButtonPlayControlState extends State<_ButtonPlayControl> with SingleTicke
     return IconButton(
       onPressed: () {
         print('play');
+        if (firstTime) {
+          open();
+          firstTime = false;
+        }
+
         if (isPlay) {
           controller.reverse();
           isPlay = !isPlay;
           Provider.of<PlayingModel>(context, listen: false).controller().stop();
+
+          audioplayer.pause();
           // Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         } else {
           controller.forward();
           isPlay = !isPlay;
           Provider.of<PlayingModel>(context, listen: false).controller().repeat();
+
+          audioplayer.play();
           // Provider.of<PlayingModel>(context, listen: false).setIsPlaying = isPlay;
         }
       },
