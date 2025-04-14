@@ -34,15 +34,15 @@ class _BackgroundGradient extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(bottom: 100),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50)),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.center,
-          colors: [Color(0xFF33333E), const Color(0xff201E28)],
+          colors: [Color(0xFF33333E), Color(0xff201E28)],
         ),
       ),
-      child: child),
+      child: child
     );
   }
 }
