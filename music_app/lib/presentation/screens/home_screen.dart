@@ -42,14 +42,17 @@ class _ContentLyrics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lyric = getLyrics();
     return SizedBox(
       height: size.height * 0.25,
-      child: SingleChildScrollView(
-            child: Text(getLyrics().toString(), style: const TextStyle(
+      child: ListWheelScrollView(
+            itemExtent: 42,
+            diameterRatio: 1.5,
+            children: lyric.map((data) => Text(data, style: const TextStyle(
                   color: Color(0xFF959599),
                   fontSize: 18,
                  ),
-                 textAlign: TextAlign.center,),
+                 textAlign: TextAlign.center,)).toList(),
           ),
     );
   }
@@ -161,10 +164,11 @@ class _MusicControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 45),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 35),
+      margin: const EdgeInsets.only(top: 40),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
