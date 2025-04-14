@@ -45,7 +45,7 @@ class _ContentLyrics extends StatelessWidget {
     return SizedBox(
       height: size.height * 0.25,
       child: SingleChildScrollView(
-            child: Text(getLyrics().toString(), style: TextStyle(
+            child: Text(getLyrics().toString(), style: const TextStyle(
                   color: Color(0xFF959599),
                   fontSize: 18,
                  ),
@@ -75,26 +75,61 @@ class _MusicPayig extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            width: size.width * 0.6,
-            // height: 200,
-            decoration: BoxDecoration(
-              color: const Color(0xff201E28),
-              borderRadius: BorderRadius.circular(200),
-              gradient: LinearGradient(
-                colors: [Colors.grey.shade800, const Color(0xff201E28)],
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(200),
-              child: Image.asset('assets/aurora.jpg'),
-            ),
-          ),
+          _DiskImage(size: size),
           const Expanded(
             child: _TimeLinePlaying()
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _DiskImage extends StatelessWidget {
+  const _DiskImage({
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: 240,
+      height: 240,
+      decoration: BoxDecoration(
+        color: const Color(0xff201E28),
+        borderRadius: BorderRadius.circular(200),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          colors: [Color(0xFF484750), Color(0xff1E1C24)],
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(200),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset('assets/aurora.jpg'),
+            Container(
+              width: 25,
+              height: 25,
+              decoration: const BoxDecoration(
+                color: Colors.black38,
+                shape: BoxShape.circle
+              ),
+            ),
+            Container(
+              width: 18,
+              height: 18,
+              decoration: const BoxDecoration(
+                color: Color(0xFF1C1C25),
+                shape: BoxShape.circle
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
