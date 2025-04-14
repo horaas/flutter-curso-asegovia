@@ -11,24 +11,38 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 100),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50)),
-                gradient: LinearGradient(
-                  colors: [Colors.grey.shade800, const Color(0xff201E28)],
-                ),
-              ),
-              child: const Column(children: [
+          const Expanded(
+            child: _BackgroundGradient(
+              child: Column(children: [
                 CustomAppBar(),
                 _MusicPlayer(),
-                ]),
-            ),
+              ])
+            )
           ),
           _ContentLyrics(size: size)
         ],
       ),
+    );
+  }
+}
+
+class _BackgroundGradient extends StatelessWidget {
+  final Widget child;
+  const _BackgroundGradient({ required this.child,});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 100),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50)),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.center,
+          colors: [Color(0xFF33333E), const Color(0xff201E28)],
+        ),
+      ),
+      child: child),
     );
   }
 }
