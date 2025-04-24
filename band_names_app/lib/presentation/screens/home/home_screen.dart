@@ -1,5 +1,7 @@
 import 'package:band_names_app/models/band_model.dart';
+import 'package:band_names_app/presentation/blocs/counter/counter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,14 +11,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<BandModel>data = [
-    BandModel(id: 3, name: 'par band', votes: 40, color: Colors.blueAccent),
-    BandModel(id: 1, name: 'kiss', votes: 10, color: Colors.red),
-    BandModel(id: 2, name: 'bon jovi', votes: 5, color: Colors.green),
-  ];
 
+  List<BandModel>data = [];
+  
   @override
   Widget build(BuildContext context) {
+    data = context.select((CounterBloc counterBloc) => counterBloc.state.bands);
+
     return Scaffold(
       appBar: AppBar(title: const Text('App names'), centerTitle: true),
       body: Container(
@@ -29,11 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) { 
-                  return _ListTileOption(band: data[index], onTap: () {
-                    data[index].votes++;
-                    setState(() {
-                      
-                    });
+                  final band = data[index];
+                  return _ListTileOption(band: band, onTap: () {
+                    context.read<CounterBloc>().add(UpdateBandsListVotes(band));
                   },);
                  },
                 
@@ -59,8 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
           MaterialButton(onPressed: () {
             _addBand(textEditControl.text);
             Navigator.pop(context);
-            setState(() {
-            });
 
           }, child: Text('Ok')),
           MaterialButton(onPressed: () {
@@ -76,8 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (name.isEmpty || name.trim() == '') {
       return;
     }
-
-    data.add(BandModel(id: data.length + 1, name: name, votes: 0, color: Colors.black));
+    context.read<CounterBloc>().add(AddBand(BandModel(id:  data.length + 1, name: name, votes: 0, color: Colors.black)));
   }
 }
 
