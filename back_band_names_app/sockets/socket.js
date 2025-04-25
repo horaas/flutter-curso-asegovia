@@ -1,5 +1,22 @@
+const Band = require('../models/band');
+const Bands = require('../models/bands');
 
+const bands = new Bands();
 
+bands.addBand(
+    new Band('par band'),
+)
+bands.addBand(
+    new Band('kiss'),
+)
+bands.addBand(
+    new Band('bon jovi'),
+)
+bands.addBand(
+    new Band('bon nuevo jovi'),
+)
+
+console.dir(bands)
 class Socket {
     constructor(server) {
         this.io = require('socket.io')(server);
@@ -9,35 +26,26 @@ class Socket {
         this.io.on('connection', (client) => this.handleConection(client));
     }
 
-    handleConection(client){
-        console.dir('conectado')
+    handleConection(client) {
+        console.dir('conectado');
+        console.dir(client.id);
         client.on('disconnect', () => this.handleDisconect());
-        this.handleMessage(client)
-        this.handleGetBands(client)
+        this.handleMessage(client);
+        this.handleGetBands(client);
     }
-    handleDisconect(){
-        console.dir('desconectado')
+    handleDisconect() {
+        console.dir('desconectado');
     }
-    handleMessage(client){
-        console.dir(client.id)
+    handleMessage(client) {
         client.on('message', (data) => {
-            console.log('reciver: ', data)
-            this.io.emit('message', {success: true});
+            console.log('reciver: ', data);
+            client.broadcast.emit('message', {
+                success: true
+            });
         });
     }
-    handleGetBands(client){
-        console.dir(client.id)
-        client.on('bands', (data) => {
-            console.log('reciver: ', data)
-            if(data.get) {
-                this.io.emit('getBands', {bands: [
-                    {id: 3, name: 'par band', votes: 40, color: 'Colors.blueAccent'},
-                    {id: 1, name: 'kiss', votes: 10, color: 'Colors.red'},
-                    {id: 2, name: 'bon jovi', votes: 5, color: 'Colors.green'},
-                  ]});
-            }
-            
-        });
+    handleGetBands() {
+        this.io.emit('getBands', bands.getBands());
     }
 }
 
