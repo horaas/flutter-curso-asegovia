@@ -1,40 +1,40 @@
 import 'package:band_names_app/models/band_model.dart';
-import 'package:band_names_app/presentation/blocs/counter/counter_bloc.dart';
+import 'package:band_names_app/providers/socket_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
 
-class _HomeScreenState extends State<HomeScreen> {
-
-  List<BandModel>data = [];
-  
   @override
   Widget build(BuildContext context) {
-     context.read<CounterBloc>().add(GetBands());
-
-    data = context.select((CounterBloc counterBloc) => counterBloc.state.bands);
+    List<BandModel>data = [];
+    final socketService = Provider.of<SocketProvider>(context);
+    final iconStatus = socketService.serverStatus == ServerStatus.online ? Icon(Icons.check_circle, color: Colors.blue[300], size: 25,) : Icon(Icons.sick, color: Colors.red[300], size: 25,);
+    data = [];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('App names'), centerTitle: true),
+      appBar: AppBar(title: const Text('App names'), centerTitle: true, actions: [
+        Container(
+          margin: const EdgeInsets.only(right: 12),
+          child: iconStatus,
+        )
+      ]),
       body: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             // _ContentBandsInfo(data: data),
-            SizedBox(height: 15,),
+            Text('Status: ${socketService.serverStatus}'),
+            const SizedBox(height: 15,),
             Expanded(
               child: ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) { 
                   final band = data[index];
                   return _ListTileOption(band: band, onTap: () {
-                    context.read<CounterBloc>().add(UpdateBandsListVotes(band));
+                    // context.read<CounterBloc>().add(UpdateBandsListVotes(band));
                   },);
                  },
                 
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => _addBandDialog(context), child: Icon(Icons.add),),
+      floatingActionButton: FloatingActionButton(onPressed: () => _addBandDialog(context), child: const Icon(Icons.add),),
     );
   }
 
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     showDialog(
       builder: (context) => AlertDialog(
-        title: Text('Add band'),
+        title: const Text('Add band'),
         content: TextField(
           controller: textEditControl,
         ),
@@ -61,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
             _addBand(textEditControl.text);
             Navigator.pop(context);
 
-          }, child: Text('Ok')),
+          }, child: const Text('Ok')),
           MaterialButton(onPressed: () {
             Navigator.pop(context);
-          }, child: Text('Cancel'),)
+          }, child: const Text('Cancel'),)
         ],
         
       ), context: context,
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (name.isEmpty || name.trim() == '') {
       return;
     }
-    context.read<CounterBloc>().add(AddBand(BandModel(id:  data.length + 1, name: name, votes: 0, color: Colors.black)));
+    // context.read<CounterBloc>().add(AddBand(BandModel(id:  data.length + 1, name: name, votes: 0, color: Colors.black)));
   }
 }
 
@@ -92,12 +92,12 @@ class _ContentBandsInfo extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           width: 200,
           height: 200,
           child: _BandInfoGrafic(data),
         ),
-        SizedBox(width: 10,),
+        const SizedBox(width: 10,),
         _ListBandInfo(data: data)
       ],
     );
@@ -142,7 +142,7 @@ class _ListBandInfo extends StatelessWidget {
             height: 10,
             color: band.color,
           ),
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
           Text(band.name)
         ],
       ),).toList(),
@@ -171,15 +171,15 @@ class _ListTileOption extends StatelessWidget {
         print('id -> ${band.id}');
       },
       background: Container(
-        padding: EdgeInsets.only(left: 8.6),
+        padding: const EdgeInsets.only(left: 8.6),
         alignment: Alignment.centerLeft,
         color: Colors.red,
-        child: Text('Delet band', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        child: const Text('Delet band', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       child: ListTile(
         leading: CircleAvatar(child: Text(band.name.substring(0,2)),),
         title: Text(band.name),
-        trailing: Text('${band.votes}', style: TextStyle(
+        trailing: Text('${band.votes}', style: const TextStyle(
           fontSize: 19,
           fontWeight: FontWeight.bold
         ),),

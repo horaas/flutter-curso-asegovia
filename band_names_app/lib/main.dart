@@ -1,11 +1,9 @@
-import 'package:band_names_app/presentation/blocs/counter/counter_bloc.dart';
 import 'package:band_names_app/presentation/screens/home/home_screen.dart';
+import 'package:band_names_app/providers/socket_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-
-
   runApp(const MainApp());
 }
 
@@ -14,8 +12,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocProvider(create: (_) => CounterBloc(), child: HomeScreen(),),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SocketProvider())
+      ],
+      child: const MaterialApp(
+        home: HomeScreen(),
+      ),
     );
   }
 }
