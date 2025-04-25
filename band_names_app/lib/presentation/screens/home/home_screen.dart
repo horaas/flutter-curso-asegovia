@@ -19,11 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final socketService = Provider.of<SocketProvider>(context, listen: false);
 
-    socketService.soket.on('getBands', (data) {
-      bands = (data as List).map((band) => BandModel.fromJson(band)).toList();
-      setState(() {});
-    },);
+    socketService.soket.on('getBands', _handleActiveBand);
+  }
 
+  _handleActiveBand(dynamic payload) {
+    bands = (payload as List).map((band) => BandModel.fromJson(band)).toList();
+    setState(() {});
   }
 
   @override
@@ -97,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     final socketService = Provider.of<SocketProvider>(context, listen: false);
     socketService.soket.emit('add-band',{'name': name} );
-    // context.read<CounterBloc>().add(AddBand(BandModel(id:  data.length + 1, name: name, votes: 0, color: Colors.black)));
   }
 }
 
@@ -187,11 +187,9 @@ class _ListTileOption extends StatelessWidget {
     final socketService = Provider.of<SocketProvider>(context, listen: false);
 
     return Dismissible(
-      key: Key('${band.id}'),
+      key: Key(band.id),
       direction: DismissDirection.startToEnd,
-      onDismissed: (_) {
-        socketService.soket.emit('delete-band',{'id': band.id} );
-      },
+      onDismissed: (_) => socketService.soket.emit('delete-band',{'id': band.id} ),
       background: Container(
         padding: const EdgeInsets.only(left: 8.6),
         alignment: Alignment.centerLeft,
@@ -205,9 +203,7 @@ class _ListTileOption extends StatelessWidget {
           '${band.votes}',
           style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
         ),
-        onTap: () {
-          socketService.soket.emit('vote-band' , {'id': band.id});
-        },
+        onTap: () => socketService.soket.emit('vote-band' , {'id': band.id}),
       ),
     );
   }
