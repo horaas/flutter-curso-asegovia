@@ -25,13 +25,11 @@
 
         const button = document.getElementById('sendMessage');
         button.addEventListener('click', () => {
-            console.dir('send')
-            socket.emit('message', {
-                nombre: 'arturo'
-            })
+
         })
-        socket.on('message', (data) => {
-            console.log('response: ', data)
+        socket.on('getBands', (data) => {
+            console.clear();
+            console.table(data)
         })
     </script>
 </body>
