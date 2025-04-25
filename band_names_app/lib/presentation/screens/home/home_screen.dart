@@ -3,16 +3,39 @@ import 'package:band_names_app/providers/socket_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<BandModel>bands = [];
 
   @override
+  void initState() {
+    super.initState();
+
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
+
+    socketService.soket.on('getBands', (data) {
+      bands = (data as List).map((band) => BandModel.fromJson(band)).toList();
+      setState(() {});
+    },);
+
+  }
+
+  @override
+  void dispose() {
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
+    socketService.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    List<BandModel>data = [];
     final socketService = Provider.of<SocketProvider>(context);
     final iconStatus = socketService.serverStatus == ServerStatus.online ? Icon(Icons.check_circle, color: Colors.blue[300], size: 25,) : Icon(Icons.sick, color: Colors.red[300], size: 25,);
-    data = [];
 
     return Scaffold(
       appBar: AppBar(title: const Text('App names'), centerTitle: true, actions: [
@@ -26,16 +49,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // _ContentBandsInfo(data: data),
-            Text('Status: ${socketService.serverStatus}'),
             const SizedBox(height: 15,),
             Expanded(
               child: ListView.builder(
-                itemCount: data.length,
+                itemCount: bands.length,
                 itemBuilder: (BuildContext context, int index) { 
-                  final band = data[index];
-                  return _ListTileOption(band: band, onTap: () {
-                    // context.read<CounterBloc>().add(UpdateBandsListVotes(band));
-                  },);
+                  final band = bands[index];
+                  return _ListTileOption(band: band);
                  },
                 
               ),
@@ -119,7 +139,7 @@ class _BandInfoGrafic extends StatelessWidget {
 
     return Stack(
       fit: StackFit.expand,
-      children: bands.map((band) => CircularProgressIndicator(value: (band.votes / totalVotes), strokeWidth: 10, color: band.color,)).toList(),
+      children: bands.map((band) => CircularProgressIndicator(value: (band.votes / totalVotes), strokeWidth: 10, )).toList(),
     );
   }
 }
@@ -140,7 +160,7 @@ class _ListBandInfo extends StatelessWidget {
           Container(
             width: 10,
             height: 10,
-            color: band.color,
+            color: Colors.red,
           ),
           const SizedBox(width: 5,),
           Text(band.name)
@@ -153,16 +173,17 @@ class _ListBandInfo extends StatelessWidget {
 
 class _ListTileOption extends StatelessWidget {
   final BandModel band;
-  final GestureTapCallback onTap;
 
   const _ListTileOption({
-    required this.band, required this.onTap,
+    required this.band,
   });
 
 
 
   @override
   Widget build(BuildContext context) {
+    final socketService = Provider.of<SocketProvider>(context);
+
     return Dismissible(
       key: Key('${band.id}'),
       direction: DismissDirection.startToEnd,
@@ -177,13 +198,16 @@ class _ListTileOption extends StatelessWidget {
         child: const Text('Delet band', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       child: ListTile(
-        leading: CircleAvatar(child: Text(band.name.substring(0,2)),),
+        leading: CircleAvatar(child: Text(band.name.substring(0, 2))),
         title: Text(band.name),
-        trailing: Text('${band.votes}', style: const TextStyle(
-          fontSize: 19,
-          fontWeight: FontWeight.bold
-        ),),
-        onTap: onTap,
+        trailing: Text(
+          '${band.votes}',
+          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+        ),
+        onTap: () {
+          socketService.soket.emit('vote-band' , {'id': band.id});
+          // context.read<CounterBloc>().add(UpdateBandsListVotes(band));
+        },
       ),
     );
   }

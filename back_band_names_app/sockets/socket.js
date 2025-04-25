@@ -3,23 +3,16 @@ const Bands = require('../models/bands');
 
 const bands = new Bands();
 
-bands.addBand(
-    new Band('par band'),
-)
-bands.addBand(
-    new Band('kiss'),
-)
-bands.addBand(
-    new Band('bon jovi'),
-)
-bands.addBand(
-    new Band('bon nuevo jovi'),
-)
+bands.addBand( new Band('par band'),)
+bands.addBand( new Band('kiss'),)
+bands.addBand( new Band('bon jovi'),)
+bands.addBand( new Band('bon nuevo jovi'),)
+bands.addBand( new Band('bon nuevo jovi'),)
 
-console.dir(bands)
 class Socket {
     constructor(server) {
         this.io = require('socket.io')(server);
+        this.client = undefined;
     }
 
     handleProcessIo() {
@@ -29,24 +22,33 @@ class Socket {
     handleConection(client) {
         console.dir('conectado');
         console.dir(client.id);
+        this.client = client
         client.on('disconnect', () => this.handleDisconect());
-        this.handleMessage(client);
-        this.handleGetBands(client);
+        this.handleVoteBand();
+        this.handleGetBands();
     }
     handleDisconect() {
         console.dir('desconectado');
     }
-    handleMessage(client) {
-        client.on('message', (data) => {
+    handleGetBands() {
+        this.client.emit('getBands', bands.getBands());
+    }
+    handleVoteBand() {
+        this.client.on('vote-band', (data) => {
             console.log('reciver: ', data);
-            client.broadcast.emit('message', {
-                success: true
-            });
+            bands.voteBand(data.id);
+            console.table(bands.getBands())
+            this.io.emit('getBands', bands.getBands());
         });
     }
-    handleGetBands() {
-        this.io.emit('getBands', bands.getBands());
-    }
+    // handleMessage() {
+    //     this.client.on('message', (data) => {
+    //         console.log('reciver: ', data);
+    //         client.broadcast.emit('message', {
+    //             success: true
+    //         });
+    //     });
+    // }
 }
 
 module.exports = {
