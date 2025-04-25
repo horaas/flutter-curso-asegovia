@@ -7,7 +7,6 @@ bands.addBand( new Band('par band'),)
 bands.addBand( new Band('kiss'),)
 bands.addBand( new Band('bon jovi'),)
 bands.addBand( new Band('bon nuevo jovi'),)
-bands.addBand( new Band('bon nuevo jovi'),)
 
 class Socket {
     constructor(server) {

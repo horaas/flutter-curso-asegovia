@@ -1,6 +1,7 @@
 import 'package:band_names_app/models/band_model.dart';
 import 'package:band_names_app/providers/socket_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            // _ContentBandsInfo(data: data),
+            _ContentBandsInfo(bands: bands),
             const SizedBox(height: 15,),
             Expanded(
               child: ListView.builder(
@@ -102,74 +103,34 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _ContentBandsInfo extends StatelessWidget {
-  final List<BandModel> data;
+  final List<BandModel> bands;
 
   const _ContentBandsInfo({
-    required this.data,
+    required this.bands,
   });
 
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          width: 200,
-          height: 200,
-          child: _BandInfoGrafic(data),
-        ),
-        const SizedBox(width: 10,),
-        _ListBandInfo(data: data)
-      ],
-    );
-  }
-}
+    Map<String, double> dataMap = {};
 
-class _BandInfoGrafic extends StatelessWidget {
-  final List<BandModel>bands;
-
-  const _BandInfoGrafic(this.bands);
-
-
-  @override
-  Widget build(BuildContext context) {
-    int totalVotes = 0;
-    for (var band in bands) {
-      totalVotes = band.votes + totalVotes;
+    for (var element in bands) {
+      dataMap.putIfAbsent(element.name, () => element.votes.toDouble(),);
     }
 
-    return Stack(
-      fit: StackFit.expand,
-      children: bands.map((band) => CircularProgressIndicator(value: (band.votes / totalVotes), strokeWidth: 10, )).toList(),
+    return dataMap.isEmpty ?  Container() : SizedBox(
+      width: double.infinity,
+      height: 200,
+      child: PieChart(
+        dataMap: dataMap,
+        chartType: ChartType.ring,
+      chartValuesOptions: const ChartValuesOptions(
+        showChartValueBackground: false
+      ),
+        
+      ),
     );
-  }
-}
 
-class _ListBandInfo extends StatelessWidget {
-  const _ListBandInfo({
-    required this.data,
-  });
-
-  final List<BandModel> data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: data.map((band) => Row(
-        children: [
-          Container(
-            width: 10,
-            height: 10,
-            color: Colors.red,
-          ),
-          const SizedBox(width: 5,),
-          Text(band.name)
-        ],
-      ),).toList(),
-      )
-    );
   }
 }
 
