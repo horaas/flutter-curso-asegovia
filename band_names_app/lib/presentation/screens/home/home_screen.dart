@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   
   @override
   Widget build(BuildContext context) {
+     context.read<CounterBloc>().add(GetBands());
+
     data = context.select((CounterBloc counterBloc) => counterBloc.state.bands);
 
     return Scaffold(
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
-            _ContentBandsInfo(data: data),
+            // _ContentBandsInfo(data: data),
             SizedBox(height: 15,),
             Expanded(
               child: ListView.builder(

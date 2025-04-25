@@ -16,3 +16,5 @@ class UpdateBandsListVotes extends CounterEvent {
   final BandModel band;
   const UpdateBandsListVotes(this.band);
 }
+class GetBands extends CounterEvent {
+}

@@ -13,12 +13,6 @@ const socket = require('./sockets/socket');
 socket.create(server).handleProcessIo();
 
 
-
-
-
-// app.get('/', (req, res) => {res.send('Hello World!')})
-
-
 server.listen(process.env.PORT, () => {
     console.log(`Example app listening on port ${process.env.PORT}`)
 })

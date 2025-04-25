@@ -17,7 +17,7 @@ class BandModel {
     id: json['id'],
     name: json['name'],
     votes: json['votes'],
-    color: json['color'],
+    color: Colors.red,
   );
 
   BandModel copyWith({int? id, String? name, int? votes, Color? color}) =>
