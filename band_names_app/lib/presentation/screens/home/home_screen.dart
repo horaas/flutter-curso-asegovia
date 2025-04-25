@@ -95,6 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (name.isEmpty || name.trim() == '') {
       return;
     }
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
+    socketService.soket.emit('add-band',{'name': name} );
     // context.read<CounterBloc>().add(AddBand(BandModel(id:  data.length + 1, name: name, votes: 0, color: Colors.black)));
   }
 }
@@ -182,7 +184,7 @@ class _ListTileOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final socketService = Provider.of<SocketProvider>(context);
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
 
     return Dismissible(
       key: Key('${band.id}'),
@@ -206,7 +208,6 @@ class _ListTileOption extends StatelessWidget {
         ),
         onTap: () {
           socketService.soket.emit('vote-band' , {'id': band.id});
-          // context.read<CounterBloc>().add(UpdateBandsListVotes(band));
         },
       ),
     );

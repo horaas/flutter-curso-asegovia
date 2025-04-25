@@ -26,6 +26,7 @@ class Socket {
         client.on('disconnect', () => this.handleDisconect());
         this.handleVoteBand();
         this.handleGetBands();
+        this.handleAddBand();
     }
     handleDisconect() {
         console.dir('desconectado');
@@ -35,9 +36,15 @@ class Socket {
     }
     handleVoteBand() {
         this.client.on('vote-band', (data) => {
-            console.log('reciver: ', data);
+            console.log('vote: ', data);
             bands.voteBand(data.id);
-            console.table(bands.getBands())
+            this.io.emit('getBands', bands.getBands());
+        });
+    }
+    handleAddBand() {
+        this.client.on('add-band', (data) => {
+            console.log('add: ', data);
+            bands.addBand(new Band(data.name));
             this.io.emit('getBands', bands.getBands());
         });
     }
