@@ -27,6 +27,7 @@ class Socket {
         this.handleVoteBand();
         this.handleGetBands();
         this.handleAddBand();
+        this.handleRemoveBand();
     }
     handleDisconect() {
         console.dir('desconectado');
@@ -48,7 +49,7 @@ class Socket {
             this.io.emit('getBands', bands.getBands());
         });
     }
-    handleAddBand() {
+    handleRemoveBand() {
         this.client.on('delete-band', (data) => {
             console.log('delete: ', data);
             bands.deleteBand(data.id);

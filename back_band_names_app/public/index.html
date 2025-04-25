@@ -9,6 +9,9 @@
 
 <body>
     <h1>Error</h1>
+    <section>
+        <input type="text" name="" id="bandName">
+    </section>
     <h2>
         <button id="sendMessage">Send Message</button>
     </h2>
@@ -24,8 +27,13 @@
         })
 
         const button = document.getElementById('sendMessage');
+        const input = document.getElementById('bandName');
         button.addEventListener('click', () => {
-
+            if (input.value && input.value.trim()) {
+                console.dir(input.value);
+                socket.emit('add-band', {name: input.value})
+            }
+            input.value = '';
         })
         socket.on('getBands', (data) => {
             console.clear();
