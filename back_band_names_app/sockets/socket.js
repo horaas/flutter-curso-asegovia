@@ -48,6 +48,13 @@ class Socket {
             this.io.emit('getBands', bands.getBands());
         });
     }
+    handleAddBand() {
+        this.client.on('delete-band', (data) => {
+            console.log('delete: ', data);
+            bands.deleteBand(data.id);
+            this.io.emit('getBands', bands.getBands());
+        });
+    }
     // handleMessage() {
     //     this.client.on('message', (data) => {
     //         console.log('reciver: ', data);

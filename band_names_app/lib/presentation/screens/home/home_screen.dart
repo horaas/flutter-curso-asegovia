@@ -189,9 +189,8 @@ class _ListTileOption extends StatelessWidget {
     return Dismissible(
       key: Key('${band.id}'),
       direction: DismissDirection.startToEnd,
-      onDismissed: (direction) {
-        print(direction);
-        print('id -> ${band.id}');
+      onDismissed: (_) {
+        socketService.soket.emit('delete-band',{'id': band.id} );
       },
       background: Container(
         padding: const EdgeInsets.only(left: 8.6),
