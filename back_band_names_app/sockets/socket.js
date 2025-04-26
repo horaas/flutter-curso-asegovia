@@ -32,6 +32,7 @@ class Socket {
         console.dir('desconectado');
     }
     handleGetBands() {
+        console.error('hola')
         this.client.emit('getBands', bands.getBands());
     }
     handleVoteBand() {
