@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: routes,
-      initialRoute: 'users',
+      initialRoute: 'chat',
     );
   }
 }
