@@ -9,26 +9,31 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF2F2F2),
+    return Scaffold(
+      backgroundColor: const Color(0xFFF2F2F2),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            IconHeaderWidget(),
-            _Form(),
-            LabelsCustom(),
-            Text(
-              'Términos',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 17,
-                fontWeight: FontWeight.w200,
-              ),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height *0.9,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                IconHeaderWidget(),
+                _Form(),
+                LabelsCustom(route: 'register', text: 'Crea una cuent ahora',),
+                Text(
+                  'Términos',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -69,7 +74,7 @@ class _FormState extends State<_Form> {
           const SizedBox(height: 20),
           CustomButtonBlue(
             text: 'Ingresar',
-            onPress: () {
+            onPressed: () {
               print(emailControl.text);
               print(passControl.text);
             },
