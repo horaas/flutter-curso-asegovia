@@ -13,12 +13,11 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF2F2F2),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: SizedBox(
             height: MediaQuery.of(context).size.height *0.9,
             child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
               children: [
                 IconHeaderWidget(),
                 _Form(),
