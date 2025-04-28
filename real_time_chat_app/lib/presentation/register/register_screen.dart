@@ -4,9 +4,9 @@ import 'package:real_time_chat_app/presentation/widgets/custom_text_field.dart';
 import 'package:real_time_chat_app/presentation/widgets/icon_header_widget.dart';
 import 'package:real_time_chat_app/presentation/widgets/labels_cutom.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
 
+  const RegisterScreen({ super.key });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 IconHeaderWidget(),
                 _Form(),
-                LabelsCustom(title: '¿No tiene cuenta?', route: 'register', text: 'Crea una cuent ahora',),
+                LabelsCustom(title: '¿Ya tiene cuenta?' ,route: 'login', text: 'Ingresar',),
                 Text(
                   'Términos',
                   style: TextStyle(
@@ -48,6 +48,7 @@ class _Form extends StatefulWidget {
 }
 
 class _FormState extends State<_Form> {
+  final TextEditingController namControl = TextEditingController();
   final TextEditingController emailControl = TextEditingController();
   final TextEditingController passControl = TextEditingController();
 
@@ -58,6 +59,12 @@ class _FormState extends State<_Form> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
+          CustomTextField(
+            type: TextInputType.text,
+            icon: Icons.people,
+            hint: 'Nombre',
+            textEditingController: namControl,
+          ),
           CustomTextField(
             type: TextInputType.emailAddress,
             icon: Icons.email_outlined,
