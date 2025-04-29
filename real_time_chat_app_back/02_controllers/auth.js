@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 
 
 const User = require("../03_models/user");
+const { generate } = require("../04_helpers/jwt");
 
 const create = async (req, res = response) => {
     
@@ -16,16 +17,19 @@ const create = async (req, res = response) => {
             throw new Error('email existe')
         }
         const user = new User(req.body);
+        //Json web tojken
+        const token = await generate(user.id);
         
         //encript contraseña
         const salt = bcrypt.genSaltSync();
         user.pass = bcrypt.hashSync(pass, salt);
 
         await user.save();
+
         res.json( {
             ok: true,
             user,
-            pass: user.pass
+            token
         })
     } catch (error) {
         console.error(error.message)
