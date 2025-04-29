@@ -9,7 +9,7 @@ const generate = (uuid) => {
             expiresIn: '48h',
         }, (error, token) => {
             if (error) {
-                reject(new Error("Error key"));
+                reject(new Error("Error generate key JWT"));
             };
             resolve(token);
         });

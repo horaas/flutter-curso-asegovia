@@ -39,8 +39,39 @@ const create = async (req, res = response) => {
         })
     }
 }
+const auth = async (req, res = response) => {
+    
+    try {
+        const { email, pass } = req.body;
+        const user = await User.findOne({email: email});
+        if (!user) {
+            throw new Error('Verificar datos', {cause: 'login'})
+        }
+        const validatePass =  bcrypt.compareSync(pass, user.pass);
+        if (!validatePass) {
+            throw new Error('Verificar datos', {cause: 'login'})
+        }
+
+        //Json web tojken
+        const token = await generate(user.id);
+
+        res.json( {
+            ok: true,
+            user,
+            token
+        })
+    } catch (error) {
+        console.error(error.message)
+        console.error(error.cause)
+        res.status(error.cause === 'login'? 400 : 500).json( {
+            ok: false,
+            msg: error.cause === 'login'? error.message : 'error'
+        })
+    }
+}
 
 
 module.exports = {
-    create
+    create,
+    auth
 }
