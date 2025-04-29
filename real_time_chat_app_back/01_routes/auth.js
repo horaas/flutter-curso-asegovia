@@ -10,6 +10,6 @@ routes.post('/new', [
     check('email', 'el email requerido').isEmail(),
     check('pass', 'la contraseña es requrida').not().isEmpty(),
     validator
-] ,create)
+] , create)
 
 module.exports = {routes}
