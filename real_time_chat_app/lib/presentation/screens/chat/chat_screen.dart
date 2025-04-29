@@ -18,8 +18,15 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final focusNode = FocusNode();
   bool writing = false;
 
-  List<Widget> messages = [];
+  List<ChatMessage> messages = [];
 
+  @override
+  void dispose() {
+    for (var message in messages) {
+      message.animationController.dispose();
+    }
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
