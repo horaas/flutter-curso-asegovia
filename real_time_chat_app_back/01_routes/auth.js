@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { create, auth } = require("../02_controllers/auth");
+const { create, auth, renewJWT } = require("../02_controllers/auth");
 const { validator } = require("../middlewares/validators");
+const { validatorJwt } = require("../middlewares/validatorJWT");
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.post('/auth', [
     check('pass', 'la contraseña es requrida').not().isEmpty(),
     validator
 ] , auth)
+routes.get('/renew', validatorJwt , renewJWT)
 
 module.exports = {routes}

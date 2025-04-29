@@ -69,9 +69,32 @@ const auth = async (req, res = response) => {
         })
     }
 }
+const renewJWT = async (req, res = response) => {
+    
+    try {
+        const {uuid } = req;
+        const user = await User.findById(uuid);
+        if (!user) {
+            throw new Error('Usuario no existe')
+        }
+        const token = await generate(uuid);
+        res.json( {
+            ok: true,
+            user,
+            token
+        })
+    } catch (error) {
+        console.error(error.message)
+        res.status( 500).json( {
+            ok: false,
+            msg:'error'
+        })
+    }
+}
 
 
 module.exports = {
     create,
-    auth
+    auth,
+    renewJWT
 }
