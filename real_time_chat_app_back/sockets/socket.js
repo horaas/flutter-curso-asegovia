@@ -29,13 +29,21 @@ class Socket {
         }
         console.dir('conectado');
         userConected(uuid, true);
+        this.client = client;
 
-        this.client = client
+        this.client.join(uuid);
+
+        this.listenPersonalMessage();
         client.on('disconnect', () => this.handleDisconect(uuid));
     }
     handleDisconect(uuid) {
         userConected(uuid, false);
         console.dir('desconectado');
+    }
+    listenPersonalMessage() {
+        this.client.on('personal-message', (data) => {
+            console.log('personal-message: ', data);
+        });
     }
     handleGetBands() {
         this.client.emit('getBands', bands.getBands());

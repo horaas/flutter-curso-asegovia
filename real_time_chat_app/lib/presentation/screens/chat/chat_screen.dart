@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:real_time_chat_app/presentation/widgets/chat_message.dart';
+import 'package:real_time_chat_app/providers/auth_service.dart';
 import 'package:real_time_chat_app/providers/chat_service.dart';
+import 'package:real_time_chat_app/providers/socket_provider.dart';
 
 
 class ChatScreen extends StatefulWidget {
@@ -19,8 +21,20 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final textController = TextEditingController();
   final focusNode = FocusNode();
   bool writing = false;
+  late ChatService chatService;
+  late SocketProvider socketService;
+  late AuthService authService;
 
   List<ChatMessage> messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    chatService = Provider.of<ChatService>(context, listen: false);
+    socketService = Provider.of<SocketProvider>(context, listen: false);
+    authService = Provider.of<AuthService>(context, listen: false);
+  }
+
 
   @override
   void dispose() {
@@ -31,7 +45,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
-    final chatService = Provider.of<ChatService>(context);
     final userTo = chatService.userTo;
 
     return Scaffold(
@@ -110,10 +123,15 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   _handleSubmitText(String text) {
     if (text.isNotEmpty && text.trim() != '') {
-      print(text);
-      final newMessage = ChatMessage(uuid: '123', message: text, animationController: AnimationController(vsync: this, duration: Duration(milliseconds: 200)));
+
+      final newMessage = ChatMessage(uuid: authService.user!.uuid, message: text, animationController: AnimationController(vsync: this, duration: Duration(milliseconds: 200)));
       messages.insert(0, newMessage);
       newMessage.animationController.forward();
+      socketService.soket.emit('personal-message', {
+        'from': authService.user!.uuid,
+        'to': chatService.userTo.uuid,
+        'message': text
+      });
     }
     textController.clear();
     focusNode.requestFocus();

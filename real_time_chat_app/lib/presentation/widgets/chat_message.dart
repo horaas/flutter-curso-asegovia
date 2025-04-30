@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:real_time_chat_app/providers/auth_service.dart';
 
 class ChatMessage extends StatelessWidget {
   final String uuid;
@@ -12,6 +14,7 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
     return FadeTransition(
       opacity: animationController,
       child: SizeTransition(
@@ -22,14 +25,14 @@ class ChatMessage extends StatelessWidget {
 
         child: Align(
           alignment:
-              uuid == '123' ? Alignment.centerRight : Alignment.centerLeft,
+              uuid == authService.user!.uuid ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             margin: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.05,
               vertical: 10,
             ),
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-            decoration: uuid == '123' ? _decotarationMy() : _decotarationHer(),
+            decoration: uuid == authService.user!.uuid ? _decotarationMy() : _decotarationHer(),
             child: Text(message),
           ),
         ),
