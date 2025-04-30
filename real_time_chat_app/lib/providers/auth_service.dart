@@ -25,13 +25,13 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  static Future getToken(String token) async {
+  static Future getToken() async {
     final storage = const FlutterSecureStorage();
     final token = await storage.read(key: 'token');
     return token;
   }
 
-  static Future deleteToken(String token) async {
+  static Future deleteToken() async {
     final storage = const FlutterSecureStorage();
     final token = await storage.delete(key: 'token');
     return token;
@@ -57,6 +57,7 @@ class AuthService extends ChangeNotifier {
     setAutenticate = false;
     return false;
   }
+
   Future<bool> register(String name, String email, String pass) async {
      setRegistering = true;
 
@@ -85,6 +86,7 @@ class AuthService extends ChangeNotifier {
   Future<void> logOut() async {
     return await _storage.delete(key: 'token');
   }
+
   Future<bool> isAutenticate() async {
     final token = await _storage.read(key: 'token');
     final resp = await http.get(

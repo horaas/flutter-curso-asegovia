@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:real_time_chat_app/models/user_model.dart';
+import 'package:real_time_chat_app/providers/auth_service.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -21,7 +22,12 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.exit_to_app),
+        leading: IconButton(
+          onPressed: () {
+            AuthService.deleteToken();
+            Navigator.restorablePushNamed(context, 'login');
+          },
+          icon: const Icon(Icons.exit_to_app)),
         title: const Text('Name'),
         centerTitle: true,
         actions: [

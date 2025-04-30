@@ -83,8 +83,6 @@ class _FormState extends State<_Form> {
             text: 'Ingresar',
             onPressed: authServices.autenticate() ? null : () async {
               FocusScope.of(context).unfocus();
-              print(emailControl.text);
-              print(passControl.text);
               final loginOk = await authServices.login(emailControl.text, passControl.text);
               if (!loginOk) {
                 alert.show('Error', 'verificar datos');
@@ -92,7 +90,6 @@ class _FormState extends State<_Form> {
               }
               if(context.mounted) {
                 Navigator.pushReplacementNamed(context,'users');
-                print('hola $loginOk');
               }
             } ,
           ),
