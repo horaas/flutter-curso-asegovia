@@ -1,3 +1,4 @@
+const { userConected } = require('../02_controllers/socket');
 const { validateJWT } = require('../04_helpers/jwt');
 const Band = require('../models/band');
 const Bands = require('../models/bands');
@@ -27,14 +28,13 @@ class Socket {
             return client.disconnect();
         }
         console.dir('conectado');
+        userConected(uuid, true);
+
         this.client = client
-        client.on('disconnect', () => this.handleDisconect());
-        this.handleVoteBand();
-        this.handleGetBands();
-        this.handleAddBand();
-        this.handleRemoveBand();
+        client.on('disconnect', () => this.handleDisconect(uuid));
     }
-    handleDisconect() {
+    handleDisconect(uuid) {
+        userConected(uuid, false);
         console.dir('desconectado');
     }
     handleGetBands() {
