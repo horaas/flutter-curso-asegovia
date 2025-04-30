@@ -92,7 +92,7 @@ class _FormState extends State<_Form> {
               FocusScope.of(context).unfocus();
               final response = await authServices.register(namControl.text, emailControl.text, passControl.text);
               if(response) {
-                alert.show('Exito', 'Registro exitoso', onTapButton: () => Navigator.pushReplacementNamed(context,'login'));
+                alert.show('Exito', 'Registro exitoso', onTapButton: () => Navigator.pushReplacementNamed(context,'users'));
                 return;
               }
 

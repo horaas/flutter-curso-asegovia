@@ -5,8 +5,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:real_time_chat_app/config/environments.dart';
 import 'package:real_time_chat_app/models/server_login_model.dart';
+import 'package:real_time_chat_app/models/user_model.dart';
 
 class AuthService extends ChangeNotifier {
+  UserModel? user;
   bool _autenticate = false;
   bool _registering = false;
   final _storage = const FlutterSecureStorage();
@@ -50,6 +52,8 @@ class AuthService extends ChangeNotifier {
 
     if (resp.statusCode == 200) {
       final loginresponse = serverLoginModelFromJson(resp.body);
+      user = loginresponse.user;
+
       await _saveToken(loginresponse.token);
       setAutenticate = false;
       return true;
@@ -71,6 +75,8 @@ class AuthService extends ChangeNotifier {
 
     if (resp.statusCode == 200) {
       final registerResponse = serverLoginModelFromJson(resp.body);
+      user = registerResponse.user;
+
       await _saveToken(registerResponse.token);
       setRegistering = false;
       return true;
@@ -95,6 +101,7 @@ class AuthService extends ChangeNotifier {
     );
     if (resp.statusCode == 200) {
       final registerResponse = serverLoginModelFromJson(resp.body);
+      user = registerResponse.user;
       await _saveToken(registerResponse.token);
       return true;
     }
