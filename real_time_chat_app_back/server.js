@@ -4,7 +4,8 @@ const cors = require('cors');
 const { dbConnection } = require('./database/config');
 const createServer = require('http').createServer;
 const socket = require('./sockets/socket');
-const { routes } = require('./01_routes/auth');
+const { authRoutes } = require('./01_routes/auth');
+const { usersRoutes } = require('./01_routes/users');
 
 require('dotenv').config();
 
@@ -22,7 +23,8 @@ socket.create(server).handleProcessIo();
 
 //routes
 
-app.use('/api/login', routes)
+app.use('/api/login', authRoutes)
+app.use('/api/users', usersRoutes)
 
 server.listen(process.env.PORT, () => {
     console.log(`Example app listening on port ${process.env.PORT}`)

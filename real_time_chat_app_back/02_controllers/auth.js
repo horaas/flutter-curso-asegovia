@@ -78,6 +78,7 @@ const renewJWT = async (req, res = response) => {
             throw new Error('Usuario no existe')
         }
         const token = await generate(uuid);
+        console.dir(token)
         res.json( {
             ok: true,
             user,

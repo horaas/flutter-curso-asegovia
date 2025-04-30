@@ -4,19 +4,19 @@ const { create, auth, renewJWT } = require("../02_controllers/auth");
 const { validator } = require("../middlewares/validators");
 const { validatorJwt } = require("../middlewares/validatorJWT");
 
-const routes = Router();
+const authRoutes = Router();
 
-routes.post('/new', [
+authRoutes.post('/new', [
     check('name', 'el nombre es requirido').not().isEmpty(),
     check('email', 'el email requerido').isEmail(),
     check('pass', 'la contraseña es requrida').not().isEmpty(),
     validator
 ] , create)
-routes.post('/auth', [
+authRoutes.post('/auth', [
     check('email', 'el email requerido').isEmail(),
     check('pass', 'la contraseña es requrida').not().isEmpty(),
     validator
 ] , auth)
-routes.get('/renew', validatorJwt , renewJWT)
+authRoutes.get('/renew', validatorJwt , renewJWT)
 
-module.exports = {routes}
+module.exports = {authRoutes}
