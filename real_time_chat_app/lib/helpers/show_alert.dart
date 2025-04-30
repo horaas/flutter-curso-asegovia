@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:real_time_chat_app/presentation/widgets/dialog_custom.dart';
 
 class ShowALert {
   final BuildContext context;
