@@ -1,3 +1,4 @@
+const { validateJWT } = require('../04_helpers/jwt');
 const Band = require('../models/band');
 const Bands = require('../models/bands');
 
@@ -19,8 +20,13 @@ class Socket {
     }
 
     handleConection(client) {
-        console.dir('conectado');
+        console.dir('id-client-socket');
         console.dir(client.id);
+        const [ isValid, uuid] = validateJWT(client.handshake.headers['x-token'])
+        if (!isValid) {
+            return client.disconnect();
+        }
+        console.dir('conectado');
         this.client = client
         client.on('disconnect', () => this.handleDisconect());
         this.handleVoteBand();
@@ -32,7 +38,6 @@ class Socket {
         console.dir('desconectado');
     }
     handleGetBands() {
-        console.error('hola')
         this.client.emit('getBands', bands.getBands());
     }
     handleVoteBand() {
