@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
+import 'package:real_time_chat_app/providers/chat_service.dart';
 import 'package:real_time_chat_app/providers/socket_provider.dart';
 import 'config/routes.dart';
 void main() {
@@ -15,9 +16,11 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SocketProvider(),),
-        ChangeNotifierProvider(create: (context) => AuthService(),)
+        ChangeNotifierProvider(create: (context) => AuthService(),),
+        ChangeNotifierProvider(create: (context) => ChatService(),),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: routes,
         initialRoute: 'loading',
       ),

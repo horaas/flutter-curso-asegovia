@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:real_time_chat_app/presentation/widgets/chat_message.dart';
+import 'package:real_time_chat_app/providers/chat_service.dart';
 
 
 class ChatScreen extends StatefulWidget {
@@ -29,12 +31,18 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
+    final chatService = Provider.of<ChatService>(context);
+    final userTo = chatService.userTo;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Column(
+        title: Column(
           children: [
-            CircleAvatar(child: Text('PA', style: TextStyle(fontSize: 12),), radius: 13,),
-            Text('Pamela', style: TextStyle(fontSize: 13),),
+            CircleAvatar(
+              radius: 13,
+              child: Text(userTo.name.substring(0,2), style: const TextStyle(fontSize: 13),), 
+            ),
+            Text(userTo.name, style: const TextStyle(fontSize: 14),),
           ],
         ),
         centerTitle: true,

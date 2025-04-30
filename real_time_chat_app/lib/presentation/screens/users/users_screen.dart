@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:real_time_chat_app/models/user_model.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
+import 'package:real_time_chat_app/providers/chat_service.dart';
 import 'package:real_time_chat_app/providers/socket_provider.dart';
 import 'package:real_time_chat_app/providers/user_services.dart';
 
@@ -103,6 +104,11 @@ class _UserListTile extends StatelessWidget {
           color: user.online ? Colors.green : Colors.redAccent,
         ),
       ),
+      onTap: () {
+        final chatService = Provider.of<ChatService>(context, listen: false);
+        chatService.userTo = user;
+        Navigator.pushNamed(context, 'chat');
+      },
     );
   }
 }
