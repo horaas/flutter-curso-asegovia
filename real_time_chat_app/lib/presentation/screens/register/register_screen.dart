@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:real_time_chat_app/helpers/show_alert.dart';
 import 'package:real_time_chat_app/presentation/widgets/custom_button_blue.dart';
 import 'package:real_time_chat_app/presentation/widgets/custom_text_field.dart';
 import 'package:real_time_chat_app/presentation/widgets/icon_header_widget.dart';
 import 'package:real_time_chat_app/presentation/widgets/labels_cutom.dart';
+import 'package:real_time_chat_app/providers/auth_service.dart';
 
 class RegisterScreen extends StatelessWidget {
 
   const RegisterScreen({ super.key });
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       body: SafeArea(
@@ -54,6 +58,9 @@ class _FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final alert = ShowALert(context: context);
+    final authServices = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -72,7 +79,7 @@ class _FormState extends State<_Form> {
             textEditingController: emailControl,
           ),
           CustomTextField(
-            type: TextInputType.emailAddress,
+            type: TextInputType.text,
             icon: Icons.lock_outline,
             hint: 'Password',
             isPass: true,
@@ -80,10 +87,16 @@ class _FormState extends State<_Form> {
           ),
           const SizedBox(height: 20),
           CustomButtonBlue(
-            text: 'Ingresar',
-            onPressed: () {
-              print(emailControl.text);
-              print(passControl.text);
+            text: 'Registrar',
+            onPressed: authServices.registering() ? null : () async {
+              FocusScope.of(context).unfocus();
+              final response = await authServices.register(namControl.text, emailControl.text, passControl.text);
+              if(response) {
+                alert.show('Exito', 'Registro exitoso', onTapButton: () => Navigator.pushReplacementNamed(context,'login'));
+                return;
+              }
+
+              alert.show('Error', 'Verigicar los datos');
             },
           ),
         ],

@@ -5,7 +5,7 @@ class ShowALert {
 
   ShowALert({required this.context});
 
-  show(String title, String message) {
+  show(String title, String message, {Function? onTapButton}) {
     showDialog(
       builder: (context) => AlertDialog(
         title: Text(title),
@@ -13,6 +13,10 @@ class ShowALert {
         actions: [
           MaterialButton(onPressed: () {
             Navigator.pop(context);
+
+            if (onTapButton != null) {
+              onTapButton();
+            }
 
           }, child: const Text('Ok')),
         ],

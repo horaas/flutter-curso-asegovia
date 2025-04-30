@@ -8,12 +8,20 @@ import 'package:real_time_chat_app/models/server_login_model.dart';
 
 class AuthService extends ChangeNotifier {
   bool _autenticate = false;
+  bool _registering = false;
   final _storage = const FlutterSecureStorage();
 
   bool autenticate() => _autenticate;
 
   set setAutenticate(bool enabled) {
     _autenticate = enabled;
+    notifyListeners();
+  }
+
+  bool registering() => _registering;
+
+  set setRegistering(bool enabled) {
+    _registering = enabled;
     notifyListeners();
   }
 
@@ -47,6 +55,26 @@ class AuthService extends ChangeNotifier {
       return true;
     }
     setAutenticate = false;
+    return false;
+  }
+  Future<bool> register(String name, String email, String pass) async {
+     setRegistering = true;
+
+    final Map<String, String> data = {'name': name, 'email': email, 'pass': pass};
+
+    final resp = await http.post(
+      Uri.https(Environments.apiUrl, 'api/login/new'),
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (resp.statusCode == 200) {
+      final registerResponse = serverLoginModelFromJson(resp.body);
+      await _saveToken(registerResponse.token);
+      setRegistering = false;
+      return true;
+    }
+    setRegistering = false;
     return false;
   }
 
