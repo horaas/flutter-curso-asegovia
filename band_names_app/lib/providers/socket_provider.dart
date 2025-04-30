@@ -7,18 +7,19 @@ class SocketProvider with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.connecting;
   late io.Socket _socket;
 
-  SocketProvider() {
-    _initConfig();
-  }
+  // SocketProvider() {
+  //   _initConfig();
+  // }
 
   ServerStatus get serverStatus => _serverStatus;
   io.Socket get soket => _socket;
 
 
-  _initConfig() {
+  void connect() {
     _socket = io.io('https://noted-oyster-in.ngrok-free.app/', {
       'transports': ['websocket'],
       'autoConnect': true,
+      'forceNew': true
     });
     _socket.onConnect((_) {
       print('connect');
@@ -30,5 +31,9 @@ class SocketProvider with ChangeNotifier {
       _serverStatus =  ServerStatus.offline;
       notifyListeners();
     });
+  }
+
+  void disconnect() {
+    _socket.disconnect();
   }
 }

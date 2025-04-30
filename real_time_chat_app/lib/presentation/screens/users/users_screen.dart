@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:real_time_chat_app/models/user_model.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
+import 'package:real_time_chat_app/providers/socket_provider.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -23,11 +24,13 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context, listen: false);
     final user = authServices.user;
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
+            socketService.disconnect();
             AuthService.deleteToken();
             Navigator.restorablePushNamed(context, 'login');
           },

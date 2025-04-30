@@ -6,6 +6,7 @@ import 'package:real_time_chat_app/presentation/widgets/custom_text_field.dart';
 import 'package:real_time_chat_app/presentation/widgets/icon_header_widget.dart';
 import 'package:real_time_chat_app/presentation/widgets/labels_cutom.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
+import 'package:real_time_chat_app/providers/socket_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -59,6 +60,7 @@ class _FormState extends State<_Form> {
 
     final alert = ShowALert(context: context);
     final authServices = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -89,6 +91,7 @@ class _FormState extends State<_Form> {
                 return;
               }
               if(context.mounted) {
+                socketService.connect();
                 Navigator.pushReplacementNamed(context,'users');
               }
             } ,

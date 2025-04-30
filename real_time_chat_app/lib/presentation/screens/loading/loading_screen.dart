@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:real_time_chat_app/presentation/screens/login/login_screen.dart';
 import 'package:real_time_chat_app/presentation/screens/users/users_screen.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
+import 'package:real_time_chat_app/providers/socket_provider.dart';
 
 
 class LoadingScreen extends StatelessWidget {
@@ -25,8 +26,11 @@ class LoadingScreen extends StatelessWidget {
   Future<void> _validateLogin(BuildContext context) async {
     final authServices = Provider.of<AuthService>(context, listen: false);
     final isAutenticated = await authServices.isAutenticate();
+    final socketService = Provider.of<SocketProvider>(context, listen: false);
+
     if (isAutenticated) {
       if (context.mounted) {
+        socketService.connect();
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
