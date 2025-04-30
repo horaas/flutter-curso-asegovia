@@ -24,7 +24,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context, listen: false);
     final user = authServices.user;
-    final socketService = Provider.of<SocketProvider>(context, listen: false);
+    final socketService = Provider.of<SocketProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,9 +38,9 @@ class _UsersScreenState extends State<UsersScreen> {
         title: Text(user?.name ?? 'nombre'),
         centerTitle: true,
         actions: [
-          const Padding(
-            padding: EdgeInsets.all(25),
-            child: Icon(Icons.check_circle, color: Colors.greenAccent),
+           Padding(
+            padding: const EdgeInsets.all(25),
+            child: socketService.serverStatus == ServerStatus.online ? const Icon(Icons.check_circle, color: Colors.greenAccent) : Icon(Icons.sick, color: Colors.red[300], size: 25,),
           ),
         ],
       ),
