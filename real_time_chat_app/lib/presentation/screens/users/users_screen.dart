@@ -4,6 +4,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:real_time_chat_app/models/user_model.dart';
 import 'package:real_time_chat_app/providers/auth_service.dart';
 import 'package:real_time_chat_app/providers/socket_provider.dart';
+import 'package:real_time_chat_app/providers/user_services.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -14,12 +15,15 @@ class UsersScreen extends StatefulWidget {
 
 class _UsersScreenState extends State<UsersScreen> {
   final RefreshController refreshController = RefreshController(initialRefresh: false);
-  final List<UserModel> users = [
-    UserModel(online: true, uuid: '1', name: 'Juan', email: 'email'),
-    UserModel(online: false, uuid: '2', name: 'pedro', email: 'email'),
-    UserModel(online: true, uuid: '3', name: 'marmol', email: 'email'),
-  ];
+  final usersServices = UserServices();
 
+  List<UserModel> users = [];
+
+  @override
+  void initState() {
+    _loadUser();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthService>(context, listen: false);
@@ -59,7 +63,9 @@ class _UsersScreenState extends State<UsersScreen> {
   }
   
   void _loadUser() async  {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    // await Future.delayed(const Duration(milliseconds: 1000));
+    users = await usersServices.getUsers();
+    setState(() {});
     // if failed,use refreshFailed()
     refreshController.refreshCompleted();
   }
