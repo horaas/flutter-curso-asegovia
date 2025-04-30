@@ -12,9 +12,9 @@ class UsersScreen extends StatefulWidget {
 class _UsersScreenState extends State<UsersScreen> {
   final RefreshController refreshController = RefreshController(initialRefresh: false);
   final List<UserModel> users = [
-    UserModel(online: true, uuid: '1', nombre: 'Juan', email: 'email'),
-    UserModel(online: false, uuid: '2', nombre: 'pedro', email: 'email'),
-    UserModel(online: true, uuid: '3', nombre: 'marmol', email: 'email'),
+    UserModel(online: true, uuid: '1', name: 'Juan', email: 'email'),
+    UserModel(online: false, uuid: '2', name: 'pedro', email: 'email'),
+    UserModel(online: true, uuid: '3', name: 'marmol', email: 'email'),
   ];
 
   @override
@@ -76,8 +76,8 @@ class _UserListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(user.nombre),
-      leading: CircleAvatar(child: Text(user.nombre.substring(0, 2))),
+      title: Text(user.name),
+      leading: CircleAvatar(child: Text(user.name.substring(0, 2))),
       trailing: CircleAvatar(
         child: Icon(
           Icons.circle,

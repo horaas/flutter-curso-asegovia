@@ -11,9 +11,10 @@ class CustomButtonBlue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: const ButtonStyle(
-        elevation: WidgetStatePropertyAll(2),
-        backgroundColor: WidgetStatePropertyAll(Colors.blueAccent),
+      style: ButtonStyle(
+        elevation: const WidgetStatePropertyAll(2),
+        backgroundColor: onPressed != null ? const WidgetStatePropertyAll(Colors.blueAccent) : null,
+        
         // textStyle: WidgetStatePropertyAll(TextStyle(color: ))
       ),
       onPressed: onPressed, child: SizedBox(
