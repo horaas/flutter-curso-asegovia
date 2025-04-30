@@ -78,11 +78,25 @@ class AuthService extends ChangeNotifier {
     return false;
   }
 
-  Future _saveToken(String token) async {
+  Future<void> _saveToken(String token) async {
     return await _storage.write(key: 'token', value: token);
   }
 
-  Future logOut(String token) async {
+  Future<void> logOut() async {
     return await _storage.delete(key: 'token');
+  }
+  Future<bool> isAutenticate() async {
+    final token = await _storage.read(key: 'token');
+    final resp = await http.get(
+      Uri.https(Environments.apiUrl, 'api/login/renew'),
+      headers: {'Content-Type': 'application/json', 'x-token': token.toString()},
+    );
+    if (resp.statusCode == 200) {
+      final registerResponse = serverLoginModelFromJson(resp.body);
+      await _saveToken(registerResponse.token);
+      return true;
+    }
+    logOut();
+    return false;
   }
 }

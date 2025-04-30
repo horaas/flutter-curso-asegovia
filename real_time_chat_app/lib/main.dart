@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
       ],
       child: MaterialApp(
         routes: routes,
-        initialRoute: 'login',
+        initialRoute: 'loading',
       ),
     );
   }
