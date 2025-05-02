@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     chatService = Provider.of<ChatService>(context, listen: false);
     socketService = Provider.of<SocketProvider>(context, listen: false);
     authService = Provider.of<AuthService>(context, listen: false);
-
+    _loadChats();
     socketService.soket.on('personal-message', _handleProcessMessage);
   }
 
@@ -46,6 +46,18 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void _loadChats() async  {
+    // await Future.delayed(const Duration(milliseconds: 1000));
+    final chatResponse = await chatService.getMessages(chatService.userTo.uuid);
+
+    messages = chatResponse.map((data){
+      return ChatMessage(
+      uuid: data.from,
+      message: data.message,
+      animationController: AnimationController(vsync: this, duration: const Duration(milliseconds: 200))..forward()
+      );},).toList();
+    setState(() {});
+  }
 
   _handleProcessMessage(dynamic message) {
     final newMessage = ChatMessage(

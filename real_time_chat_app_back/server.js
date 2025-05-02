@@ -6,6 +6,7 @@ const createServer = require('http').createServer;
 const socket = require('./sockets/socket');
 const { authRoutes } = require('./01_routes/auth');
 const { usersRoutes } = require('./01_routes/users');
+const { messageRoutes } = require('./01_routes/messages');
 
 require('dotenv').config();
 
@@ -25,6 +26,7 @@ socket.create(server).handleProcessIo();
 
 app.use('/api/login', authRoutes)
 app.use('/api/users', usersRoutes)
+app.use('/api/messages', messageRoutes)
 
 server.listen(process.env.PORT, () => {
     console.log(`Example app listening on port ${process.env.PORT}`)
