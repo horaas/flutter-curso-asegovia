@@ -19,7 +19,7 @@ class CustomButtonBlue extends StatelessWidget {
       ),
       onPressed: onPressed, child: SizedBox(
       width: double.infinity,
-      height: 55,
-      child: Center(child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 17),))));
+      height: MediaQuery.of(context).size.width * 0.12,
+      child: Center(child: Text(text, style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.width * 0.04),))));
   }
 }

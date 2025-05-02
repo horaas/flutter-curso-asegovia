@@ -43,6 +43,7 @@ class Socket {
     listenPersonalMessage() {
         this.client.on('personal-message', (data) => {
             console.log('personal-message: ', data);
+            this.io.to(data.to).emit('personal-message', data);
         });
     }
     handleGetBands() {

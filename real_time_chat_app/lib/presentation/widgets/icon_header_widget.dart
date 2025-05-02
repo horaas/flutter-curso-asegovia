@@ -27,12 +27,12 @@ class IconHeaderWidget extends StatelessWidget {
               colors: [Color(0xff66D58A), Color(0xFFF2F2F2)],
             ),
           ),
-          child: const Text(
+          child: Text(
             'Messenger',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
-              fontSize: 36,
+              fontSize: MediaQuery.of(context).size.width * 0.07,
             ),
           ),
         ),

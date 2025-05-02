@@ -13,7 +13,7 @@ class LabelsCustom extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(color: Colors.black54, fontSize: 15),
+          style: TextStyle(color: Colors.black54, fontSize: MediaQuery.of(context).size.width * 0.03),
         ),
         const SizedBox(height: 5),
         GestureDetector(
@@ -24,7 +24,7 @@ class LabelsCustom extends StatelessWidget {
             text,
             style: TextStyle(
               color: Colors.blue[600],
-              fontSize: 18,
+              fontSize: MediaQuery.of(context).size.width * 0.04,
               fontWeight: FontWeight.bold,
             ),
           ),

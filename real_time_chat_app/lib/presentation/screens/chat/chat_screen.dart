@@ -33,16 +33,38 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     chatService = Provider.of<ChatService>(context, listen: false);
     socketService = Provider.of<SocketProvider>(context, listen: false);
     authService = Provider.of<AuthService>(context, listen: false);
-  }
 
+    socketService.soket.on('personal-message', _handleProcessMessage);
+  }
 
   @override
   void dispose() {
+    socketService.soket.off('personal-message');
     for (var message in messages) {
       message.animationController.dispose();
     }
     super.dispose();
   }
+
+
+  _handleProcessMessage(dynamic message) {
+    final newMessage = ChatMessage(
+      animationController: AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 200),
+      ),
+      uuid: message['from'],
+      message: message['message'],
+    );
+    print(message);
+    setState(() {
+      messages.insert(0, newMessage);
+      newMessage.animationController.forward();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final userTo = chatService.userTo;
@@ -82,11 +104,11 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
    Widget _inputChat(BuildContext _context) {
 
     return Container(
-      height: 100,
+      height: MediaQuery.of(context).size.height * 0.08,
       color: Colors.white,
       child: SafeArea(child: 
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 8, ),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
             children: [
               Expanded(child: TextField(
@@ -95,24 +117,35 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 onChanged: (value) {
                   print(value);
                   writing = value.isNotEmpty && value.trim() != '' ? true : false;
-
-                  setState(() {
-                    
-                  });
+                  setState(() {});
                 },
-                decoration: InputDecoration.collapsed(
+                decoration: const InputDecoration.collapsed(
                   hintText: 'Enviar mensage'
                 ),
                 focusNode: focusNode,
               )),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                child: Platform.isIOS ? CupertinoButton(child: Text('Enviar'), onPressed: writing ? () => _handleSubmitText(textController.text) : null,) : IconTheme(
-                  data: IconThemeData(
-                    color: Colors.blue[400]
-                  ),
-                  child: IconButton(onPressed: writing ? () => _handleSubmitText(textController.text) : null, icon: Icon(Icons.send,)),
-                ),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                child:
+                    Platform.isIOS
+                        ? CupertinoButton(
+                          onPressed:
+                              writing
+                                  ? () => _handleSubmitText(textController.text)
+                                  : null,
+                          child: const Text('Enviar'),
+                        )
+                        : IconTheme(
+                          data: IconThemeData(color: Colors.blue[400]),
+                          child: IconButton(
+                            onPressed:
+                                writing
+                                    ? () =>
+                                        _handleSubmitText(textController.text)
+                                    : null,
+                            icon: const Icon(Icons.send),
+                          ),
+                        ),
               )
             ],
           ),
@@ -124,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   _handleSubmitText(String text) {
     if (text.isNotEmpty && text.trim() != '') {
 
-      final newMessage = ChatMessage(uuid: authService.user!.uuid, message: text, animationController: AnimationController(vsync: this, duration: Duration(milliseconds: 200)));
+      final newMessage = ChatMessage(uuid: authService.user!.uuid, message: text, animationController: AnimationController(vsync: this, duration: const Duration(milliseconds: 200)));
       messages.insert(0, newMessage);
       newMessage.animationController.forward();
       socketService.soket.emit('personal-message', {

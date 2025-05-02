@@ -55,16 +55,3 @@ class ChatMessage extends StatelessWidget {
     );
   }
 }
-
-class _TextContainer extends StatelessWidget {
-  final TextAlign textAlign;
-  const _TextContainer({this.textAlign = TextAlign.right});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Hola como estas?',
-      textAlign: textAlign,
-    );
-  }
-}
