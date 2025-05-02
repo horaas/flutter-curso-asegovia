@@ -1,0 +1,1 @@
+ npm i bcryptsjs express-validator jsonwebtoken mongoose cors
