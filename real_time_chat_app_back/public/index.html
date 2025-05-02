@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Error</h1>
+    <div id="hola">
+        <svg height="210" width="400">
+        </svg>
+    </div>
+    <section>
+        <input type="text" name="" id="bandName">
+    </section>
+    <h2>
+        <button id="sendMessage">Send Message</button>
+    </h2>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on('connect', () => {
+            console.dir('conectado');
+        })
+        socket.on('disconnect', () => {
+            // socket.close()
+            // socket.connect()
+            console.dir('desconectado');
+        })
+
+        const button = document.getElementById('sendMessage');
+        const input = document.getElementById('bandName');
+        button.addEventListener('click', () => {
+            if (input.value && input.value.trim()) {
+                console.dir(input.value);
+                socket.emit('add-band', {
+                    name: input.value
+                })
+            }
+            input.value = '';
+        })
+        socket.on('getBands', (data) => {
+            console.table(data)
+            const dataToShow = data.map((band) => {
+                return band.votes
+            })
+            createGrafic(dataToShow)
+        })
+    </script>
+    <script>
+        function createGrafic(bands) {
+
+            var svg = d3.select("svg"),
+                width = svg.attr("width"),
+                height = svg.attr("height"),
+                radius = Math.min(width, height) / 2,
+                g = svg.append("g")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            var labelArc = d3.arc()
+                .outerRadius(radius - 50)
+                .innerRadius(radius - 40);
+
+                var color = d3.scaleOrdinal(['#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c']);
+
+            // Generate the pie
+            var pie = d3.pie();
+
+            // Generate the arcs
+            var arc = d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius);
+
+            //Generate groups
+            var arcs = g.selectAll("arc")
+                .data(pie(bands))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+            //Draw arc paths
+            arcs.append("path")
+                .attr("fill", function (d, i) {
+                    return color(i);
+                })
+                .attr("d", arc);
+
+            arcs.append("text")
+                .attr("transform", function (d) {
+                    return "translate(" + labelArc.centroid(d) + ")";
+                })
+                .attr("dy", ".35em")
+                .text(function (d) {
+                    return d.data;
+                });
+        }
+    </script>
+</body>
+
+</html>

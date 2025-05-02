@@ -81,5 +81,12 @@
             "cwd": "music_app",
             "program": "lib/main.dart"
         },
+        {
+            "name": "real_time_chat_app",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "real_time_chat_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
