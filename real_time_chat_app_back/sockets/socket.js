@@ -1,4 +1,4 @@
-const { userConected } = require('../02_controllers/socket');
+const { userConected, saveMessage } = require('../02_controllers/socket');
 const { validateJWT } = require('../04_helpers/jwt');
 const Band = require('../models/band');
 const Bands = require('../models/bands');
@@ -41,8 +41,9 @@ class Socket {
         console.dir('desconectado');
     }
     listenPersonalMessage() {
-        this.client.on('personal-message', (data) => {
+        this.client.on('personal-message', async (data) => {
             console.log('personal-message: ', data);
+            await saveMessage(data);
             this.io.to(data.to).emit('personal-message', data);
         });
     }
