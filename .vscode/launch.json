@@ -88,5 +88,12 @@
             "cwd": "real_time_chat_app",
             "program": "lib/main.dart"
         },
+        {
+            "name": "estados",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "estados",
+            "program": "lib/main.dart"
+        },
     ]
 }
