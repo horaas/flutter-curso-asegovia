@@ -1,7 +1,7 @@
-import 'package:estados/controller/usuario_controller.dart';
+import 'package:estados/bloc/user/user_bloc.dart';
 import 'package:estados/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class Pagina1Page extends StatelessWidget {
@@ -10,36 +10,25 @@ class Pagina1Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final usrController = Get.put(UsuarioController());
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pagina 1'),
         actions: [
           IconButton(onPressed: () {
-             
+             BlocProvider.of<UserBloc>(context, listen: false).add(RemoveUser());
           }, icon: const Icon(Icons.delete))
         ],
       ),
-      body: Obx(() => usrController.existeUsuario.value ?  InformacionUsuario(user: usrController.user.value,) : const NoUser(),),
-      
-      //  true ? InformacionUsuario(user: User(nombre: 'nombre', edad: 1, profesiones: ['ssss']),) : const Center(child: Text('No hay user'),),
+      body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        
+        return state.exitUser ? InformacionUsuario(user: state.user!,) : const Center(child: Text('No hay user'),);
+      },),
 
      floatingActionButton: FloatingActionButton(
        child: const Icon( Icons.accessibility_new ),
-       onPressed: () => Get.toNamed('pagina2')
+       onPressed: () => Navigator.pushNamed(context, 'pagina2')
      ),
    );
-  }
-}
-
-class NoUser extends StatelessWidget {
-
-  const NoUser({ super.key });
-
-   @override
-   Widget build(BuildContext context) {
-       return const Center(child: Text('No hay user'));
   }
 }
 

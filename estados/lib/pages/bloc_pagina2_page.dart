@@ -1,8 +1,7 @@
-import 'package:estados/controller/usuario_controller.dart';
+import 'package:estados/bloc/user/user_bloc.dart';
 import 'package:estados/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Pagina2Page extends StatelessWidget {
   
@@ -10,7 +9,8 @@ class Pagina2Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userController = Get.find<UsuarioController>();
+    final userBloc = BlocProvider.of<UserBloc>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pagina 2'),
@@ -28,29 +28,15 @@ class Pagina2Page extends StatelessWidget {
                   nombre: 'juan',
                   profesiones: ['desarrollo', 'otro']
                 );
-                userController.loadUser(user);
-                Get.snackbar('Usuario', 'el nombre es ${userController.user.value.nombre}', backgroundColor: Colors.white, boxShadows: [
-                  const BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 10
-                  )
-                ]);
+                userBloc.add(ActivateUser(user));
               },
               child: const Text('Establecer Usuario', style: TextStyle( color: Colors.white ) )
             ),
-            MaterialButton(
-              color: Colors.blue,
-              onPressed: () {
-
-                Get.changeTheme(Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
-              },
-              child: const Text('cambiar thema', style: TextStyle( color: Colors.white ) )
-            ),
 
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-                userController.changeAgeUser(45);
+                userBloc.add(ChangeEdadUser(39));
               },
               child: const Text('Cambiar Edad', style: TextStyle( color: Colors.white ) )
             ),
@@ -58,7 +44,7 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: () {
-                userController.addProfesionUser();
+                  userBloc.add(AddProfetiondUser());
               },
               child: const Text('Añadir Profesion', style: TextStyle( color: Colors.white ) )
             ),
