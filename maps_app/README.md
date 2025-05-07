@@ -10,4 +10,5 @@ flutter pub add flutter_bloc
 flutter pub add google_maps_flutter
 flutter pub add dio
 flutter pub add animate_do
+flutter pub add equatable
 ```
