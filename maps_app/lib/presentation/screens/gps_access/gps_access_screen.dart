@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maps_app/blocs/blocs.dart';
 
 class GpsAccessScreen extends StatelessWidget {
 
@@ -6,9 +8,14 @@ class GpsAccessScreen extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
-       return const Scaffold(
+       return Scaffold(
            body: Center(
-            child: _AccesButton(),
+            child: BlocBuilder<GpsBloc, GpsState>(builder: (_, state) {
+              print(state);
+              return state.isGpsEnabled ? _AccesButton() : _EnabledGpsMessage();
+            },)
+            
+            
            ),
        );
   }
@@ -19,7 +26,7 @@ class _EnabledGpsMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('acceso concedido');
+    return const Text('Necesita habilitar el gps concedido');
   }
 }
 
