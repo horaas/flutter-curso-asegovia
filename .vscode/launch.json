@@ -95,5 +95,12 @@
             "cwd": "estados",
             "program": "lib/main.dart"
         },
+        {
+            "name": "maps",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "maps_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
