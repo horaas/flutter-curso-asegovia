@@ -45,8 +45,9 @@ class _AccesButton extends StatelessWidget {
           // https://api.flutter.dev/flutter/painting/OutlinedBorder-class.html
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           onPressed: () {
-          
-        }, child: const Text('Dar Acceso', style: TextStyle(
+            final gpsBloc = BlocProvider.of<GpsBloc>(context);
+            gpsBloc.askGpsAccess();
+          }, child: const Text('Dar Acceso', style: TextStyle(
           color: Colors.white
         ),),)
       ],
