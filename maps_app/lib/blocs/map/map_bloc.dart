@@ -19,4 +19,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     _googleMapController = event.googleMapController;
     emit(state.copyWith(isMapInitialized: true));
   }
+  moveCamera(LatLng newLocation) {
+    final cameraUpdate = CameraUpdate.newLatLng(newLocation);
+    _googleMapController?.animateCamera(cameraUpdate);
+  }
 }

@@ -48,6 +48,8 @@ class _ContentMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
     return Stack(
       children: [
         MapView(lastLocation.latitude, lastLocation.longitude),
@@ -56,7 +58,10 @@ class _ContentMap extends StatelessWidget {
           left: 20,
           child: IconButton.filledTonal(
             onPressed: () {
+              final userLocation = locationBloc.state.lastLocation;
+              if (userLocation == null) return;
 
+              mapBloc.moveCamera(userLocation);
             },
             icon: const Icon(Icons.location_searching),
           ),
