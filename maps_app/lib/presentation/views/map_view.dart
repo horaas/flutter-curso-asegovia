@@ -16,22 +16,26 @@ class MapView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final mapBloc = BlocProvider.of<MapBloc>(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
       width: size.width ,
       height: size.height,
-      child: GoogleMap(
-        mapType: MapType.normal,
-        myLocationEnabled: true,
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
-        style: jsonEncode(uberTheme),
-        initialCameraPosition: CameraPosition(
-          target: LatLng(lat, lng),
-          zoom: 15,
+      child: Listener(
+        onPointerMove: (event) => mapBloc.add(const OnStopFollowingMapEvent()),
+        child: GoogleMap(
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          zoomControlsEnabled: false,
+          myLocationButtonEnabled: false,
+          style: jsonEncode(uberTheme),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(lat, lng),
+            zoom: 15,
+          ),
+          onMapCreated: (GoogleMapController controller) => mapBloc.add(OnMapInitEvent(controller)),
         ),
-        onMapCreated: (GoogleMapController controller) => mapBloc.add(OnMapInitEvent(controller)),
       ),
     );
   }

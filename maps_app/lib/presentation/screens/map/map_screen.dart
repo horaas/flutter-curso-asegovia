@@ -74,10 +74,13 @@ class _ContentMap extends StatelessWidget {
         Positioned(
           bottom: 90,
           left: 20,
-          child: IconButton.filledTonal(
-            onPressed: () {
-            },
-            icon: const Icon(Icons.directions_run)//userLocation.followUser ? const Icon(Icons.directions_run) :const Icon(Icons.accessibility_new_outlined) ,
+          child: BlocBuilder<MapBloc, MapState>(
+            builder: (context, state) => IconButton.filledTonal(
+              onPressed: () {
+                mapBloc.add(const OnStartFollowingMapEvent());
+              },
+              icon: state.followUser ? const Icon(Icons.directions_run) :const Icon(Icons.accessibility_new_outlined) ,
+            ),
           ),
         ),
         Positioned(
@@ -88,6 +91,16 @@ class _ContentMap extends StatelessWidget {
 
             },
             icon: const Icon(Icons.pin_drop),
+          ),
+        ),
+        Positioned(
+          bottom: 180,
+          left: 20,
+          child: IconButton.filledTonal(
+            onPressed: () {
+                mapBloc.add(const OnStopFollowingMapEvent());
+            },
+            icon: const Icon(Icons.close),
           ),
         ),
       ],

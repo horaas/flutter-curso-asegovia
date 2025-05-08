@@ -12,4 +12,10 @@ class OnMapInitEvent extends MapEvent {
 
   const OnMapInitEvent(this.googleMapController);
 }
+class OnStartFollowingMapEvent extends MapEvent {
+  const OnStartFollowingMapEvent();
+}
+class OnStopFollowingMapEvent extends MapEvent {
+  const OnStopFollowingMapEvent();
+}
 
