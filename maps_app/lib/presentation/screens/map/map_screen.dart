@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:maps_app/blocs/blocs.dart';
+import 'package:maps_app/presentation/views/views.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -32,34 +33,54 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<LocationBloc, LocationState>(builder: (context, state) {
-        if (state.lastLocation == null)return const Center(child: Text('sin mapa'),);
+        if (state.lastLocation == null) return const Center(child: Text('sin mapa'),);
 
-        return _MapView(state.lastLocation!.latitude, state.lastLocation!.longitude);
+        return SingleChildScrollView(child: _ContentMap(state.lastLocation!));
       },),
     );
   }
 }
 
-class _MapView extends StatelessWidget {
-  final double lat;
-  final double lng;
-  
-  const _MapView(this.lat, this.lng);
+class _ContentMap extends StatelessWidget {
+  final LatLng lastLocation;
+
+  const _ContentMap(this.lastLocation);
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      mapType: MapType.normal,
-      myLocationEnabled: true,
-      zoomControlsEnabled: false,
-      myLocationButtonEnabled: false,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(lat, lng),
-        zoom: 15,
-      ),
-      onMapCreated: (GoogleMapController controller) {
-        // _controller.complete(controller);
-      },
+    return Stack(
+      children: [
+        MapView(lastLocation.latitude, lastLocation.longitude),
+         Positioned(
+          bottom: 40,
+          left: 20,
+          child: IconButton.filledTonal(
+            onPressed: () {
+
+            },
+            icon: const Icon(Icons.location_searching),
+          ),
+        ),
+        Positioned(
+          bottom: 90,
+          left: 20,
+          child: IconButton.filledTonal(
+            onPressed: () {
+            },
+            icon: const Icon(Icons.directions_run)//userLocation.followUser ? const Icon(Icons.directions_run) :const Icon(Icons.accessibility_new_outlined) ,
+          ),
+        ),
+        Positioned(
+          bottom: 140,
+          left: 20,
+          child: IconButton.filledTonal(
+            onPressed: () {
+
+            },
+            icon: const Icon(Icons.pin_drop),
+          ),
+        ),
+      ],
     );
   }
 }
