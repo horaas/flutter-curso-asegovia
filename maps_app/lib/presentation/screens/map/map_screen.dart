@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:maps_app/blocs/blocs.dart';
+import 'package:maps_app/presentation/ui/ui.dart';
 import 'package:maps_app/presentation/views/views.dart';
 
 class MapScreen extends StatefulWidget {
@@ -59,8 +60,12 @@ class _ContentMap extends StatelessWidget {
           child: IconButton.filledTonal(
             onPressed: () {
               final userLocation = locationBloc.state.lastLocation;
-              if (userLocation == null) return;
-
+              if (userLocation == null) {
+                final snack = CustomSnackbar(message: 'no hay');
+                ScaffoldMessenger.of(context).showSnackBar(snack);
+                return;
+              }
+              
               mapBloc.moveCamera(userLocation);
             },
             icon: const Icon(Icons.location_searching),
