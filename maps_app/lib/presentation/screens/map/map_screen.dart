@@ -120,7 +120,8 @@ class _ContentMap extends StatelessWidget {
             icon: const Icon(Icons.route),
           ),
         ),
-        CustomSearchBar()
+        CustomSearchBar(),
+        const ManualMarker()
       ],
     );
   }
