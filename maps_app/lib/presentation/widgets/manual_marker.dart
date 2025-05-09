@@ -1,8 +1,25 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maps_app/blocs/blocs.dart';
+
 
 class ManualMarker extends StatelessWidget {
-  const ManualMarker({super.key});
+
+  const ManualMarker({ super.key });
+
+   @override
+   Widget build(BuildContext context) {
+       return BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+         if (state.displaySearchMarker) {
+          return const _ManualMarkerBody();
+         }
+         return const SizedBox();
+       },);
+  }
+}
+class _ManualMarkerBody extends StatelessWidget {
+  const _ManualMarkerBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +30,13 @@ class ManualMarker extends StatelessWidget {
       height: size.height,
       child: Stack(
         children: [
-          Positioned(top: 70, left: 20, child: _BtnBack()),
+          const Positioned(top: 70, left: 20, child: _BtnBack()),
           Center(
             child: Transform.translate(
-              offset: Offset(0, -25),
+              offset: const Offset(0, -25),
               child: BounceInDown(
                 from: 100,
-                child: Icon(Icons.location_on_rounded, size: 45),
+                child: const Icon(Icons.location_on_rounded, size: 45),
               ),
             ),
           ),
@@ -27,7 +44,7 @@ class ManualMarker extends StatelessWidget {
             bottom: 20,
             right: 40,
             child: FadeInUp(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               child: MaterialButton(
                 minWidth: size.width - 120,
                 color: Colors.black,
@@ -55,14 +72,18 @@ class _BtnBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
+
     return FadeInLeft(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       child: CircleAvatar(
-        maxRadius: 25,
+        maxRadius: 20,
         backgroundColor: Colors.white,
         child: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () {
+            searchBloc.add(OnActivatedManualMarkerEvent());
+          },
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
       ),
     );
