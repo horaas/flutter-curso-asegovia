@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_app/blocs/blocs.dart';
 import 'package:maps_app/presentation/ui/ui.dart';
 import 'package:maps_app/presentation/views/views.dart';
+import 'package:maps_app/presentation/widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -119,6 +120,7 @@ class _ContentMap extends StatelessWidget {
             icon: const Icon(Icons.route),
           ),
         ),
+        CustomSearchBar()
       ],
     );
   }

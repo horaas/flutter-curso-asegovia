@@ -34,12 +34,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   }
 
   void startFollowingUser() {
-    add(const OnStartFollowinUserEvent());
-    geolocatorStrem = Geolocator.getPositionStream().listen((event) {
-      print('startFollowingUser = $event');
-      final postion = event;
-      add(OnNewUserLocationEvent(LatLng(postion.latitude, postion.longitude)));
-    },);
+    // add(const OnStartFollowinUserEvent());
+    // geolocatorStrem = Geolocator.getPositionStream().listen((event) {
+    //   print('startFollowingUser = $event');
+    //   final postion = event;
+      // add(OnNewUserLocationEvent(LatLng(postion.latitude, postion.longitude)));
+      add(const OnNewUserLocationEvent(LatLng(6.289519, -75.567497)));
+    // },);
   }
 
   stopFollowingUser() {
