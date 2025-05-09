@@ -19,3 +19,12 @@ class OnStopFollowingMapEvent extends MapEvent {
   const OnStopFollowingMapEvent();
 }
 
+
+class UpdateUserPolylinesEvent extends MapEvent {
+  final List<LatLng> historyLocation;
+  const UpdateUserPolylinesEvent(this.historyLocation);
+}
+class OnTogglePolylines extends MapEvent {
+  const OnTogglePolylines();
+}
+

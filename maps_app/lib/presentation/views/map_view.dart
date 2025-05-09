@@ -9,8 +9,8 @@ import 'package:maps_app/config/config.dart';
 class MapView extends StatelessWidget {
   final double lat;
   final double lng;
-  
-  const MapView(this.lat, this.lng, {super.key});
+  final Set<Polyline>polylines;
+  const MapView(this.lat, this.lng, {super.key, required this.polylines});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class MapView extends StatelessWidget {
           zoomControlsEnabled: false,
           myLocationButtonEnabled: false,
           style: jsonEncode(uberTheme),
+          polylines: polylines,
           initialCameraPosition: CameraPosition(
             target: LatLng(lat, lng),
             zoom: 15,

@@ -53,7 +53,13 @@ class _ContentMap extends StatelessWidget {
     final mapBloc = BlocProvider.of<MapBloc>(context);
     return Stack(
       children: [
-        MapView(lastLocation.latitude, lastLocation.longitude),
+        BlocBuilder<MapBloc, MapState>(builder: (context, state) {
+          final Map<String, Polyline> polylines = Map.from(state.polyLines);
+          if (!state.showMyRoute) {
+            polylines.removeWhere((key, value) => key == 'myRoute',);
+          }
+          return MapView(lastLocation.latitude, lastLocation.longitude,polylines: polylines.values.toSet(),);
+        }),
          Positioned(
           bottom: 40,
           left: 20,
@@ -101,6 +107,16 @@ class _ContentMap extends StatelessWidget {
                 mapBloc.add(const OnStopFollowingMapEvent());
             },
             icon: const Icon(Icons.close),
+          ),
+        ),
+        Positioned(
+          bottom: 240,
+          left: 20,
+          child: IconButton.filledTonal(
+            onPressed: () {
+                mapBloc.add(const OnTogglePolylines());
+            },
+            icon: const Icon(Icons.route),
           ),
         ),
       ],
