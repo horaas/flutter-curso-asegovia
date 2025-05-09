@@ -24,7 +24,10 @@ class _ManualMarkerBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+ 
     return SizedBox(
       width: size.width,
       height: size.height,
@@ -50,7 +53,17 @@ class _ManualMarkerBody extends StatelessWidget {
                 color: Colors.black,
                 height: 50,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                onPressed: () {},
+                onPressed: () async {
+                  final start = locationBloc.state.lastLocation;
+
+                  if (start == null) return;
+
+                  final end = mapBloc.mapCenter;
+                  if (end == null) return;
+
+                  final polylines = await searchBloc.getStartToEnd(start, end);
+                  await mapBloc.drawPolylines(polylines);
+                },
                 child: const Text(
                   'Confirmar',
                   style: TextStyle(

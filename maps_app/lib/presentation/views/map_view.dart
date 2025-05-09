@@ -36,6 +36,7 @@ class MapView extends StatelessWidget {
             zoom: 15,
           ),
           onMapCreated: (GoogleMapController controller) => mapBloc.add(OnMapInitEvent(controller)),
+          onCameraMove: (position) => mapBloc.mapCenter = position.target,
         ),
       ),
     );
