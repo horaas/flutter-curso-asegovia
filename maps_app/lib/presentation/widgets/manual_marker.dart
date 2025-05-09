@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maps_app/blocs/blocs.dart';
+import 'package:maps_app/helpers/helpers.dart';
 
 
 class ManualMarker extends StatelessWidget {
@@ -61,8 +62,14 @@ class _ManualMarkerBody extends StatelessWidget {
                   final end = mapBloc.mapCenter;
                   if (end == null) return;
 
+                  showLoading(context);
                   final polylines = await searchBloc.getStartToEnd(start, end);
                   await mapBloc.drawPolylines(polylines);
+
+                  searchBloc.add(OnActivatedManualMarkerEvent());
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text(
                   'Confirmar',
