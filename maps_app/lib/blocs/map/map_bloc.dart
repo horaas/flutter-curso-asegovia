@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_app/blocs/blocs.dart';
+import 'package:maps_app/helpers/custom_image_marker.dart';
 import 'package:maps_app/models/models.dart';
 
 part 'map_event.dart';
@@ -82,15 +83,25 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
       points: destination.points);
 
-    final startMarker = Marker(markerId: const MarkerId('start'), position: destination.points.first,
-    infoWindow: const InfoWindow(
-            title: 'fin',
-      snippet: 'gola mundo'
-    ) );
-    final endMarker = Marker(markerId: const MarkerId('end'), position: destination.points.last, infoWindow: InfoWindow(
-      title: 'fin',
-      snippet: destination.endPlace.properties.label
-    ) );
+    final iconStart = await getAssetsImageMarker();
+    final iconEnd = await getUrlImageMarker();
+
+    final startMarker = Marker(
+      markerId: const MarkerId('start'),
+      position: destination.points.first,
+      infoWindow: const InfoWindow(title: 'fin', snippet: 'gola mundo'),
+      icon: iconStart
+    );
+    final endMarker = Marker(
+      markerId: const MarkerId('end'),
+      position: destination.points.last,
+      infoWindow: InfoWindow(
+        title: 'fin',
+        snippet: destination.endPlace.properties.label,
+      ),
+      icon: iconEnd,
+      
+    );
 
 
     final routePolylines = Map<String, Polyline>.from(state.polyLines);
