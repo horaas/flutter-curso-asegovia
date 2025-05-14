@@ -28,12 +28,12 @@ class TrafficService {
       );
 
       final data = TrafficResponse.fromJson(resp.data);
-    print(data);
+      final endPlace  = await getResultbyGoecode(end);
       final distance = data.features[0].properties.summary.distance;
       final duration = data.features[0].properties.summary.duration;
       final geometry = data.features[0].geometry.coordinates.map((data) => LatLng(data[1],data[0])).toList();
 
-      return RouteTo(points: geometry, duration: duration, distance: distance);
+      return RouteTo(points: geometry, duration: duration, distance: distance, endPlace: endPlace);
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw Exception('error');
@@ -61,6 +61,32 @@ class TrafficService {
 
       print(placesResponse.features.length);
       return placesResponse.features;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw Exception('error');
+      }
+      throw Exception();
+    } catch (e) {
+      print(e.toString());
+      throw Exception();
+    }
+  }
+ 
+  Future<FeaturePlaces> getResultbyGoecode(LatLng proximity) async {
+    try {
+      final queryParams = {
+        'size': 1,
+        'point.lon': '${proximity.longitude}', //proximity.longitude,
+        'point.lat': '${proximity.latitude}', //proximity.latitude,
+      };
+
+      final resp = await _dioTraffic.get(
+        '/geocode/reverse',
+        queryParameters: queryParams,
+      );
+
+      final placesResponse = PlacesModel.fromJson(resp.data);
+      return placesResponse.features[0];
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw Exception('error');

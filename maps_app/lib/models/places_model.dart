@@ -221,24 +221,24 @@ class QueryPlaces {
     final int size;
     final List<String> layers;
     final bool private;
-    final double focusPointLat;
-    final double focusPointLon;
+    // final double focusPointLat;
+    // final double focusPointLon;
     final LangPlaces lang;
     final int querySize;
     final String parser;
-    final ParsedTextPlaces parsedText;
+    // final ParsedTextPlaces parsedText;
 
     QueryPlaces({
         required this.text,
         required this.size,
         required this.layers,
         required this.private,
-        required this.focusPointLat,
-        required this.focusPointLon,
+        // required this.focusPointLat,
+        // required this.focusPointLon,
         required this.lang,
         required this.querySize,
         required this.parser,
-        required this.parsedText,
+        // required this.parsedText,
     });
 
     factory QueryPlaces.fromJson(Map<String, dynamic> json) => QueryPlaces(
@@ -246,12 +246,12 @@ class QueryPlaces {
         size: json["size"] ?? '',
         layers: json["layers"] != null ? List<String>.from(json["layers"].map((x) => x)) : [],
         private: json["private"] ?? '',
-        focusPointLat: json["focus.point.lat"]?.toDouble(),
-        focusPointLon: json["focus.point.lon"]?.toDouble(),
+        // focusPointLat: json["focus.point.lat"]?.toDouble(),
+        // focusPointLon: json["focus.point.lon"]?.toDouble(),
         lang: LangPlaces.fromJson(json["lang"]),
         querySize: json["querySize"] ?? '',
         parser: json["parser"] ?? '',
-        parsedText: ParsedTextPlaces.fromJson(json["parsed_text"]),
+        // parsedText: ParsedTextPlaces.fromJson(json["parsed_text"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -259,12 +259,12 @@ class QueryPlaces {
         "size": size,
         "layers": List<dynamic>.from(layers.map((x) => x)),
         "private": private,
-        "focus.point.lat": focusPointLat,
-        "focus.point.lon": focusPointLon,
+        // "focus.point.lat": focusPointLat,
+        // "focus.point.lon": focusPointLon,
         "lang": lang.toJson(),
         "querySize": querySize,
         "parser": parser,
-        "parsed_text": parsedText.toJson(),
+        // "parsed_text": parsedText.toJson(),
     };
 }
 

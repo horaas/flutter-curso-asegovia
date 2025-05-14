@@ -10,7 +10,9 @@ class MapView extends StatelessWidget {
   final double lat;
   final double lng;
   final Set<Polyline>polylines;
-  const MapView(this.lat, this.lng, {super.key, required this.polylines});
+  final Set<Marker>markers;
+
+  const MapView(this.lat, this.lng, {super.key, required this.polylines, required this.markers});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class MapView extends StatelessWidget {
           myLocationButtonEnabled: false,
           style: jsonEncode(uberTheme),
           polylines: polylines,
+          markers: markers,
           initialCameraPosition: CameraPosition(
             target: LatLng(lat, lng),
             zoom: 15,

@@ -29,7 +29,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   
     on<OnStopFollowingMapEvent>((event, emit) => emit(state.copyWith(followUser: false)),);
 
-    on<OnDisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polyLines: event.polylines)),);
+    on<OnDisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polyLines: event.polylines, markers: event.markers)),);
 
     locationStateSubscription = locationBloc.stream.listen((locationState) {
       print(state.followUser);
@@ -82,9 +82,28 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
       points: destination.points);
 
+    final startMarker = Marker(markerId: const MarkerId('start'), position: destination.points.first,
+    infoWindow: const InfoWindow(
+            title: 'fin',
+      snippet: 'gola mundo'
+    ) );
+    final endMarker = Marker(markerId: const MarkerId('end'), position: destination.points.last, infoWindow: InfoWindow(
+      title: 'fin',
+      snippet: destination.endPlace.properties.label
+    ) );
+
+
     final routePolylines = Map<String, Polyline>.from(state.polyLines);
     routePolylines['route'] = myRoute;
-    add(OnDisplayPolylinesEvent(routePolylines));
+
+    final markers =  Map<String, Marker>.from(state.markers);
+    markers['start'] = startMarker;
+    markers['end'] = endMarker;
+
+
+    add(OnDisplayPolylinesEvent(routePolylines, markers));
+    await Future.delayed(const Duration(milliseconds: 300));
+    _googleMapController?.showMarkerInfoWindow(const MarkerId('end'));
 
   }
   moveCamera(LatLng newLocation) {

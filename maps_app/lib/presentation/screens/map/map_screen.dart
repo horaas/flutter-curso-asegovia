@@ -56,10 +56,11 @@ class _ContentMap extends StatelessWidget {
       children: [
         BlocBuilder<MapBloc, MapState>(builder: (context, state) {
           final Map<String, Polyline> polylines = Map.from(state.polyLines);
+          final Map<String, Marker> markers = Map.from(state.markers);
           if (!state.showMyRoute) {
             polylines.removeWhere((key, value) => key == 'myRoute',);
           }
-          return MapView(lastLocation.latitude, lastLocation.longitude,polylines: polylines.values.toSet(),);
+          return MapView(lastLocation.latitude, lastLocation.longitude,polylines: polylines.values.toSet(), markers: markers.values.toSet(),);
         }),
          Positioned(
           bottom: 40,
