@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:maps_app/blocs/blocs.dart';
+import 'package:maps_app/helpers/helpers.dart';
 import 'package:maps_app/presentation/screens/screens.dart';
 import 'package:maps_app/services/services.dart';
 
@@ -22,9 +23,21 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        // body: Center(
+        //   child: Container(
+        //     width: 300,
+        //     height: 150,
+        //     child: CustomPaint(
+        //       painter: EndMarker(
+        //         destination: 'destino kasdjhas sakjdhsa dkasjdhas daksjdhas d',
+        //         kilometer: 200
+        //       ),
+        //     ),
+        //   ),
+        // ),
         body: LoadingScreen(),
       ),
     );
