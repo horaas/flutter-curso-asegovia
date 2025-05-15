@@ -18,7 +18,8 @@ class MainApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'home',theme: ThemeData().copyWith(
+        initialRoute: 'home',
+        theme: ThemeData().copyWith(
           scaffoldBackgroundColor: const Color(0xff21232A),
           primaryColor: const Color(0xff284879),
           appBarTheme: const AppBarTheme().copyWith(
@@ -26,17 +27,15 @@ class MainApp extends StatelessWidget {
             centerTitle: true,
             titleTextStyle: const TextStyle().copyWith(
               color: Colors.white,
-              fontSize: 20
+              fontSize: 20,
             ),
-            iconTheme: const IconThemeData().copyWith(
-              color: Colors.white
-            )
-          )
+            iconTheme: const IconThemeData().copyWith(color: Colors.white),
+          ),
         ),
-       routes: {
-        'home': (_) => const HomeScreen(),
-        'payment': (_) => const PaymentSuccesfull(),
-       },
+        routes: {
+          'home': (_) => const HomeScreen(),
+          'payment': (_) => const PaymentSuccesfull(),
+        },
       ),
     );
   }
