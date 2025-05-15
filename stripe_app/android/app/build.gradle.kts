@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.stripe_app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = "27.0.12077973"
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
