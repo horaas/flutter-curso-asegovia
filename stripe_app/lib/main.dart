@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'home',theme: ThemeData().copyWith(
+      initialRoute: 'payment',theme: ThemeData().copyWith(
         scaffoldBackgroundColor: const Color(0xff21232A),
         primaryColor: const Color(0xff284879),
         appBarTheme: const AppBarTheme().copyWith(
@@ -29,6 +29,7 @@ class MainApp extends StatelessWidget {
       ),
      routes: {
       'home': (_) => const HomeScreen(),
+      'payment': (_) => const PaymentSuccesfull(),
      },
     );
   }
