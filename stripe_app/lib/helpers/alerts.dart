@@ -19,7 +19,7 @@ showAlert(BuildContext context, String title, String message) async {
       title: Text(title),
       content: Text(message),
       actions: [
-        MaterialButton(onPressed: () => Navigator.of(context).pop(),)
+        MaterialButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Ok'),)
       ],
     )
   );
