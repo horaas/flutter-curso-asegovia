@@ -30,10 +30,11 @@ class MainApp extends StatelessWidget {
         //   child: Container(
         //     width: 300,
         //     height: 150,
+        //     color: Colors.red,
         //     child: CustomPaint(
-        //       painter: EndMarker(
-        //         destination: 'destino kasdjhas sakjdhsa dkasjdhas daksjdhas d',
-        //         kilometer: 200
+        //       painter: StartMarker(
+        //         destination: 'hola como estas en este nuevo texto que es demasiado largo para poder verlo',
+        //         minutes: 200
         //       ),
         //     ),
         //   ),

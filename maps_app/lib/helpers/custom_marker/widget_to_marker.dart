@@ -7,7 +7,7 @@ import 'package:maps_app/helpers/helpers.dart';
 Future <BitmapDescriptor> startCustomMarker(int minutes, String destination) async {
   final recorder = ui.PictureRecorder();
   final canvas = ui.Canvas(recorder);
-  const size = ui.Size(350, 150);
+  const size = ui.Size(180, 90);
 
   final startMarker = StartMarker(minutes: minutes, destination: destination);
   startMarker.paint(canvas, size);
@@ -23,7 +23,7 @@ Future <BitmapDescriptor> startCustomMarker(int minutes, String destination) asy
 Future <BitmapDescriptor> endCustomMarker(int kilometer, String destination) async {
   final recorder = ui.PictureRecorder();
   final canvas = ui.Canvas(recorder);
-  const size = ui.Size(350, 150);
+  const size = ui.Size(180, 90);
 
   final startMarker = EndMarker(kilometer: kilometer, destination: destination);
   startMarker.paint(canvas, size);

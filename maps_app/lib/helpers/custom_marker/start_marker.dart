@@ -8,37 +8,37 @@ class StartMarker extends CustomPainter {
   StartMarker({required this.minutes, required this.destination});
   @override
   void paint(Canvas canvas, Size size) {
-    final double circleRadius = 20;
-    final double circleRadiusWhite = 7;
+    final double circleRadius = 10;
+    final double circleRadiusWhite = 5;
     final pencil = Paint()..color = Colors.black;
     final pencilWhite = Paint()..color = Colors.white;
 
-    Offset center = Offset(circleRadius, size.height - circleRadius);
-    Offset centerWhite = Offset(circleRadius, size.height - circleRadius);
+    Offset center = Offset(size.width * 0.06, size.height * 0.88);
+    Offset centerWhite = Offset(size.width * 0.06, size.height * 0.88);
 
     canvas.drawCircle(center, circleRadius, pencil);
     canvas.drawCircle(centerWhite, circleRadiusWhite, pencilWhite);
 
     // dibujar path
     final path = Path();
-    path.moveTo(40, 20);
-    path.lineTo(size.width - 10, 20.0);
-    path.lineTo(size.width - 10, 100.0);
-    path.lineTo(40, 100.0);
-    canvas.drawShadow(path, Colors.black, 10, false);
+    path.moveTo(size.width * 0.04, size.height * 0.1);
+    path.lineTo(size.width * 0.96, size.height * 0.1);
+    path.lineTo(size.width * 0.96, size.height * 0.7);
+    path.lineTo(size.width * 0.04, size.height * 0.7);
+    canvas.drawShadow(path, Colors.black, size.width * 0.025, false);
     canvas.drawPath(path, pencilWhite);
 
-    // caja negra
+    // // caja negra
 
-    const blacBox = Rect.fromLTWH(40, 20, 70, 80);
+    Rect blacBox = Rect.fromLTWH(size.width * 0.04, size.height * 0.1, size.width * 0.25, size.height * 0.6);
 
     canvas.drawRect(blacBox, pencil);
 
     // textos
     final textSpan = TextSpan(
-      style: const TextStyle(
+      style: TextStyle(
         color: Colors.white,
-        fontSize: 30,
+        fontSize: size.width * 0.085,
         fontWeight: FontWeight.w400,
       ),
       text: '$minutes',
@@ -48,15 +48,16 @@ class StartMarker extends CustomPainter {
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
-    )..layout(minWidth: 70, maxWidth: 70);
-    minustsPainter.paint(canvas, const Offset(40, 35));
+    )..layout(minWidth: size.width * 0.25, maxWidth: size.width * 0.6);
 
-    //minutos
+    minustsPainter.paint(canvas, Offset(size.width * 0.045, size.height * 0.18));
 
-    final minutesText = const TextSpan(
+    // //minutos
+
+    final minutesText = TextSpan(
       style: TextStyle(
         color: Colors.white,
-        fontSize: 20,
+        fontSize: size.width * 0.055,
         fontWeight: FontWeight.w400,
       ),
       text: 'Min',
@@ -66,15 +67,15 @@ class StartMarker extends CustomPainter {
       text: minutesText,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
-    )..layout(minWidth: 70, maxWidth: 70);
-    minutMinPainter.paint(canvas, const Offset(40, 70));
+    )..layout(minWidth: size.width * 0.25, maxWidth: size.width * 0.6);
+    minutMinPainter.paint(canvas, Offset(size.width * 0.045, size.height * 0.4));
 
-    //description
+    // //description
 
     final locationText = TextSpan(
-      style: const TextStyle(
+      style: TextStyle(
         color: Colors.black,
-        fontSize: 17,
+        fontSize:  size.width * 0.055,
         fontWeight: FontWeight.bold,
       ),
       text: destination,
@@ -86,11 +87,11 @@ class StartMarker extends CustomPainter {
       text: locationText,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
-    )..layout(minWidth: size.width - 135, maxWidth: size.width - 135);
+    )..layout(minWidth: size.width * 0.25, maxWidth: size.width * 0.65);
 
-    final double offsetY = destination.length > 20 ? 40 : 50;
+    final double offsetY = destination.length > 20 ? size.height * 0.25 : size.height * 0.32;
 
-    locationPainter.paint(canvas, Offset(120, offsetY));
+    locationPainter.paint(canvas, Offset(size.width * 0.32, offsetY));
   }
 
   @override
