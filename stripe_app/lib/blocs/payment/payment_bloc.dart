@@ -9,10 +9,14 @@ part 'payment_state.dart';
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   PaymentBloc() : super(const PaymentState()) {
     on<OnSelectedCard>((event, emit) {
-      state.copyWith(cardActive: true, card: event.card);
+      emit(
+        state.copyWith(cardActive: true, card: event.card)
+      );
     });
     on<OnRemoveSelectedCard>((event, emit) {
-      state.copyWith(cardActive: false);
+      emit(
+        state.copyWith(cardActive: false)
+      );
     });
 
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stripe_app/blocs/blocs.dart';
 import 'package:stripe_app/data/credist_cards_data.dart';
 import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/presentations/screens/screens.dart';
@@ -12,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final paymentBloc = BlocProvider.of<PaymentBloc>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pago'), actions: [
@@ -34,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                 final card = creditCardsData[index];
                 return GestureDetector(
                   onTap: () {
+                    paymentBloc.add(OnSelectedCard(card));
                     Navigator.push(context, navigateFadein(context, const CardScreen())); 
                   },
                   child: Hero(

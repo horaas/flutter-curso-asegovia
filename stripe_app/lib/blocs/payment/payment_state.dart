@@ -25,5 +25,5 @@ class PaymentState extends Equatable {
   );
 
   @override
-  List<Object> get props => [amountPayment, currency, cardActive, card!];
+  List<Object?> get props => [amountPayment, currency, cardActive, card];
 }

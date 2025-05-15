@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stripe_app/blocs/blocs.dart';
 
 class TotalPayButton extends StatelessWidget {
   const TotalPayButton({super.key});
@@ -24,7 +26,7 @@ class TotalPayButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,7 +37,10 @@ class TotalPayButton extends StatelessWidget {
               Text('255.55 Usd', style: TextStyle(fontSize: 20)),
             ],
           ),
-          _BtnPay(),
+          BlocBuilder<PaymentBloc, PaymentState>(
+            builder: (context, state) {
+              return _BtnPay(state);
+            }),
         ],
       ),
     );
@@ -43,9 +48,13 @@ class TotalPayButton extends StatelessWidget {
 }
 
 class _BtnPay extends StatelessWidget {
+  final PaymentState state;
+
+  const _BtnPay(this.state);
+
   @override
   Widget build(BuildContext context) {
-    return true ? _buildCreditCardButton(context) : _buildPayButton(context);
+    return state.cardActive ? _buildCreditCardButton(context) : _buildPayButton(context);
   }
   
   _buildPayButton(BuildContext context) {
