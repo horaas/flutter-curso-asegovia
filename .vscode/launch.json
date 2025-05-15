@@ -102,5 +102,12 @@
             "cwd": "maps_app",
             "program": "lib/main.dart"
         },
+        {
+            "name": "strippe",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "stripe_app",
+            "program": "lib/main.dart"
+        },
     ]
 }
