@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:stripe_app/blocs/blocs.dart';
+import 'package:stripe_app/helpers/helpers.dart';
+import 'package:stripe_app/presentations/screens/screens.dart';
 import 'package:stripe_app/presentations/widgets/total_pay_button.dart';
 import 'package:stripe_app/services/stripe_service.dart';
 
@@ -33,6 +37,7 @@ class _AddCardPayState extends State<AddCardPay> {
 
   @override
   Widget build(BuildContext context) {
+    final paymentBloc = BlocProvider.of<PaymentBloc>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('prueba')),
       body: Stack(
@@ -52,8 +57,18 @@ class _AddCardPayState extends State<AddCardPay> {
           ),
           Positioned(
           bottom: 0,
-          child: TotalPayButton(onPressed: () {
-            print('hola');
+          child: TotalPayButton(onPressed: () async {
+            showLoading(context);
+            final responseProcessPayment = await StripeService().paymentWithNewcard(amount: paymentBloc.state.paymentAmountString, currency: paymentBloc.state.currency);
+
+            if (context.mounted) {
+              Navigator.of(context).pop();
+              if (responseProcessPayment.ok) {
+                Navigator.push(context, navigateFadein(context, const PaymentSuccesfull())); 
+              } else {
+                showAlert(context, 'Error', 'mesanje de error');
+              }
+            }
           },) 
         )
         ],

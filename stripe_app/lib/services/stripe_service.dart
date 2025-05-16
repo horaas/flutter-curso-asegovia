@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/models/credit_card_model.dart';
 import 'package:stripe_app/models/models.dart';
 
@@ -34,15 +35,13 @@ class StripeService {
     required CreditCardModel card,
   }) async {}
 
-  Future<void> paymentWithNewcard({
+  Future<StripeCustomResponse> paymentWithNewcard({
     required String amount,
     required String currency,
   }) async {
     try {
-      final response = await _createPaymentInten(
-        amount: amount,
-        currency: currency,
-      );
+       
+      // this process is data from user required
       final billingDetails = const BillingDetails(
         email: 'email@stripe.com',
         phone: '+48888000888',
@@ -55,19 +54,16 @@ class StripeService {
           postalCode: '77063',
         ),
       ); 
-       await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
+       final paymentParamas = PaymentMethodParams.card(
+          paymentMethodData: PaymentMethodData(
           billingDetails: billingDetails,
-          paymentIntentClientSecret: response.clientSecret,
-          merchantDisplayName: 'Ikay'
         )
-       );
-       await Stripe.instance.presentPaymentSheet();
-      // return StripeCustomResponse(ok: true);
+      );
+
+      return await _handlePaymentProcess(amount: amount, currency: currency, paymentMethodParams: paymentParamas);
+
     } catch (e) {
-      print('hola');
-      print(e.toString());
-      // return StripeCustomResponse(ok: false, msg: 'error');
+      return StripeCustomResponse(ok: false, msg: 'error');
     }
   }
 
@@ -103,16 +99,21 @@ class StripeService {
   Future<StripeCustomResponse> _handlePaymentProcess({
     required String amount,
     required String currency,
-    required PaymentMethod paymentMethod,
+    required PaymentMethodParams paymentMethodParams,
   }) async {
     try {
-      final response = await _createPaymentInten(
+     final paymentIntet = await _createPaymentInten(
         amount: amount,
         currency: currency,
       );
-      return StripeCustomResponse(ok: true);
+      final paymentProcess = await Stripe.instance.confirmPayment(paymentIntentClientSecret: paymentIntet.clientSecret, data: paymentMethodParams);
+
+      if (paymentProcess.status == PaymentIntentsStatus.Succeeded) {
+        return StripeCustomResponse(ok: true);
+      }
+      return StripeCustomResponse(ok: false, msg: 'error de pago');
     } catch (e) {
-      return StripeCustomResponse(ok: false, msg: 'error');
+      return StripeCustomResponse(ok: false, msg: 'error exception');
     }
   }
 }

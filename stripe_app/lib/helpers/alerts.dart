@@ -7,12 +7,6 @@ showLoading (BuildContext context) async {
     )
   );
 
-
-  await Future.delayed(const Duration(milliseconds: 2000));
-
-  if (context.mounted) {  
-    Navigator.of(context).pop();
-  }
 }
 showAlert(BuildContext context, String title, String message) async {
   showDialog(context: context, barrierDismissible: false, builder: (_) => AlertDialog(
