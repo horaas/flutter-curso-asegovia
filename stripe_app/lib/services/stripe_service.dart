@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:stripe_app/helpers/helpers.dart';
-import 'package:stripe_app/models/credit_card_model.dart';
+
+import 'package:stripe_app/config/config.dart';
 import 'package:stripe_app/models/models.dart';
 
 class StripeService {
@@ -9,22 +9,16 @@ class StripeService {
   static final StripeService _instance = StripeService._privateConstructor();
   factory StripeService() => _instance;
 
-  final String _paymnetApiUrl = 'https://api.stripe.com/v1';
-  static final String _secretKey =
-      'sk_test_51RP4f1RuQvIbUXD4jPRHsqw4BOoEoyyf5JKp3jFNapH1UxGkIuz0JdHPwM4ZXSPMtEl9idIGYgrW1QvZZLkvN50i00X03KAd3s';
-  final String _apiKey =
-      'pk_test_51RP4f1RuQvIbUXD4KsaKFMUXFCnPYUabI8AkXd4xdETXQuLKK4b0kxxYpUC72N3cly6JNTC0i6zjE44yrUBC1Vgg00yMBHIrZG';
-
   final Dio _dioStripe = Dio(
     BaseOptions(
-      baseUrl: 'https://api.stripe.com/v1',
+      baseUrl: Environment.paymnetApiUrl,
       queryParameters: {},
-      headers: {'Authorization': 'Bearer $_secretKey'},
+      headers: {'Authorization': 'Bearer ${Environment.secretKey}'},
     ),
   );
 
   void init() {
-    Stripe.publishableKey = _apiKey;
+    Stripe.publishableKey = Environment.apiKey;
     Stripe.urlScheme = 'test';
     Stripe.merchantIdentifier = 'test';
   }

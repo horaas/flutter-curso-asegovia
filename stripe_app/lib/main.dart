@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+
 import 'package:stripe_app/blocs/blocs.dart';
+import 'package:stripe_app/config/environment.dart';
 import 'package:stripe_app/presentations/screens/screens.dart';
 import 'package:stripe_app/services/stripe_service.dart';
 
 void main() async {
+  await Environment.initEnviroments();
   WidgetsFlutterBinding.ensureInitialized();
   StripeService().init();
   await Stripe.instance.applySettings();
