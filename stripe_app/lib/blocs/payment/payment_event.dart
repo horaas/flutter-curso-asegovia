@@ -15,3 +15,6 @@ class OnSelectedCard extends PaymentEvent {
 class OnRemoveSelectedCard extends PaymentEvent {
   
 }
+class OnIsManualSelectedCard extends PaymentEvent {
+  
+}

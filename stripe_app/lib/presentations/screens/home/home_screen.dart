@@ -23,8 +23,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Pago'), actions: [
         IconButton(
             onPressed: () async {
-              final amount = paymentBloc.state.paymentAmountString;
-              final currency = paymentBloc.state.currency;
+              paymentBloc.add(OnIsManualSelectedCard());
               Navigator.push(context, navigateFadein(context, const AddCardPay())); 
               // final response = await stripeServices.paymentWithNewcard(
               //   amount: amount,
