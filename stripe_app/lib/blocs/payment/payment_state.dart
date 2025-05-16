@@ -24,6 +24,9 @@ class PaymentState extends Equatable {
     card: card ?? this.card,
   );
 
+
+  String get paymentAmountString => '${(amountPayment*100).floor()}';
+
   @override
   List<Object?> get props => [amountPayment, currency, cardActive, card];
 }

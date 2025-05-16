@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripe_app/blocs/blocs.dart';
 import 'package:stripe_app/presentations/screens/screens.dart';
+import 'package:stripe_app/services/stripe_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  StripeService().init();
+  await Stripe.instance.applySettings();
   runApp(const MainApp());
 }
 
@@ -12,6 +17,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => PaymentBloc(),)

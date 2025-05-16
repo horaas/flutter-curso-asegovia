@@ -7,20 +7,36 @@ import 'package:stripe_app/data/credist_cards_data.dart';
 import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/presentations/screens/screens.dart';
 import 'package:stripe_app/presentations/widgets/total_pay_button.dart';
+import 'package:stripe_app/services/stripe_service.dart';
 
 class HomeScreen extends StatelessWidget {
+
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final stripeServices = StripeService();
     final size = MediaQuery.of(context).size;
     final paymentBloc = BlocProvider.of<PaymentBloc>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pago'), actions: [
-        IconButton(onPressed: () {
-          
-        }, icon: const Icon(FontAwesomeIcons.plus))
+        IconButton(
+            onPressed: () async {
+              final amount = paymentBloc.state.paymentAmountString;
+              final currency = paymentBloc.state.currency;
+              Navigator.push(context, navigateFadein(context, const AddCardPay())); 
+              // final response = await stripeServices.paymentWithNewcard(
+              //   amount: amount,
+              //   currency: currency,
+              // );
+              // if (response.ok) {
+              //   showAlert(context, 'ok', 'mensaje ok');
+              // } else {
+              //   showAlert(context, 'Error', 'mesanje de error');
+              // }
+            },
+            icon: const Icon(FontAwesomeIcons.plus))
       ],),
       body: Stack(
         children: [
