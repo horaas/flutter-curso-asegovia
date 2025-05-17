@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/blocs/blocs.dart';
+import 'package:stripe_app/helpers/helpers.dart';
+import 'package:stripe_app/presentations/screens/cards/payment_succesfull.dart';
 import 'package:stripe_app/presentations/widgets/total_pay_button.dart';
+import 'package:stripe_app/services/stripe_service.dart';
 
 class CardScreen extends StatelessWidget {
   const CardScreen({super.key});
@@ -37,7 +40,32 @@ class CardScreen extends StatelessWidget {
               );
             },
           ),
-          const Positioned(bottom: 0, child: TotalPayButton()),
+          Positioned(bottom: 0, child: TotalPayButton(
+            onPressed: () async {
+                showLoading(context);
+                final card = paymentBloc.state.card;
+                final amount = paymentBloc.state.paymentAmountString;
+                final currency = paymentBloc.state.currency;
+                final responseProcessPayment = await StripeService()
+                    .paymentWithcardSelect(
+                      amount: amount,
+                      currency: currency,
+                      card: card!,
+                    );
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  if (responseProcessPayment.ok) {
+                    Navigator.push(
+                      context,
+                      navigateFadein(context, const PaymentSuccesfull()),
+                    );
+                  } else {
+                    showAlert(context, 'Error', 'mesanje de error');
+                  }
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

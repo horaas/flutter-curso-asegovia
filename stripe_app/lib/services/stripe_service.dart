@@ -4,6 +4,21 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripe_app/config/config.dart';
 import 'package:stripe_app/models/models.dart';
 
+//TODO esto se deberia de cargar mediante un stado para poder manejar de alguna base de datos 
+
+final BillingDetails defaultDataBillDetails = const BillingDetails(
+  email: 'email@stripe.com',
+  phone: '+48888000888',
+  address: Address(
+    city: 'Houston',
+    country: 'US',
+    line1: '1459  Circle Drive',
+    line2: '',
+    state: 'Texas',
+    postalCode: '77063',
+  ),
+);
+
 class StripeService {
   StripeService._privateConstructor();
   static final StripeService _instance = StripeService._privateConstructor();
@@ -23,11 +38,32 @@ class StripeService {
     Stripe.merchantIdentifier = 'test';
   }
 
-  Future<void> paymentWithcardSelect({
+  Future<StripeCustomResponse> paymentWithcardSelect({
     required String amount,
     required String currency,
     required CreditCardModel card,
-  }) async {}
+  }) async {
+    try {
+      final monthYear = card.expiracyDate.split('/');
+      // Create updateDataCard
+      await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
+        number: card.cardNumber,
+        cvc: card.cvv,
+        expirationMonth: int.parse(monthYear.first),
+        expirationYear: int.parse(monthYear.last),
+      ));
+
+      final paymentParamas = PaymentMethodParams.card(
+          paymentMethodData: PaymentMethodData(
+          billingDetails: defaultDataBillDetails
+        )
+      );
+
+      return await _handlePaymentProcess(amount: amount, currency: currency, paymentMethodParams: paymentParamas);
+    } catch (e) {
+      return StripeCustomResponse(ok: false, msg: 'error');
+    }
+  }
 
   Future<StripeCustomResponse> paymentWithNewcard({
     required String amount,
@@ -48,9 +84,9 @@ class StripeService {
           postalCode: '77063',
         ),
       ); 
-       final paymentParamas = PaymentMethodParams.card(
+      final paymentParamas = PaymentMethodParams.card(
           paymentMethodData: PaymentMethodData(
-          billingDetails: billingDetails,
+          billingDetails: billingDetails
         )
       );
 

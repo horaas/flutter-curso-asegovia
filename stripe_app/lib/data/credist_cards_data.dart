@@ -14,7 +14,7 @@ final List<CreditCardModel> creditCardsData = <CreditCardModel>[
       cardNumber: '5555555555554444',
       brand: 'mastercard',
       cvv: '213',
-      expiracyDate: '01/25',
+      expiracyDate: '01/30',
       cardHolderName: 'Melissa Flores'
     ),
     CreditCardModel(
