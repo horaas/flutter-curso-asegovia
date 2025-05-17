@@ -57,7 +57,7 @@ class _BtnPay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return state.cardActive || state.isManualProcess ? _buildCreditCardButton(context) : _buildPayButton(context);
+    return _buildCreditCardButton(context);// : _buildPayButton(context);
   }
   
   _buildPayButton(BuildContext context) {
@@ -83,6 +83,7 @@ class _BtnPay extends StatelessWidget {
     return MaterialButton(
       height: 45,
       minWidth: 150,
+      disabledColor: Colors.grey[300],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       color: Colors.black,
       onPressed: onPressed,
