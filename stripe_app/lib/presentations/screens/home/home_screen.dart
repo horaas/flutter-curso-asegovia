@@ -25,15 +25,6 @@ class HomeScreen extends StatelessWidget {
             onPressed: () async {
               paymentBloc.add(OnIsManualSelectedCard());
               Navigator.push(context, navigateFadein(context, const AddCardPay())); 
-              // final response = await stripeServices.paymentWithNewcard(
-              //   amount: amount,
-              //   currency: currency,
-              // );
-              // if (response.ok) {
-              //   showAlert(context, 'ok', 'mensaje ok');
-              // } else {
-              //   showAlert(context, 'Error', 'mesanje de error');
-              // }
             },
             icon: const Icon(FontAwesomeIcons.plus))
       ],),
@@ -71,9 +62,29 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 0,
-            child: TotalPayButton() 
+            child: TotalPayButton(onPressed: () async {
+
+              showLoading(context);
+              final paymentBlocState = paymentBloc.state;
+              final responseProcessPayment = await StripeService()
+                    .paymentWithApplePayGooglePay(
+                      amount: paymentBlocState.paymentAmountString,
+                      currency: paymentBlocState.currency
+                    );
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  if (responseProcessPayment.ok) {
+                    Navigator.push(
+                      context,
+                      navigateFadein(context, const PaymentSuccesfull()),
+                    );
+                  } else {
+                    showAlert(context, 'Error', responseProcessPayment.msg);
+                  }
+                }
+            },) 
           )
         ],
       ),

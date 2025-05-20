@@ -97,10 +97,60 @@ class StripeService {
     }
   }
 
-  Future<void> paymentWithApplePayGooglePay({
+  Future<StripeCustomResponse> paymentWithApplePayGooglePay({
     required String amount,
     required String currency,
-  }) async {}
+  }) async {
+    try {
+      final googlePaySupported = await Stripe.instance
+        .isPlatformPaySupported(googlePay: const IsGooglePaySupportedParams());
+
+
+      if (!googlePaySupported) {
+      return StripeCustomResponse(ok: false, msg: 'google play not soprted');
+      }
+      final paymentIntet = await _createPaymentInten(
+        amount: amount,
+        currency: currency,
+      );
+      await Stripe.instance.confirmPlatformPayPaymentIntent(
+        clientSecret: paymentIntet.clientSecret,
+        confirmParams: PlatformPayConfirmParams.googlePay(
+          googlePay: GooglePayParams(
+            testEnv: Environment.isDev,
+            merchantName: 'Example for payment',
+            merchantCountryCode: 'US',
+            currencyCode: currency,
+          ),
+        ),
+      );
+      // final paymentMethod = await Stripe.instance
+      //     .createPlatformPayPaymentMethod(
+      //       params: PlatformPayPaymentMethodParams.applePay(
+      //         applePayParams: ApplePayParams(
+      //           cartItems: [
+      //             ApplePayCartSummaryItem.immediate(
+      //               label: 'Product Test',
+      //               amount: amount,
+      //             ),
+      //           ],
+      //           merchantCountryCode: 'Es',
+      //           currencyCode: currency,
+      //         ),
+      //       ),
+      //     );
+      // final paymentParamas = PaymentMethodParams.card(
+      //     paymentMethodData: PaymentMethodData(
+      //     billingDetails: defaultDataBillDetails
+      //   )
+      // );
+
+      // return await _handlePaymentProcess(amount: amount, currency: currency, paymentMethodParams: paymentParamas);
+      return StripeCustomResponse(ok: false, msg: 'error');
+    } catch (e) {
+      return StripeCustomResponse(ok: false, msg: 'error');
+    }
+  }
 
   Future<PaymentIntentResponse> _createPaymentInten({
     required String amount,

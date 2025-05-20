@@ -8,4 +8,5 @@ class Environment {
   static String secretKey = dotenv.env['SECRET_KEY'] ?? 'error de API';
   static String apiKey = dotenv.env['API_KEY'] ?? 'error de API';
   static String paymnetApiUrl = dotenv.env['PAYMENT_API_URL'] ?? 'error de API';
+  static bool isDev = dotenv.env['DEV'] == 'true' ? true : false;
 }
